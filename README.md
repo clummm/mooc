@@ -85,8 +85,8 @@ mooc
 ``` bash
 # 运行前，确保已安装vue-cli
 # 进入 mooc 目录
-# 安装相关依赖
-# npm install
+# 安装/更新相关依赖
+npm install
 
 # 启动项目，运行在localhost:8080
 npm run dev
