@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
+
+/* 全局引入axios */
+Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
