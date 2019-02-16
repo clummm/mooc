@@ -4,12 +4,12 @@
 </template>
 
 <script>
-export default {
-  name: 'message',
-  data () {
-    return {}
+  export default {
+    name: 'message',
+    data () {
+      return {}
+    }
   }
-}
 </script>
 
 <style scoped>

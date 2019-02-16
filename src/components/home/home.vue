@@ -11,17 +11,17 @@
 </template>
 
 <script>
-export default {
-  name: 'home',
-  data () {
-    return {}
-  },
-  methods: {
-    randomCourse () {
-      this.$router.push({path: '/course/' + Math.floor((Math.random() * 100) + 1)})
+  export default {
+    name: 'home',
+    data () {
+      return {}
+    },
+    methods: {
+      randomCourse () {
+        this.$router.push({path: '/course/' + Math.floor((Math.random() * 100) + 1)})
+      }
     }
   }
-}
 
 </script>
 

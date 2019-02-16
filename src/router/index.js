@@ -24,7 +24,7 @@ export default new Router({
     },
     // 一级分类页
     {
-      path: '/category',
+      path: '/category/:cid',
       name: 'category',
       component: category
     },
