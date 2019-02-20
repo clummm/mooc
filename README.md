@@ -44,8 +44,8 @@ mooc
 |   |   |   ├── catalog                  // 课程目录
 |   |   |   ├── comments                 // 课程评价
 |   |   |   ├── courseLearn              // 课时内容详情页
+|   |   |   ├── discuss                  // 课程讨论
 |   |   |   ├── notes                    // 课程笔记
-|   |   |   ├── QA                       // 课程问答
 |   |   |   └── course.vue
 |   |   ├── footer                   // 网站共用footer
 |   |   ├── header                   // 网站共用header

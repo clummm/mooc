@@ -5,7 +5,7 @@
 
 <script>
   export default {
-    name: 'qa',
+    name: 'discuss',
     data () {
       return {}
     }
