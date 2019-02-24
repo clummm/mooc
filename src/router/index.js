@@ -11,6 +11,8 @@ import myHistory from '../components/user/myHistory/myHistory'
 import myNotes from '../components/user/myNote/myNote'
 import upload from '../components/user/upload/upload'
 
+import searchResult from '../components/searchResult/searchResult'
+
 Vue.use(Router)
 
 export default new Router({
@@ -77,6 +79,12 @@ export default new Router({
       path: '/course/:cid',
       name: 'course',
       component: course
+    },
+    // 搜索结果页
+    {
+      path: '/search',
+      name: 'searchResult',
+      component: searchResult
     }
     // 未完待续
   ]
