@@ -1,10 +1,10 @@
 <!-- 根组件 -->
 <template>
   <div id="app">
-    <v-header></v-header>
-    <router-view/>
-    <account></account>
-    <v-footer v-if=this.showAccountWindow></v-footer>
+    <account v-show="isAccountWindowShow" @hideAccountWindow="hideAccountWindow" ref="account"></account>
+    <v-header @showAccountWindow="showAccountWindow"></v-header>
+    <router-view></router-view>
+    <v-footer></v-footer>
   </div>
 </template>
 
@@ -17,7 +17,18 @@
     name: 'App',
     data () {
       return {
-        showAccountWindow: false
+        isAccountWindowShow: false
+      }
+    },
+    methods: {
+      // 显示登录/注册弹窗
+      showAccountWindow (type) {
+        this.isAccountWindowShow = true
+        this.$refs.account.changeTab(type)
+      },
+      // 隐藏登录注册弹窗
+      hideAccountWindow () {
+        this.isAccountWindowShow = false
       }
     },
     components: {
@@ -38,5 +49,6 @@
   }
 </script>
 
-<style>
+<style lang="stylus" scoped>
+
 </style>

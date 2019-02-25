@@ -12,6 +12,7 @@ import myNotes from '../components/user/myNote/myNote'
 import upload from '../components/user/upload/upload'
 
 import searchResult from '../components/searchResult/searchResult'
+import protocol from '../components/help/protocol/protocol'
 
 Vue.use(Router)
 
@@ -85,6 +86,11 @@ export default new Router({
       path: '/search',
       name: 'searchResult',
       component: searchResult
+    },
+    {
+      path: '/protocol',
+      name: 'protocol',
+      component: protocol
     }
     // 未完待续
   ]

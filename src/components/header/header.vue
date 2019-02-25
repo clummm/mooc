@@ -10,6 +10,10 @@
     </div>
     <span class="mycourse">我的课程</span>
     <div class="message">消息</div>
+    <div class="login-register">
+      <span class="login" @click="showAccountWindow('LOGIN')">登录</span>
+      <span class="register" @click="showAccountWindow('REGISTER')">注册</span>
+    </div>
   </div>
 </template>
 
@@ -33,6 +37,10 @@
       // 返回首页
       goHome () {
         this.$router.push('home')
+      },
+      // 通知父组件打开登录/注册弹窗
+      showAccountWindow (type) {
+        this.$emit('showAccountWindow', type)
       }
     }
   }
