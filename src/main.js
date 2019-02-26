@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import store from './store'// 引入store
+import store from './store/'// 引入store
 import './plugins/element.js'
 
 /* 全局引入axios */

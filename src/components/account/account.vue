@@ -54,7 +54,6 @@
 
 <script type="text/ecmascript-6">
   import identify from '../identify/identify' // 生成验证码的组件
-
   import { randomString } from '../../common/js/randomString' // 随机生成4位验证码
 
   export default {
@@ -175,8 +174,9 @@
         }
         // 注册成功
         this.hideAccountWindow()
-        this.$store.dispatch('changeHasLogin', true)
-        this.$store.dispatch('setUser', { name: '张三' })
+        this.$store.dispatch('account/setHasLogin', true)
+        this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
+        window.localStorage.token = 1
         window.alert('注册成功')
       },
       // 登录
@@ -203,8 +203,9 @@
           storage['lastLoginTime'] = (new Date()).getTime()
         }
         this.hideAccountWindow()
-        this.$store.dispatch('changeHasLogin', true)
-        this.$store.dispatch('setUser', { name: '张三' })
+        this.$store.dispatch('account/setHasLogin', true)
+        this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
+        window.localStorage.token = 1
         alert('登录成功')
       }
     },

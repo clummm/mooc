@@ -13,10 +13,11 @@ import upload from './components/user/upload/upload'
 
 import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
+import store from './store/'
 
 Vue.use(Router)
-
-export default new Router({
+const NEED_LOGIN = 'needLogin'
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -42,37 +43,43 @@ export default new Router({
         {
           path: '/',
           redirect: 'courseList',
-          name: 'user'
+          name: 'user',
+          meta: NEED_LOGIN
         },
         // 我的课程
         {
           path: 'courseList',
           name: 'courseList',
-          component: courseList
+          component: courseList,
+          meta: NEED_LOGIN
         },
         // 我的笔记
         {
           path: 'myNotes',
           name: 'myNotes',
-          component: myNotes
+          component: myNotes,
+          meta: NEED_LOGIN
         },
         // 我的消息
         {
           path: 'message',
           name: 'message',
-          component: message
+          component: message,
+          meta: NEED_LOGIN
         },
         // 历史足迹
         {
           path: 'myHistory',
           name: 'myHistory',
-          component: myHistory
+          component: myHistory,
+          meta: NEED_LOGIN
         },
         // 上传管理
         {
           path: 'upload',
           name: 'upload',
-          component: upload
+          component: upload,
+          meta: NEED_LOGIN
         }
       ]
     },
@@ -104,3 +111,23 @@ export default new Router({
     // }
   ]
 })
+
+// 在每次进入路由前判断
+router.beforeEach((to, from, next) => {
+  console.log(from)
+  console.log(to)
+  // 如果token未失效则获取用户基本信息
+  if (window.localStorage.token) {
+    store.dispatch('account/setHasLogin', true)
+    store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
+    window.localStorage.token = 1
+  } else {
+    // 如果token失效则判断即将进入页面是否需要登录，需要则不跳转并弹出登录窗口
+    if (to.meta === NEED_LOGIN) {
+      store.dispatch('account/setAccountWindowShow', true)
+      next(false)
+    }
+  }
+  next()
+})
+export default router

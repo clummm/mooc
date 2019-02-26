@@ -13,23 +13,27 @@
   import header from './components/header/header'
   import footer from './components/footer/footer'
   import account from './components/account/account'
+  import { mapActions, mapGetters } from 'vuex'
+
   export default {
     name: 'App',
     data () {
       return {
-        isAccountWindowShow: false, // 是否显示登录注册窗口
         userOnline: false // 用户是否在线
       }
     },
     methods: {
+      ...mapActions('account', {
+        setAccountWindowShow: 'setAccountWindowShow'
+      }),
       // 显示登录/注册弹窗
       showAccountWindow (type) {
-        this.isAccountWindowShow = true
+        this.setAccountWindowShow(true)
         this.$refs.account.openAccountWindow(type)
       },
       // 隐藏登录注册弹窗
       hideAccountWindow () {
-        this.isAccountWindowShow = false
+        this.setAccountWindowShow(false)
       },
       // 登录成功
       loginSuccess () {
@@ -40,6 +44,11 @@
       quitLogin () {
         this.userOnline = false
       }
+    },
+    computed: {
+      ...mapGetters('account', {
+        isAccountWindowShow: 'getAccountWindowShow'
+      })
     },
     components: {
       'v-header': header,
