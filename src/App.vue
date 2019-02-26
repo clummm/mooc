@@ -2,7 +2,7 @@
 <template>
   <div id="app">
     <account v-show="isAccountWindowShow" @hideAccountWindow="hideAccountWindow" ref="account"
-    @loginSuccess="loginSuccess"></account>
+             @loginSuccess="loginSuccess"></account>
     <v-header @showAccountWindow="showAccountWindow" :userOnline="userOnline"></v-header>
     <router-view></router-view>
     <v-footer></v-footer>
@@ -13,7 +13,6 @@
   import header from './components/header/header'
   import footer from './components/footer/footer'
   import account from './components/account/account'
-
   export default {
     name: 'App',
     data () {
@@ -61,5 +60,4 @@
 </script>
 
 <style lang="stylus" scoped>
-
 </style>

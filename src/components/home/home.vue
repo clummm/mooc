@@ -18,7 +18,7 @@
     },
     methods: {
       randomCourse () {
-        this.$router.push({path: '/course/' + Math.floor((Math.random() * 100) + 1)})
+        this.$router.push({ path: '/course/' + Math.floor((Math.random() * 100) + 1) })
       }
     }
   }

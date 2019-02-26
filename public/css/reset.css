@@ -83,6 +83,8 @@ html { overflow-y: scroll; }
 /* 自定义 */
 /* 定义网页最小宽高 */
 html, body {
-  min-width: 1205px;
+  /*min-width: 1024px;*/
+  width: 1024px;
   min-height: 100%;
+  margin: auto;
 }

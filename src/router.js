@@ -1,23 +1,24 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/home/home'
-import category from '../components/category/category'
-import user from '../components/user/user'
-import course from '../components/course/course'
+import Home from './components/home/home'
+import category from './components/category/category'
+import user from './components/user/user'
+import course from './components/course/course'
 
-import courseList from '../components/user/courseList/courseList'
-import message from '../components/user/message/message'
-import myHistory from '../components/user/myHistory/myHistory'
-import myNotes from '../components/user/myNote/myNote'
-import upload from '../components/user/upload/upload'
+import courseList from './components/user/courseList/courseList'
+import message from './components/user/message/message'
+import myHistory from './components/user/myHistory/myHistory'
+import myNotes from './components/user/myNote/myNote'
+import upload from './components/user/upload/upload'
 
-import searchResult from '../components/searchResult/searchResult'
-import protocol from '../components/help/protocol/protocol'
+import searchResult from './components/searchResult/searchResult'
+import protocol from './components/help/protocol/protocol'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     // 主页
     {
@@ -92,6 +93,14 @@ export default new Router({
       name: 'protocol',
       component: protocol
     }
-    // 未完待续
+    // 懒加载示例
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    // }
   ]
 })

@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import store from './store'// 引入store
+import './plugins/element.js'
 
 /* 全局引入axios */
 Vue.prototype.$http = axios
@@ -13,9 +14,7 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store, // 使用store
-  components: {App},
-  template: '<App/>'
-})
+  render: h => h(App)
+}).$mount('#app')

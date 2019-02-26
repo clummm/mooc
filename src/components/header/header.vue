@@ -39,7 +39,7 @@
       search () {
         let routeData = this.$router.resolve({
           name: 'searchResult',
-          query: {searchContent: this.searchContent}
+          query: { searchContent: this.searchContent }
         })
         window.open(routeData.href, '_blank')
       },
