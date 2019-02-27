@@ -254,7 +254,7 @@
     .content
       width: 290px;
       height: 270px;
-      z-index 2
+      z-index 99
       position absolute
       left 0
       right 0

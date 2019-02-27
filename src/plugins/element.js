@@ -1,4 +1,6 @@
 import Vue from 'vue'
-import { Button } from 'element-ui'
+import { Carousel, CarouselItem } from 'element-ui'
 
-Vue.use(Button)
+// 引入 element-ui
+Vue.use(Carousel)
+Vue.use(CarouselItem)

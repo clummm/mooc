@@ -1,6 +1,6 @@
 <!-- 一级分类页 -->
 <template>
-  <div>category</div>
+  <div>category: {{ $route.params.cid }}</div>
 </template>
 
 <script>
