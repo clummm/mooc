@@ -2,51 +2,60 @@
   <div class="account-wrapper">
     <div class="shadow" @click="hideAccountWindow"></div>
     <div class="content">
-      <span class="login" @click="changeTab('LOGIN')">登录</span>
-      <span class="register" @click="changeTab('REGISTER')">注册</span>
-      <span class="clsoe" @click="hideAccountWindow">关闭</span>
+      <div class="tab-wrapper">
+        <span class="login" :class="{'active':loginActive}" @click="changeTab('LOGIN')">登录</span>
+        <span class="register " :class="{'active':registerActive}"
+              @click="changeTab('REGISTER')">注册</span>
+      </div>
       <div class="login-content" v-show="currentType==='LOGIN'">
-        <input type="number" placeholder="请输入登录手机号码" v-model="loginPhone">
+        <input class="login-phone" type="text" placeholder="请输入登录手机号码" v-model="loginPhone" maxlength="11"
+               oninput="value=value.replace(/[^\d]/g,'')">
         <div class="password-wrapper">
-          <input type="password" placeholder="请输入登录密码" ref="loginPassword" v-model="loginPassword">
-          <span class="show-password" @click="toggleLoginPassword">显示</span>
+          <input class="login-password" type="password" placeholder="请输入登录密码" ref="loginPassword"
+                 v-model="loginPassword">
+          <img class="show-password" :src="eyeStatus" width="12" height="7.5" @click="toggleLoginPassword"/>
         </div>
-        <div class="hint">{{loginHint}}</div>
-        <div>
-          <input type="checkbox" v-model="autoLogin">
-          <span>7天自动登录</span>
+        <div  class="hint">{{loginHint}}</div>
+        <div class="other-way">
+          <span class="phone">手机验证码登录</span>
+          <span class="forget">忘记密码?</span>
         </div>
-        <button @click="login">登录</button>
+        <button class="login"  @click="login">登录超视慕课网</button>
+        <p class="other-ways">QQ登录 · 微信登录 · 微博登录</p>
       </div>
       <div class="register-content" v-show="currentType==='REGISTER'">
-        <input type="number" placeholder="请输入注册手机号码" v-model="registerPhone">
+        <input type="text" placeholder="请输入注册手机号码" v-model="registerPhone" maxlength="11"
+               oninput="value=value.replace(/[^\d]/g,'')">
         <div class="identify-wrapper">
           <input type="text" maxlength="4" v-model="registerCode">
-          <span @click="refreshCode">刷新</span>
-          <identify class="identify" :identifyCode="identifyCode"></identify>
+          <div @click="refreshCode" class="icon-wrapper">
+            <identify class="identify" :identifyCode="identifyCode"></identify>
+          </div>
         </div>
-        <div>
-          <input type="checkbox" v-model="agreeProtocol">
-          <span>同意</span>
-          <span @click="openProtocol">《超视慕课平台注册协议》</span>
+        <div class="hint">{{registerHint}}</div>
+        <div class="protocol-wrapper">
+          <el-checkbox type="checkbox" v-model="agreeProtocol" class="box"></el-checkbox>
+          <div class="text">
+            <span>同意</span><span @click="openProtocol" class="protocol">《超视慕课平台注册协议》</span>
+          </div>
         </div>
-        <div>{{registerHint}}</div>
-        <span @click="register1">注册</span>
+        <button class="register" @click="register1">获取验证码</button>
       </div>
       <div class="register-content1" v-show="currentType==='REGISTER1'">
-        <p>填写短信验证码密码完成注册</p>
-        <p>短信验证码已发送至{{registerPhone}}</p>
-        <div>
-          <input type="text" placeholder="请输入短信验证码" v-model="registerTextCode">
-          <span>重新发送</span>
+        <p class="text">填写短信验证码密码完成注册</p>
+        <p class="text">短信验证码已发送至{{registerPhone}}</p>
+        <div class="code-wrapper">
+          <input type="text" placeholder="请输入短信验证码" maxlength="5" v-model="registerTextCode">
+          <img class="again" src="./again.png" width="12" height="12">
         </div>
-        <div>
+        <div class="password-wrapper">
           <input type="password" placeholder="6-16位密码，区分大小写" ref="registerPassword"
                  v-model="registerPassword">
-          <span @click="toggleRegisterPassword">显示</span>
+          <img class="show-password" :src="eyeStatus" width="12" height="7.5" @click="toggleLoginPassword"/>
         </div>
-        <p>{{register1Hint}}</p>
-        <button @click="register">完成</button>
+        <p class="hint">{{register1Hint}}</p>
+        <button class="done" @click="register">完成注册</button>
+        <div class="back" @click="changeTab('REGISTER')">返回修改手机号码</div>
       </div>
     </div>
   </div>
@@ -55,7 +64,8 @@
 <script type="text/ecmascript-6">
   import identify from '../identify/identify' // 生成验证码的组件
   import { randomString } from '../../common/js/randomString' // 随机生成4位验证码
-
+  import eyeclose from './eyeclose.png'
+  import eyeopen from './eyeopen.png'
   export default {
     name: 'account',
     data () {
@@ -72,7 +82,7 @@
         loginHint: '', // 登录时提示信息
         registerHint: '', // 注册第一步时提示信息
         register1Hint: '', // 注册第二步时提示信息
-        currentType: '', // 当前是登录还是注册
+        currentType: 'LOGIN', // 当前是登录还是注册
         identifyCode: '', // 本地生成的验证码
         agreeProtocol: '' // 同意注册协议
       }
@@ -209,6 +219,23 @@
         alert('登录成功')
       }
     },
+    computed: {
+      // 登录被选中
+      loginActive: function () {
+        return this.currentType === 'LOGIN'
+      },
+      registerActive: function () {
+        return this.currentType === 'REGISTER' || this.currentType === 'REGISTER1'
+      },
+      eyeStatus: function () {
+        if (this.showLoginPassword) {
+          return eyeopen
+        } else {
+          return eyeclose
+        }
+      }
+
+    },
     components: {
       identify
     }
@@ -225,6 +252,8 @@
       position fixed
 
     .content
+      width: 290px;
+      height: 270px;
       z-index 2
       position absolute
       left 0
@@ -232,12 +261,237 @@
       bottom 0
       top 0
       margin auto
-      width 400px
-      height 300px
-      background white
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.1), 0px 1px 8px 0px rgba(0, 0, 0, 0.04);
+      border-radius: 11px;
 
+      .tab-wrapper
+        width: 62px;
+        height: 20px;
+        line-height: 20px;
+        margin 20px auto 14px auto
+        font-size: 14px;
+        font-family: PingFangSC-Medium;
+        font-weight: 700;
+        color: rgba(46, 49, 52, 0.5);
+
+        .login
+          float left
+          cursor pointer
+
+          &:hover
+            color: rgba(46, 49, 52, 1);
+
+        .register
+          float right
+          cursor pointer
+
+          &:hover
+            color: rgba(46, 49, 52, 1);
+
+        .active
+          color: rgba(46, 49, 52, 1);
+
+      input
+        width: 244px;
+        height: 29px;
+        padding-left 10px
+        background: rgba(255, 255, 255, 1);
+        border-radius: 8px;
+        border: 1px solid rgba(190, 195, 208, 1);
+        font-size: 12px;
+        font-family: PingFangSC-Medium;
+        font-weight: 500;
+        color: rgba(76, 116, 170, 1);
+        line-height: 15px;
+        outline none
+
+        &::-webkit-input-placeholder /* WebKit browsers */
+          color: rgba(76, 116, 170, 1);
+
+        &:-moz-placeholder /* Mozilla Firefox 4 to 18 */
+          color: rgba(76, 116, 170, 1);
+
+        &::-moz-placeholder /* Mozilla Firefox 19+ */
+          color: rgba(76, 116, 170, 1);
+
+        &:-ms-input-placeholder /* Internet Explorer 10+ */
+          color: rgba(76, 116, 170, 1);
+
+      .login-content
+        text-align center
+
+        .login-phone
+          margin-bottom 10px
+
+        .password-wrapper
+          position relative
+
+          .show-password
+            position absolute
+            top 0
+            bottom 0
+            right 30px
+            margin-top auto
+            margin-bottom auto
+            cursor pointer
+
+        .hint
+          padding 0 23px
+          text-align left
+          height 12px
+          line-height: 12px;
+          font-size:12px;
+          margin-top 5px
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(250, 89, 108, 1);
+        .other-way
+          padding 0 23px
+          height:20px;
+          font-size:11px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          line-height:20px;
+          .phone
+            float left
+            color:rgba(93,115,250,1);
+          .forget
+            float right
+            color:rgba(168,178,183,1);
+        .login
+          width:164px;
+          height: 32px;
+          margin-top 20px
+          background: linear-gradient(90deg, rgba(71, 54, 245, 1) 0%, rgba(155, 61, 247, 1) 100%);
+          border-radius: 16px;
+          color:rgba(255,255,255,1);
+          font-size:12px;
+          line-height:33px;
+          border none
+          box-shadow: 0px 4px 20px 0px rgba(71,54,245,0.1843), 0px 1px 8px 0px rgba(155,61,247,0.1843);
+          cursor pointer
+        .other-ways
+          height:22px;
+          font-size: 11px;
+          line-height: 22px;
+          margin-top 20px
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(168, 178, 183, 1);
       .register-content
+        text-align center
         .identify-wrapper
-          .identify
-            display inline-block
+          position relative
+          margin-top 10px
+          .icon-wrapper
+            position absolute
+            top 5px
+            bottom 0
+            right 30px
+            cursor pointer
+        .hint
+          padding 0 23px
+          text-align left
+          height 12px
+          line-height: 12px;
+          font-size:12px;
+          margin-top 5px
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(250, 89, 108, 1);
+        .protocol-wrapper
+          padding 0 23px
+          height:22px;
+          font-size:11px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(46,49,52,1);
+          line-height:22px;
+          .box
+            float left
+          .text
+            position relative
+            float left
+            right 25px
+          .protocol
+            cursor pointer
+            text-decoration underline
+            &:hover
+              color:rgba(72,55,245,1)
+        .register
+          width:164px;
+          height: 32px;
+          margin-top 25px
+          background: linear-gradient(90deg, rgba(71, 54, 245, 1) 0%, rgba(155, 61, 247, 1) 100%);
+          border-radius: 16px;
+          color:rgba(255,255,255,1);
+          font-size:12px;
+          line-height:33px;
+          border none
+          box-shadow: 0px 4px 20px 0px rgba(71,54,245,0.1843), 0px 1px 8px 0px rgba(155,61,247,0.1843);
+          cursor pointer
+
+      .register-content1
+        text-align center
+        .text
+          height:14px;
+          font-size:12px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(168,178,183,1);
+          line-height:14px;
+          margin-bottom 5px
+        .code-wrapper
+          position relative
+          margin-bottom 10px
+          .again
+            position absolute
+            top 0
+            bottom 0
+            right 30px
+            margin-top auto
+            margin-bottom auto
+            cursor pointer
+        .password-wrapper
+          position relative
+          .show-password
+            position absolute
+            top 0
+            bottom 0
+            right 30px
+            margin-top auto
+            margin-bottom auto
+            cursor pointer
+        .hint
+          padding 0 23px
+          text-align left
+          height 12px
+          line-height: 12px;
+          font-size:12px;
+          margin-top 5px
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(250, 89, 108, 1);
+        .done
+          width:164px;
+          height: 32px;
+          margin-top 10px
+          background: linear-gradient(90deg, rgba(71, 54, 245, 1) 0%, rgba(155, 61, 247, 1) 100%);
+          border-radius: 16px;
+          color:rgba(255,255,255,1);
+          font-size:12px;
+          line-height:33px;
+          border none
+          box-shadow: 0px 4px 20px 0px rgba(71,54,245,0.1843), 0px 1px 8px 0px rgba(155,61,247,0.1843);
+          cursor pointer
+        .back
+          margin-top 15px
+          height:22px;
+          font-size:11px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(46,49,52,1);
+          line-height:22px;
+          cursor pointer
 </style>

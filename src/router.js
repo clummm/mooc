@@ -122,10 +122,10 @@ router.beforeEach((to, from, next) => {
     store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
     window.localStorage.token = 1
   } else {
-    // 如果token失效则判断即将进入页面是否需要登录，需要则不跳转并弹出登录窗口
+    // 拦截直接通过url访问需要登录权限的页面，如果token失效则返回首页并显示登录窗口
     if (to.meta === NEED_LOGIN) {
       store.dispatch('account/setAccountWindowShow', true)
-      next(false)
+      next({ name: 'Home' })
     }
   }
   next()

@@ -15,11 +15,11 @@
       },
       fontSizeMin: {
         type: Number,
-        default: 16
+        default: 14
       },
       fontSizeMax: {
         type: Number,
-        default: 40
+        default: 20
       },
       backgroundColorMin: {
         type: Number,
@@ -55,11 +55,11 @@
       },
       contentWidth: {
         type: Number,
-        default: 112
+        default: 71
       },
       contentHeight: {
         type: Number,
-        default: 38
+        default: 20
       }
     },
     methods: {
@@ -104,7 +104,7 @@
       },
       drawLine (ctx) {
         // 绘制干扰线
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 3; i++) {
           ctx.strokeStyle = this.randomColor(this.lineColorMin, this.lineColorMax)
           ctx.beginPath()
           ctx.moveTo(this.randomNum(0, this.contentWidth), this.randomNum(0, this.contentHeight))
@@ -114,7 +114,7 @@
       },
       drawDot (ctx) {
         // 绘制干扰点
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 10; i++) {
           ctx.fillStyle = this.randomColor(0, 255)
           ctx.beginPath()
           ctx.arc(this.randomNum(0, this.contentWidth), this.randomNum(0, this.contentHeight), 1, 0, 2 * Math.PI)
