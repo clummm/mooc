@@ -59,9 +59,13 @@
       goHome () {
         this.$router.push({ name: 'Home' })
       },
-      // 通知父组件打开登录/注册弹窗
+      // 打开登录/注册弹窗
       showAccountWindow (type) {
-        this.$emit('showAccountWindow', type)
+        this.setAccountWindowShow(
+          {
+            show: true,
+            type: type
+          })
       },
       // 打开用户个人模块
       openUser () {
@@ -73,10 +77,16 @@
       // 打开用户个人模块,消息子组件
       openMessage () {
         let userInfo = this.userInfo
+        // 用户已登录
         if (userInfo) {
           this.$router.push({ name: 'message', params: { uid: userInfo.id } })
         } else {
-          this.setAccountWindowShow(true)
+          // 用户未登录则提醒登录
+          this.setAccountWindowShow(
+            {
+              show: true,
+              type: 'LOGIN'
+            })
         }
       },
       // 显示个人菜单
@@ -134,5 +144,6 @@
         padding 0 10px
 
         .user-menu
+          position absolute
           background grey
 </style>

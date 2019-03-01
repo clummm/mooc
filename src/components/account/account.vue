@@ -15,19 +15,19 @@
                  v-model="loginPassword">
           <img class="show-password" :src="eyeStatus" width="12" height="7.5" @click="toggleLoginPassword"/>
         </div>
-        <div  class="hint">{{loginHint}}</div>
+        <div class="hint">{{loginHint}}</div>
         <div class="other-way">
           <span class="phone">手机验证码登录</span>
           <span class="forget">忘记密码?</span>
         </div>
-        <button class="login"  @click="login">登录超视慕课网</button>
+        <button class="login" @click="login">登录超视慕课网</button>
         <p class="other-ways">QQ登录 · 微信登录 · 微博登录</p>
       </div>
       <div class="register-content" v-show="currentType==='REGISTER'">
         <input type="text" placeholder="请输入注册手机号码" v-model="registerPhone" maxlength="11"
                oninput="value=value.replace(/[^\d]/g,'')">
         <div class="identify-wrapper">
-          <input type="text" maxlength="4" v-model="registerCode">
+          <input type="text" maxlength="4" v-model="registerCode" placeholder="请输入验证码">
           <div @click="refreshCode" class="icon-wrapper">
             <identify class="identify" :identifyCode="identifyCode"></identify>
           </div>
@@ -51,7 +51,7 @@
         <div class="password-wrapper">
           <input type="password" placeholder="6-16位密码，区分大小写" ref="registerPassword"
                  v-model="registerPassword">
-          <img class="show-password" :src="eyeStatus" width="12" height="7.5" @click="toggleLoginPassword"/>
+          <img class="show-password" :src="eyeStatus" width="12" height="7.5" @click="toggleRegisterPassword"/>
         </div>
         <p class="hint">{{register1Hint}}</p>
         <button class="done" @click="register">完成注册</button>
@@ -66,6 +66,8 @@
   import { randomString } from '../../common/js/randomString' // 随机生成4位验证码
   import eyeclose from './eyeclose.png'
   import eyeopen from './eyeopen.png'
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
     name: 'account',
     data () {
@@ -88,31 +90,15 @@
       }
     },
     methods: {
-      // 通知父组件隐藏登录/注册弹窗
+      ...mapActions('account', {
+        setAccountWindowShow: 'setAccountWindowShow'
+      }),
+      // 隐藏登录/注册弹窗
       hideAccountWindow () {
-        this.$emit('hideAccountWindow')
-      },
-      // 让父组件调用打开登录/注册弹窗
-      openAccountWindow (type) {
-        this.currentType = type
-        // 初始化信息
-        this.showLoginPassword = false
-        this.showRegisterPassword = false
-        this.loginPhone = ''
-        this.loginPassword = ''
-        this.autoLogin = false
-        this.registerPhone = ''
-        this.registerCode = ''
-        this.registerTextCode = ''
-        this.registerPassword = ''
-        this.loginHint = ''
-        this.registerHint = ''
-        this.register1Hint = ''
-        this.agreeProtocol = false
-        // 如果是注册则生成验证码
-        if (this.currentType === 'REGISTER') {
-          this.refreshCode()
-        }
+        this.setAccountWindowShow({
+          show: false,
+          type: 'LOGIN'
+        })
       },
       // 登录时显示/隐藏密码
       toggleLoginPassword () {
@@ -183,11 +169,12 @@
           return 0
         }
         // 注册成功
-        this.hideAccountWindow()
-        this.$store.dispatch('account/setHasLogin', true)
-        this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
+        // this.hideAccountWindow()
+        // this.$store.dispatch('account/setHasLogin', true)
+        // this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
         window.localStorage.token = 1
         window.alert('注册成功')
+        window.location.reload()
       },
       // 登录
       login () {
@@ -205,18 +192,12 @@
         // 后台校验账号密码是否正确
         // 登录失败
         // 登录成功
-        // 7天自动登录
-        if (this.autoLogin) {
-          let storage = window.localStorage
-          storage['phone'] = this.loginPhone
-          storage['password'] = this.loginPassword
-          storage['lastLoginTime'] = (new Date()).getTime()
-        }
         this.hideAccountWindow()
-        this.$store.dispatch('account/setHasLogin', true)
-        this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
+        // this.$store.dispatch('account/setHasLogin', true)
+        // this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
         window.localStorage.token = 1
         alert('登录成功')
+        window.location.reload()
       }
     },
     computed: {
@@ -233,8 +214,35 @@
         } else {
           return eyeclose
         }
-      }
+      },
+      ...mapGetters('account', {
+        isAccountWindowShow: 'getAccountWindowShow'
+      })
 
+    },
+    watch: {
+      isAccountWindowShow (value) {
+        if (value.show) {
+          // 初始化信息
+          this.showLoginPassword = false
+          this.showRegisterPassword = false
+          this.loginPhone = ''
+          this.loginPassword = ''
+          this.autoLogin = false
+          this.registerPhone = ''
+          this.registerCode = ''
+          this.registerTextCode = ''
+          this.registerPassword = ''
+          this.loginHint = ''
+          this.registerHint = ''
+          this.register1Hint = ''
+          this.agreeProtocol = false
+          this.currentType = value.type
+          if (this.currentType === 'REGISTER') {
+            this.refreshCode()
+          }
+        }
+      }
     },
     components: {
       identify
@@ -245,7 +253,7 @@
 <style lang="stylus" scoped>
   .account-wrapper
     .shadow
-      z-index 1
+      z-index 98
       background rgba(0, 0, 0, 0.1)
       width 100%
       height 100%
@@ -341,110 +349,127 @@
           text-align left
           height 12px
           line-height: 12px;
-          font-size:12px;
+          font-size: 12px;
           margin-top 5px
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(250, 89, 108, 1);
+
         .other-way
           padding 0 23px
-          height:20px;
-          font-size:11px;
-          font-family:PingFangSC-Medium;
-          font-weight:500;
-          line-height:20px;
+          height: 20px;
+          font-size: 11px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          line-height: 20px;
+
           .phone
             float left
-            color:rgba(93,115,250,1);
+            color: rgba(93, 115, 250, 1);
+
           .forget
             float right
-            color:rgba(168,178,183,1);
+            color: rgba(168, 178, 183, 1);
+
         .login
-          width:164px;
+          width: 164px;
           height: 32px;
           margin-top 20px
           background: linear-gradient(90deg, rgba(71, 54, 245, 1) 0%, rgba(155, 61, 247, 1) 100%);
           border-radius: 16px;
-          color:rgba(255,255,255,1);
-          font-size:12px;
-          line-height:33px;
+          color: rgba(255, 255, 255, 1);
+          font-size: 12px;
+          line-height: 33px;
           border none
-          box-shadow: 0px 4px 20px 0px rgba(71,54,245,0.1843), 0px 1px 8px 0px rgba(155,61,247,0.1843);
+          box-shadow: 0px 4px 20px 0px rgba(71, 54, 245, 0.1843), 0px 1px 8px 0px rgba(155, 61, 247, 0.1843);
           cursor pointer
+
         .other-ways
-          height:22px;
+          height: 22px;
           font-size: 11px;
           line-height: 22px;
           margin-top 20px
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(168, 178, 183, 1);
+
       .register-content
         text-align center
+
         .identify-wrapper
           position relative
           margin-top 10px
+
           .icon-wrapper
             position absolute
             top 5px
             bottom 0
             right 30px
             cursor pointer
+
         .hint
           padding 0 23px
           text-align left
           height 12px
           line-height: 12px;
-          font-size:12px;
+          font-size: 12px;
           margin-top 5px
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(250, 89, 108, 1);
+
         .protocol-wrapper
           padding 0 23px
-          height:22px;
-          font-size:11px;
-          font-family:PingFangSC-Medium;
-          font-weight:500;
-          color:rgba(46,49,52,1);
-          line-height:22px;
+          height: 22px;
+          font-size: 11px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(46, 49, 52, 1);
+          line-height: 22px;
+
           .box
             float left
+
           .text
             position relative
             float left
             right 25px
+
           .protocol
             cursor pointer
             text-decoration underline
+
             &:hover
-              color:rgba(72,55,245,1)
+              color: rgba(72, 55, 245, 1)
+
         .register
-          width:164px;
+          width: 164px;
           height: 32px;
           margin-top 25px
           background: linear-gradient(90deg, rgba(71, 54, 245, 1) 0%, rgba(155, 61, 247, 1) 100%);
           border-radius: 16px;
-          color:rgba(255,255,255,1);
-          font-size:12px;
-          line-height:33px;
+          color: rgba(255, 255, 255, 1);
+          font-size: 12px;
+          line-height: 33px;
           border none
-          box-shadow: 0px 4px 20px 0px rgba(71,54,245,0.1843), 0px 1px 8px 0px rgba(155,61,247,0.1843);
+          box-shadow: 0px 4px 20px 0px rgba(71, 54, 245, 0.1843), 0px 1px 8px 0px rgba(155, 61, 247, 0.1843);
           cursor pointer
 
       .register-content1
         text-align center
+
         .text
-          height:14px;
-          font-size:12px;
-          font-family:PingFangSC-Medium;
-          font-weight:500;
-          color:rgba(168,178,183,1);
-          line-height:14px;
-          margin-bottom 5px
+          line-height: 15px;
+          font-size: 12px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(168, 178, 183, 1);
+
         .code-wrapper
           position relative
+          margin-top 5px
           margin-bottom 10px
+
           .again
             position absolute
             top 0
@@ -453,8 +478,10 @@
             margin-top auto
             margin-bottom auto
             cursor pointer
+
         .password-wrapper
           position relative
+
           .show-password
             position absolute
             top 0
@@ -463,35 +490,37 @@
             margin-top auto
             margin-bottom auto
             cursor pointer
+
         .hint
           padding 0 23px
           text-align left
           height 12px
           line-height: 12px;
-          font-size:12px;
+          font-size: 12px;
           margin-top 5px
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(250, 89, 108, 1);
+
         .done
-          width:164px;
+          width: 164px;
           height: 32px;
           margin-top 10px
           background: linear-gradient(90deg, rgba(71, 54, 245, 1) 0%, rgba(155, 61, 247, 1) 100%);
           border-radius: 16px;
-          color:rgba(255,255,255,1);
-          font-size:12px;
-          line-height:33px;
+          color: rgba(255, 255, 255, 1);
+          font-size: 12px;
           border none
-          box-shadow: 0px 4px 20px 0px rgba(71,54,245,0.1843), 0px 1px 8px 0px rgba(155,61,247,0.1843);
+          box-shadow: 0px 4px 20px 0px rgba(71, 54, 245, 0.1843), 0px 1px 8px 0px rgba(155, 61, 247, 0.1843);
           cursor pointer
+
         .back
-          margin-top 15px
-          height:22px;
-          font-size:11px;
-          font-family:PingFangSC-Medium;
-          font-weight:500;
-          color:rgba(46,49,52,1);
-          line-height:22px;
+          margin-top 12px
+          height: 22px;
+          font-size: 11px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(46, 49, 52, 1);
+          line-height: 22px;
           cursor pointer
 </style>

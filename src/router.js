@@ -14,6 +14,7 @@ import upload from './components/user/upload/upload'
 import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
 import store from './store/'
+import courseVideo from './components/courseVideo/courseVideo'
 
 Vue.use(Router)
 const NEED_LOGIN = 'needLogin'
@@ -89,6 +90,14 @@ const router = new Router({
       name: 'course',
       component: course
     },
+    // 播放页
+    {
+      path: '/course/:cid/courseVideo',
+      name: 'courseVideo',
+      component: courseVideo,
+      meta: NEED_LOGIN
+
+    },
     // 搜索结果页
     {
       path: '/search',
@@ -124,7 +133,10 @@ router.beforeEach((to, from, next) => {
   } else {
     // 拦截直接通过url访问需要登录权限的页面，如果token失效则返回首页并显示登录窗口
     if (to.meta === NEED_LOGIN) {
-      store.dispatch('account/setAccountWindowShow', true)
+      store.dispatch('account/setAccountWindowShow', {
+        show: true,
+        type: 'LOGIN'
+      })
       next({ name: 'Home' })
     }
   }

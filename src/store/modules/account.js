@@ -1,6 +1,9 @@
 const state = {
   // 是否显示登录窗口
-  isAccountWindowShow: false,
+  isAccountWindowShow: {
+    show: false,
+    type: 'LOGIN'
+  },
   hasLogin: false,
   userInfo: null
 }
