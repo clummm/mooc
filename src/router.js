@@ -128,7 +128,7 @@ router.beforeEach((to, from, next) => {
   // 如果token未失效则获取用户基本信息
   if (window.localStorage.token) {
     store.dispatch('account/setHasLogin', true)
-    store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
+    store.dispatch('account/setUserInfo', { id: 123, name: '张三', interest: [1, 2, 3] })
     window.localStorage.token = 1
   } else {
     // 拦截直接通过url访问需要登录权限的页面，如果token失效则返回首页并显示登录窗口
