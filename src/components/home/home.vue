@@ -17,7 +17,8 @@
           </ul>
           <div class="sub-category-content" v-if="item.active">
             <div class="inner-box">
-              <router-link :to="{name: 'category', params:{cid: subItem.id}}" v-for="(subItem, i) in item.second"
+              <router-link :to="{name: 'category', params:{cid: subItem.id}}"
+                           v-for="(subItem, i) in item.second"
                            :key="i">
                 {{subItem.name}}
               </router-link>
@@ -40,22 +41,58 @@
     </div>
     <div class="interest-guide-container">
       <div class="interest-guide-wrapper">
-        <span>兴趣推荐</span>
-        <span class="interest-change">修改兴趣</span>
+        <span>{{interestHint}}</span>
+        <el-button type="text" class="interest-change" @click="checkLoginBeforeInterestDialog">修改兴趣</el-button>
+        <el-dialog
+          title="修改兴趣"
+          :visible.sync="interestDialogVisible"
+          :before-close="cancelInterestChange">
+          <el-tabs>
+            <el-tab-pane
+              :label="item.name"
+              v-for="(item, index) in category" :key="index">
+              <el-checkbox-group v-model="interest" @change="changeInterest">
+                <el-checkbox
+                  v-for="(subItem, i) in item.second" :key="i"
+                  :label="subItem.id" border>
+                  {{subItem.name}}
+                </el-checkbox>
+              </el-checkbox-group>
+              <div>
+                <span>已选择{{interest.length}}个兴趣:</span>
+                <span v-for="(item, index) in interest" :key="index"> {{categoryType[item]}} </span>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="commitInterest">完 成</el-button>
+            <el-button type="primary" @click="clearInterest">清 空</el-button>
+          </span>
+        </el-dialog>
       </div>
     </div>
-    <div class="recommend-box">
+    <div>由于后台请求尚未完成，先默认展示3个二级分类的推荐课程</div>
+    <div class="recommend-box" v-for="(item, index) in recommendCourseOn2ndCate" :key="index">
+      <div class="recommend-title">{{item.name}}</div>
+      <router-link class="recommend" v-for="(course, i) in item.recommend" :key="i"
+                   :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-  import Category from './js/category'
+  import { CATEGORY_TYPE, PRIMARY_CATEGORY, SECOND_CATEGORY } from './js/category'
 
   export default {
     name: 'home',
     data () {
       return {
+        // 是否显示修改兴趣对话框
+        interestDialogVisible: false,
+        // 用户兴趣
+        interest: [],
+        interestHint: '',
         // 轮播图
         carousels: [
           {
@@ -73,8 +110,11 @@
             title: 3,
             url: '#'
           }],
-        // 获取分类数据
-        category: Category
+        // 一级分类数据
+        category: {},
+        // 二级分类推荐视频
+        recommendCourseOn2ndCate: {},
+        categoryType: CATEGORY_TYPE
       }
     },
     methods: {
@@ -84,7 +124,59 @@
       // 显示前三个子分类
       show3SubCategory (arr) {
         return arr.slice(0, 3)
+      },
+      changeInterest (interest) {
+        this.interest = interest
+      },
+      // 打开兴趣对话框前检查登录状态
+      checkLoginBeforeInterestDialog () {
+        if (window.localStorage.token) {
+          this.interestDialogVisible = true
+        } else {
+          alert('请先登录')
+        }
+      },
+      // 提交兴趣
+      commitInterest () {
+        // 提交到后台
+        // ...post({uid: ..., token: ..., interest: this.interest})
+        // 保存到本地
+        window.localStorage.interest = JSON.stringify(this.interest)
+        // this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三', interest: this.interest })
+        console.log('-----commit interest--------')
+        console.log('=======interest========')
+        console.log(this.interest)
+        console.log('localStorage: ' + window.localStorage.interest)
+        this.interestDialogVisible = false
+        console.log('interest length: ' + this.interest.length)
+        this.interestHint = this.interest.length <= 0 ? '未选择学习兴趣，随机推荐课程' : '兴趣推荐'
+      },
+      // 取消兴趣更改
+      cancelInterestChange (done) {
+        this.interest = window.localStorage.interest ? JSON.parse(window.localStorage.interest) : []
+        console.log('cancel interest change.')
+        done()
+      },
+      clearInterest () {
+        this.interest = []
+        window.localStorage.interest = JSON.stringify(this.interest)
       }
+    },
+    created () {
+      // 获取用户兴趣
+      if (window.localStorage.interest) {
+        this.interest = JSON.parse(window.localStorage.interest)
+        this.interestHint = this.interest.length <= 0 ? '未选择学习兴趣，随机推荐课程' : '兴趣推荐'
+      } else {
+        this.interest = []
+        this.interestHint = '未选择学习兴趣，随机推荐课程'
+      }
+      // 后台获取一级分类
+      // ...
+      this.category = PRIMARY_CATEGORY
+      // 后台获取二级分类推荐视频
+      // ...post({interest: this.interest.slice(0, 3)})
+      this.recommendCourseOn2ndCate = SECOND_CATEGORY
     }
   }
 
