@@ -8,12 +8,12 @@ import store from './store/'// 引入store
 import './plugins/element.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import Cookies from 'js-cookie'
 /* 全局引入ElementUI */
 Vue.use(ElementUI)
 /* 全局引入axios */
 Vue.prototype.$http = axios
-
+Vue.prototype.$cookies = Cookies
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

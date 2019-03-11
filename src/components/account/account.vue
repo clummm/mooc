@@ -172,7 +172,7 @@
         // this.hideAccountWindow()
         // this.$store.dispatch('account/setHasLogin', true)
         // this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
-        window.localStorage.token = 1
+        this.$cookies.set('token', '123', { expires: 7 })
         window.alert('注册成功')
         window.location.reload()
       },
@@ -195,7 +195,7 @@
         this.hideAccountWindow()
         // this.$store.dispatch('account/setHasLogin', true)
         // this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三' })
-        window.localStorage.token = 1
+        this.$cookies.set('token', '123', { expires: 7 })
         alert('登录成功')
         window.location.reload()
       }

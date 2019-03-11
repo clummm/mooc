@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './components/home/home'
@@ -125,13 +126,19 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   console.log(from)
   console.log(to)
-  // 如果token未失效则获取用户基本信息
-  if (window.localStorage.token) {
-    store.dispatch('account/setHasLogin', true)
-    store.dispatch('account/setUserInfo', { id: 123, name: '张三', interest: [1, 2, 3] })
-    window.localStorage.token = 1
+  //  从cookie中获取token
+  let token = Cookies.get('token')
+  // 从vuex中获取用户基本信息
+  let userInfo = store.getters['account/getUserInfo']
+  if (token) {
+    // token有效，但是无用户信息，可能1.未登录 2.刷新页面或者打开新窗口时vuex恢复默认状态
+    // 从后台获取用户基本信息
+    if (!userInfo) {
+      store.dispatch('account/setUserInfo', { id: 123, name: '张三', interest: [1, 2, 3] })
+    }
+    // token有效且用户信息正常则无操作
   } else {
-    // 拦截直接通过url访问需要登录权限的页面，如果token失效则返回首页并显示登录窗口
+    // token无效 拦截直接通过url访问需要登录权限的页面，如果token失效则返回首页并显示登录窗口
     if (to.meta === NEED_LOGIN) {
       store.dispatch('account/setAccountWindowShow', {
         show: true,
@@ -142,4 +149,5 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+
 export default router

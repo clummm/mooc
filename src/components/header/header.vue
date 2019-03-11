@@ -9,14 +9,14 @@
           <input type="submit" value="搜索">
         </form>
       </div>
-      <div class="user" v-show="hasLogin" @click="openUser" @mouseenter="showUserMenu" @mouseleave="hideUserMenu">
-        <span>头像</span>
-        <span v-if="userInfo">{{userInfo.name}}</span>
-        <ul class="user-menu" v-show="isUserMenuShow">
-          <li class="user-menu-item" @click="quit">安全退出</li>
+      <div class="user" v-show="userInfo"  @mouseenter="showUserMenu" @mouseleave="hideUserMenu">
+        <span @click="openUser">头像</span>
+        <span v-if="userInfo" @click="openUser">{{userInfo.name}}</span>
+        <ul class="user-menu" @click="quit" v-show="isUserMenuShow">
+          <li class="user-menu-item" >安全退出</li>
         </ul>
       </div>
-      <div class="login-register" v-show="!hasLogin">
+      <div class="login-register" v-show="!userInfo">
         <span class="login" @click="showAccountWindow('LOGIN')">登录</span>
         <span class="register" @click="showAccountWindow('REGISTER')">注册</span>
       </div>
@@ -100,7 +100,6 @@
       // 安全退出
       quit () {
         this.setUserInfo(null)
-        this.setHasLogin(false)
         window.localStorage.clear()
         // 如果当前页面是需要登录权限的则返回首页
         if (this.$route.meta === 'needLogin') {
@@ -109,13 +108,11 @@
       },
       ...mapActions('account', {
         setUserInfo: 'setUserInfo',
-        setHasLogin: 'setHasLogin',
         setAccountWindowShow: 'setAccountWindowShow'
       })
     },
     computed: {
       ...mapGetters('account', {
-        hasLogin: 'getHasLogin',
         userInfo: 'getUserInfo'
       })
     }

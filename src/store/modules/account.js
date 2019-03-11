@@ -4,15 +4,11 @@ const state = {
     show: false,
     type: 'LOGIN'
   },
-  hasLogin: false,
   userInfo: null
 }
 const getters = {
   getAccountWindowShow: (state, getters, rootState) => {
     return state.isAccountWindowShow
-  },
-  getHasLogin: (state, getters, rootState) => {
-    return state.hasLogin
   },
   getUserInfo: (state, getters, rootState) => {
     return state.userInfo
@@ -23,9 +19,6 @@ const actions = {
   setAccountWindowShow: ({ state, commit }, accountWindowShow) => {
     commit('setAccountWindowShow', accountWindowShow)
   },
-  setHasLogin: ({ state, commit }, hasLogin) => {
-    commit('setHasLogin', hasLogin)
-  },
   setUserInfo: ({ state, commit }, userInfo) => {
     commit('setUserInfo', userInfo)
   }
@@ -33,9 +26,6 @@ const actions = {
 const mutations = {
   setAccountWindowShow (state, accountWindowShow) {
     state.isAccountWindowShow = accountWindowShow
-  },
-  setHasLogin (state, hasLogin) {
-    state.hasLogin = hasLogin
   },
   setUserInfo (state, userInfo) {
     state.userInfo = userInfo
