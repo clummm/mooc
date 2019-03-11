@@ -43,7 +43,7 @@
       }
     },
     methods: {
-      // 打开新窗口搜索
+      // 搜索
       search () {
         this.$router.push({
           name: 'searchResult',

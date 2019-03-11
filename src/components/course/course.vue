@@ -19,7 +19,7 @@
     methods: {
       playVideo () {
         // 未登录时无法播放课程，弹出登录窗口提示登录
-        if (!this.hasLogin) {
+        if (!this.userInfo) {
           this.setAccountWindowShow({
             show: true,
             type: 'LOGIN'
@@ -43,13 +43,13 @@
     },
     computed: {
       ...mapGetters('account', {
-        hasLogin: 'getHasLogin'
+        userInfo: 'getUserInfo'
       })
     },
     created () {
       this.cid = this.$route.params.cid
       // 如果用户已登录则根据用户id获取用户在该课程的学习记录
-      if (this.hasLogin) {
+      if (this.userInfo) {
         console.log('login')
       }
     }
