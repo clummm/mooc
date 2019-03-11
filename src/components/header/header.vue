@@ -101,6 +101,7 @@
       quit () {
         this.setUserInfo(null)
         window.localStorage.clear()
+        this.$cookies.remove('token')
         // 如果当前页面是需要登录权限的则返回首页
         if (this.$route.meta === 'needLogin') {
           this.goHome()
