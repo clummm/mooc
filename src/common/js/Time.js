@@ -1,3 +1,4 @@
+// 播放器中显示时间转换
 export function secToTimer (originalSec) {
   const sec = Math.floor(originalSec % 60)
   var time = originalSec / 60

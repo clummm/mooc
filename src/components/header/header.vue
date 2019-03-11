@@ -2,26 +2,44 @@
 <template>
   <div class="head-wrapper">
     <div class="head-content">
-      <span class="title" @click="goHome">超视慕课平台</span>
+      <router-link class="title" :to="{name:'Home'}">超视慕课平台</router-link>
       <div class="search-wrapper">
         <form @submit.prevent="search">
           <input type="text" placeholder="请输入搜索内容" v-model="searchContent">
           <input type="submit" value="搜索">
         </form>
       </div>
-      <div class="user" v-show="userInfo"  @mouseenter="showUserMenu" @mouseleave="hideUserMenu">
-        <span @click="openUser">头像</span>
+      <div class="user" v-show="userInfo" @mouseenter="isUserMenuShow=true" @mouseleave="isUserMenuShow=false">
+        <img :src="this.userInfo.icon" @click="openUser" width="40" height="40" class="user-icon">
         <span v-if="userInfo" @click="openUser">{{userInfo.name}}</span>
-        <ul class="user-menu" @click="quit" v-show="isUserMenuShow">
-          <li class="user-menu-item" >安全退出</li>
+        <ul class="user-menu" v-show="isUserMenuShow">
+          <router-link class="user-menu-item" :to="{name: 'myNotes'}">我的笔记</router-link>
+          <router-link class="user-menu-item" :to="{name: 'upload'}">上传管理</router-link>
+          <router-link class="user-menu-item" :to="{name: 'settings'}">个人设置</router-link>
+          <li class="user-menu-item" @click="quit">安全退出</li>
         </ul>
       </div>
       <div class="login-register" v-show="!userInfo">
         <span class="login" @click="showAccountWindow('LOGIN')">登录</span>
         <span class="register" @click="showAccountWindow('REGISTER')">注册</span>
       </div>
-      <div class="message" @click="openMessage">消息</div>
-      <span class="my-course">我的课程</span>
+      <div class="message" @mouseenter="isInfoMenuShow=true"
+           @mouseleave="isInfoMenuShow=false">
+        <span @click="openUserChild('message')">消息</span>
+        <ul class="info-menu" v-show="isInfoMenuShow&&userInfo">
+          <router-link class="info-menu-item" :to="{ name: 'course', params: { cid: 123 } }">课程提醒消息</router-link>
+          <router-link class="info-menu-item" :to="{ name: 'myDiscussDetail', params: { did: 123 } }">讨论互动消息
+          </router-link>
+        </ul>
+      </div>
+      <div class="my-course" @mouseenter="isCourseMenuShow=true"
+           @mouseleave="isCourseMenuShow=false">
+        <span @click="openUserChild('course')">我的课程</span>
+        <ul class="course-menu" v-show="isCourseMenuShow&&userInfo">
+          <router-link class="course-menu-item" :to="{ name: 'course', params: { cid: 100 } }">课程1</router-link>
+          <router-link class="course-menu-item" :to="{ name: 'course', params: { cid: 101 } }">课程2</router-link>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +57,9 @@
     data () {
       return {
         searchContent: '',
-        isUserMenuShow: false
+        isUserMenuShow: false,
+        isInfoMenuShow: false,
+        isCourseMenuShow: false
       }
     },
     methods: {
@@ -55,10 +75,6 @@
         // })
         // window.open(routeData.href, '_blank')
       },
-      // 返回首页
-      goHome () {
-        this.$router.push({ name: 'Home' })
-      },
       // 打开登录/注册弹窗
       showAccountWindow (type) {
         this.setAccountWindowShow(
@@ -71,15 +87,15 @@
       openUser () {
         let userInfo = this.userInfo
         if (userInfo) {
-          this.$router.push({ name: 'user', params: { uid: userInfo.id } })
+          this.$router.push({ name: 'user' })
         }
       },
-      // 打开用户个人模块,消息子组件
-      openMessage () {
+      // 打开用户个人模块,并进入指定子模块
+      openUserChild (type) {
         let userInfo = this.userInfo
         // 用户已登录
         if (userInfo) {
-          this.$router.push({ name: 'message', params: { uid: userInfo.id } })
+          this.$router.push({ name: type })
         } else {
           // 用户未登录则提醒登录
           this.setAccountWindowShow(
@@ -89,14 +105,6 @@
             })
         }
       },
-      // 显示个人菜单
-      showUserMenu () {
-        this.isUserMenuShow = true
-      },
-      // 隐藏个人菜单
-      hideUserMenu () {
-        this.isUserMenuShow = false
-      },
       // 安全退出
       quit () {
         this.setUserInfo(null)
@@ -104,7 +112,7 @@
         this.$cookies.remove('token')
         // 如果当前页面是需要登录权限的则返回首页
         if (this.$route.meta === 'needLogin') {
-          this.goHome()
+          this.$router.push({ name: 'Home' })
         }
       },
       ...mapActions('account', {
@@ -124,6 +132,7 @@
   .head-wrapper
     background grey
     color white
+    height 40px
 
     .head-content
       width 1024px
@@ -141,7 +150,19 @@
         float right
         padding 0 10px
 
-        .user-menu
+        .user-icon
+          border-radius 50%
+
+        .user-menu, .info-menu, .course-menu
           position absolute
+          z-index 3
           background grey
+
+          .user-menu-item, .info-menu-item, .course-menu-item
+            color white
+            display block
+
+            &:hover
+              text-decoration underline
+
 </style>

@@ -8,7 +8,6 @@ import course from './components/course/course'
 
 import courseList from './components/user/courseList/courseList'
 import message from './components/user/message/message'
-import myHistory from './components/user/myHistory/myHistory'
 import myNotes from './components/user/myNote/myNote'
 import upload from './components/user/upload/upload'
 
@@ -16,7 +15,12 @@ import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
 import store from './store/'
 import courseVideo from './components/courseVideo/courseVideo'
+import discussDetail from './components/dicussDetail/discussDetail'
+import noteDetail from './components/noteDetail/noteDetail'
+import settings from './components/settings/settings'
 
+import './common/js/data'
+import { USER_INFO } from "./common/js/data"
 Vue.use(Router)
 const NEED_LOGIN = 'needLogin'
 const router = new Router({
@@ -37,7 +41,7 @@ const router = new Router({
     },
     // 用户页
     {
-      path: '/user/:uid',
+      path: '/user',
       // name: 'user',
       component: user,
       children: [
@@ -69,13 +73,6 @@ const router = new Router({
           component: message,
           meta: NEED_LOGIN
         },
-        // 历史足迹
-        {
-          path: 'myHistory',
-          name: 'myHistory',
-          component: myHistory,
-          meta: NEED_LOGIN
-        },
         // 上传管理
         {
           path: 'upload',
@@ -84,6 +81,13 @@ const router = new Router({
           meta: NEED_LOGIN
         }
       ]
+    },
+    // 个人设置
+    {
+      path: '/user/settings',
+      name: 'settings',
+      component: settings,
+      meta: NEED_LOGIN
     },
     // 课程页
     {
@@ -99,12 +103,39 @@ const router = new Router({
       meta: NEED_LOGIN
 
     },
+    // 我的讨论详情页
+    {
+      path: 'discussDetail/:did',
+      name: 'myDiscussDetail',
+      component: discussDetail,
+      meta: NEED_LOGIN
+    },
+    // 通用讨论详情页
+    {
+      path: 'discussDetail/:did',
+      name: 'discussDetail',
+      component: discussDetail
+    },
+    // 我的笔记详情页
+    {
+      path: 'noteDetail/:nid',
+      name: 'myNoteDetail',
+      component: noteDetail,
+      meta: NEED_LOGIN
+    },
+    // 通用笔记详情页
+    {
+      path: 'noteDetail/:nid',
+      name: 'noteDetail',
+      component: noteDetail
+    },
     // 搜索结果页
     {
       path: '/search',
       name: 'searchResult',
       component: searchResult
     },
+    // 协议展示页
     {
       path: '/protocol',
       name: 'protocol',
@@ -134,7 +165,7 @@ router.beforeEach((to, from, next) => {
     // token有效，但是无用户信息，可能1.未登录 2.刷新页面或者打开新窗口时vuex恢复默认状态
     // 从后台获取用户基本信息
     if (!userInfo) {
-      store.dispatch('account/setUserInfo', { id: 123, name: '张三', interest: [1, 2, 3] })
+      store.dispatch('account/setUserInfo', USER_INFO)
     }
     // token有效且用户信息正常则无操作
   } else {

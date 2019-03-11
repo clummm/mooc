@@ -5,7 +5,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-
+  // 用于生产验证码
   export default {
     name: 'identify',
     props: {

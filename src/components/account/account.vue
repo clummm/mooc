@@ -63,7 +63,7 @@
 
 <script type="text/ecmascript-6">
   import identify from '../identify/identify' // 生成验证码的组件
-  import { randomString } from '../../common/js/randomString' // 随机生成4位验证码
+  import { randomString } from './randomString' // 随机生成4位验证码
   import eyeclose from './eyeclose.png'
   import eyeopen from './eyeopen.png'
   import { mapGetters, mapActions } from 'vuex'
