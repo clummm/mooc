@@ -29,10 +29,8 @@
             name: 'courseVideo',
             params: {
               cid: this.cid,
-              position: {
-                sid: 10,
-                time: 1030
-              }
+              sid: 1,
+              time: 100
             }
           })
         }

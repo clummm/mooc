@@ -18,9 +18,8 @@ import courseVideo from './components/courseVideo/courseVideo'
 import discussDetail from './components/dicussDetail/discussDetail'
 import noteDetail from './components/noteDetail/noteDetail'
 import settings from './components/settings/settings'
+import { USER_INFO } from './common/js/data'
 
-import './common/js/data'
-import { USER_INFO } from "./common/js/data"
 Vue.use(Router)
 const NEED_LOGIN = 'needLogin'
 const router = new Router({
@@ -97,7 +96,7 @@ const router = new Router({
     },
     // 播放页
     {
-      path: '/course/:cid/courseVideo',
+      path: '/course/:cid/courseVideo/:sid/:time',
       name: 'courseVideo',
       component: courseVideo,
       meta: NEED_LOGIN
@@ -155,8 +154,8 @@ const router = new Router({
 
 // 在每次进入路由前判断
 router.beforeEach((to, from, next) => {
-  console.log(from)
-  console.log(to)
+  // console.log(from)
+  // console.log(to)
   //  从cookie中获取token
   let token = Cookies.get('token')
   // 从vuex中获取用户基本信息
