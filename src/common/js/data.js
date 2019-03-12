@@ -10,7 +10,7 @@ const USER_INFO = {
   age: ['1995', '12', '22'],
   job: 'android开发工程师',
   address: ['四川', '成都', '天府新区'],
-  interests: [1, 2, 3],
+  interest: [1, 2, 3],
   cuorses: [{
     id: '100',
     icon: COURSE,

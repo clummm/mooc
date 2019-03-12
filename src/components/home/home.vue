@@ -51,7 +51,7 @@
             <el-tab-pane
               :label="item.name"
               v-for="(item, index) in category" :key="index">
-              <el-checkbox-group v-model="interest" @change="changeInterest">
+              <el-checkbox-group v-model="localInterest" @change="changeInterest">
                 <el-checkbox
                   v-for="(subItem, i) in item.second" :key="i"
                   :label="subItem.id" border>
@@ -59,8 +59,8 @@
                 </el-checkbox>
               </el-checkbox-group>
               <div>
-                <span>已选择{{interest.length}}个兴趣:</span>
-                <span v-for="(item, index) in interest" :key="index"> {{categoryType[item]}} </span>
+                <span>已选择{{localInterest.length}}个兴趣:</span>
+                <span v-for="(item, index) in localInterest" :key="index"> {{categoryType[item]}} </span>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <div>由于后台请求尚未完成，先默认展示3个二级分类的推荐课程</div>
-    <div class="recommend-box" v-for="(item, index) in recommendCourseOn2ndCate" :key="index">
+    <div class="recommend-box" v-for="(item, index) in recommendCourseOnSubCate" :key="index">
       <div class="recommend-title">{{item.name}}</div>
       <router-link class="recommend" v-for="(course, i) in item.recommend" :key="i"
                    :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+  import { mapGetters, mapMutations } from 'vuex'
   import { CATEGORY_TYPE, PRIMARY_CATEGORY, SECOND_CATEGORY } from './js/category'
 
   export default {
@@ -91,7 +92,7 @@
         // 是否显示修改兴趣对话框
         interestDialogVisible: false,
         // 用户兴趣
-        interest: [],
+        localInterest: [],
         interestHint: '',
         // 轮播图
         carousels: [
@@ -113,7 +114,7 @@
         // 一级分类数据
         category: {},
         // 二级分类推荐视频
-        recommendCourseOn2ndCate: {},
+        recommendCourseOnSubCate: [],
         categoryType: CATEGORY_TYPE
       }
     },
@@ -126,7 +127,7 @@
         return arr.slice(0, 3)
       },
       changeInterest (interest) {
-        this.interest = interest
+        this.localInterest = interest
       },
       // 打开兴趣对话框前检查登录状态
       checkLoginBeforeInterestDialog () {
@@ -141,42 +142,45 @@
         // 提交到后台
         // ...post({uid: ..., token: ..., interest: this.interest})
         // 保存到本地
-        window.localStorage.interest = JSON.stringify(this.interest)
-        // this.$store.dispatch('account/setUserInfo', { id: 123, name: '张三', interest: this.interest })
-        console.log('-----commit interest--------')
-        console.log('=======interest========')
-        console.log(this.interest)
-        console.log('localStorage: ' + window.localStorage.interest)
+        // window.localStorage.interest = JSON.stringify(this.interest)
+        this.setUserInterest(this.localInterest)
         this.interestDialogVisible = false
-        console.log('interest length: ' + this.interest.length)
         this.interestHint = this.interest.length <= 0 ? '未选择学习兴趣，随机推荐课程' : '兴趣推荐'
       },
       // 取消兴趣更改
       cancelInterestChange (done) {
-        this.interest = window.localStorage.interest ? JSON.parse(window.localStorage.interest) : []
+        this.localInterest = this.interest || []
         console.log('cancel interest change.')
         done()
       },
+      // 清空兴趣
       clearInterest () {
-        this.interest = []
-        window.localStorage.interest = JSON.stringify(this.interest)
-      }
+        this.localInterest = []
+        this.setUserInterest(this.localInterest)
+      },
+      ...mapMutations('account', {
+        setUserInterest: 'setUserInterest'
+      })
     },
     created () {
       // 获取用户兴趣
-      if (window.localStorage.interest) {
-        this.interest = JSON.parse(window.localStorage.interest)
-        this.interestHint = this.interest.length <= 0 ? '未选择学习兴趣，随机推荐课程' : '兴趣推荐'
+      if (this.interest && this.interest.length > 0) {
+        this.interestHint = '兴趣推荐'
       } else {
-        this.interest = []
         this.interestHint = '未选择学习兴趣，随机推荐课程'
       }
+      this.localInterest = this.interest || []
       // 后台获取一级分类
       // ...
       this.category = PRIMARY_CATEGORY
       // 后台获取二级分类推荐视频
       // ...post({interest: this.interest.slice(0, 3)})
-      this.recommendCourseOn2ndCate = SECOND_CATEGORY
+      this.recommendCourseOnSubCate = SECOND_CATEGORY
+    },
+    computed: {
+      ...mapGetters('account', {
+        interest: 'getUserInterest'
+      })
     }
   }
 

@@ -19,8 +19,7 @@ import discussDetail from './components/dicussDetail/discussDetail'
 import noteDetail from './components/noteDetail/noteDetail'
 import settings from './components/settings/settings'
 
-import './common/js/data'
-import { USER_INFO } from "./common/js/data"
+import { USER_INFO } from './common/js/data'
 Vue.use(Router)
 const NEED_LOGIN = 'needLogin'
 const router = new Router({

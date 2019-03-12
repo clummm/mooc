@@ -12,6 +12,9 @@ const getters = {
   },
   getUserInfo: (state, getters, rootState) => {
     return state.userInfo
+  },
+  getUserInterest: (state, getters, rootState) => {
+    return state.userInfo ? state.userInfo.interest : null
   }
 }
 
@@ -21,6 +24,9 @@ const actions = {
   },
   setUserInfo: ({ state, commit }, userInfo) => {
     commit('setUserInfo', userInfo)
+  },
+  setUserInterest: ({ state, commit }, interest) => {
+    commit('setUserInterest', interest)
   }
 }
 const mutations = {
@@ -29,6 +35,12 @@ const mutations = {
   },
   setUserInfo (state, userInfo) {
     state.userInfo = userInfo
+  },
+  setUserInterest (state, interest) {
+    if (state.userInfo) {
+      state.userInfo.interest = interest || []
+    }
+    console.log(state.userInfo)
   }
 }
 export default {
