@@ -9,7 +9,7 @@
           <input type="submit" value="搜索">
         </form>
       </div>
-      <div class="user" v-show="userInfo" @mouseenter="isUserMenuShow=true" @mouseleave="isUserMenuShow=false">
+      <div class="user" v-if="userInfo" @mouseenter="isUserMenuShow=true" @mouseleave="isUserMenuShow=false">
         <img :src="this.userInfo.icon" @click="openUser" width="40" height="40" class="user-icon">
         <span v-if="userInfo" @click="openUser">{{userInfo.name}}</span>
         <ul class="user-menu" v-show="isUserMenuShow">
@@ -109,6 +109,7 @@
       quit () {
         this.setUserInfo(null)
         window.localStorage.clear()
+        window.sessionStorage.clear()
         this.$cookies.remove('token')
         // 如果当前页面是需要登录权限的则返回首页
         if (this.$route.meta === 'needLogin') {
