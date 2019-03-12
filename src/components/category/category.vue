@@ -70,32 +70,20 @@
       }
     },
     created () {
+      console.log(`when created, currentPage is ${this.currentPage}`)
       // 获取一级分类
       this.category = PRIMARY_CATEGORY
       this.subCategory = this.category[0].second || []
+      // 后台获取课程
       this.getCourses()
-    },
-    beforeMount () {
-      console.log('----beforeMounted----')
-    },
-    mounted () {
-      console.log('----Mounted----')
-    },
-    beforeUpdate () {
-      console.log('----beforeUpdated----')
-    },
-    updated () {
-      console.log('----updated----')
     },
     watch: {
       '$route' (to, from) {
         // 对路由变化作出响应...
         console.log(`to is ${to.params.cid}, from is ${from.params.cid}`)
-        console.log(`to not equals from ? ${String(to.params.cid) !== String(from.params.cid)}`)
-        if (String(to.params.cid) !== String(from.params.cid)) {
-          this.getCourses()
-          this.currentPage = 1
-        }
+        console.log(`when route changes, currentPage is ${this.currentPage}`)
+        this.getCourses()
+        console.log(`change currentPage, currentPage is ${this.currentPage}`)
       }
     },
     methods: {
@@ -131,6 +119,7 @@
       },
       // 获取分类课程
       getCourses () {
+        this.currentPage = Number(this.$route.query.p) || 1
         // 获取后台课程数据
         // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize})
         this.courses = COURSE_LIST.courses
@@ -138,9 +127,7 @@
       },
       // 当前页变化
       handleCurrentChange (page) {
-        this.currentPage = page
-        this.getCourses()
-        console.log(`the page is ${this.currentPage}.`)
+        this.$router.push({ name: 'category', params: this.$route.params, query: { p: page } })
       }
     }
   }
