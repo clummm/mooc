@@ -83,7 +83,6 @@
 
 <script>
   import { CATEGORY_TYPE, PRIMARY_CATEGORY, SECOND_CATEGORY } from './js/category'
-  import { mapGetters } from 'vuex'
 
   export default {
     name: 'home',
@@ -118,12 +117,6 @@
         categoryType: CATEGORY_TYPE
       }
     },
-    computed: {
-      // 映射vuex中的getter
-      ...mapGetters('account', {
-        userInfo: 'getUserInfo'
-      })
-    },
     methods: {
       // randomCourse () {
       //   this.$router.push({ path: '/course/' + Math.floor((Math.random() * 100) + 1) })
@@ -137,13 +130,10 @@
       },
       // 打开兴趣对话框前检查登录状态
       checkLoginBeforeInterestDialog () {
-        if (this.userInfo) {
+        if (window.localStorage.token) {
           this.interestDialogVisible = true
         } else {
-          this.$store.dispatch('account/setAccountWindowShow', {
-            show: true,
-            type: 'LOGIN'
-          })
+          alert('请先登录')
         }
       },
       // 提交兴趣
