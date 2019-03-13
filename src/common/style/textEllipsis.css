@@ -1,0 +1,10 @@
+/*文本自动换行且超过两行省略*/
+.text-ellipsis {
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+}
+

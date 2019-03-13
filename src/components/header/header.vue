@@ -13,7 +13,7 @@
         <img :src="this.userInfo.icon" @click="openUser" width="40" height="40" class="user-icon">
         <span v-if="userInfo" @click="openUser">{{userInfo.name}}</span>
         <ul class="user-menu" v-show="isUserMenuShow">
-          <router-link class="user-menu-item" :to="{name: 'myNotes'}">我的笔记</router-link>
+          <router-link class="user-menu-item" :to="{name: 'note'}">我的笔记</router-link>
           <router-link class="user-menu-item" :to="{name: 'upload'}">上传管理</router-link>
           <router-link class="user-menu-item" :to="{name: 'settings'}">个人设置</router-link>
           <li class="user-menu-item" @click="quit">安全退出</li>
@@ -28,7 +28,7 @@
         <span @click="openUserChild('message')">消息</span>
         <ul class="info-menu" v-show="isInfoMenuShow&&userInfo">
           <router-link class="info-menu-item" :to="{ name: 'course', params: { cid: 123 } }">课程提醒消息</router-link>
-          <router-link class="info-menu-item" :to="{ name: 'myDiscussDetail', params: { did: 123 } }">讨论互动消息
+          <router-link class="info-menu-item" :to="{ name: 'myDiscussDetail', params: { did: 123,type:'myDiscuss' } }">讨论互动消息
           </router-link>
         </ul>
       </div>

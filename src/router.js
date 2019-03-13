@@ -8,8 +8,11 @@ import course from './components/course/course'
 
 import courseList from './components/user/courseList/courseList'
 import message from './components/user/message/message'
-import myNotes from './components/user/myNote/myNote'
+import note from './components/user/note/note'
 import upload from './components/user/upload/upload'
+import discuss from './components/user/discuss/discuss'
+import courseNote from './components/user/courseNote/courseNote'
+import courseDiscuss from './components/user/courseDiscuss/courseDiscuss'
 
 import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
@@ -51,6 +54,20 @@ const router = new Router({
           name: 'user',
           meta: NEED_LOGIN
         },
+        // 我的课程下与我相关的笔记
+        {
+          path: 'courseList/:cid/courseNote',
+          name: 'courseNote',
+          component: courseNote,
+          meta: NEED_LOGIN
+        },
+        // 我的课程下与我相关的讨论
+        {
+          path: 'courseList/:cid/courseDiscuss',
+          name: 'courseDiscuss',
+          component: courseDiscuss,
+          meta: NEED_LOGIN
+        },
         // 我的课程
         {
           path: 'courseList',
@@ -60,9 +77,9 @@ const router = new Router({
         },
         // 我的笔记
         {
-          path: 'myNotes',
-          name: 'myNotes',
-          component: myNotes,
+          path: 'note',
+          name: 'note',
+          component: note,
           meta: NEED_LOGIN
         },
         // 我的消息
@@ -70,6 +87,13 @@ const router = new Router({
           path: 'message',
           name: 'message',
           component: message,
+          meta: NEED_LOGIN
+        },
+        // 我的讨论
+        {
+          path: 'discuss',
+          name: 'discuss',
+          component: discuss,
           meta: NEED_LOGIN
         },
         // 上传管理
@@ -104,27 +128,27 @@ const router = new Router({
     },
     // 我的讨论详情页
     {
-      path: 'discussDetail/:did',
+      path: '/discussDetail/:did/:type',
       name: 'myDiscussDetail',
       component: discussDetail,
       meta: NEED_LOGIN
     },
     // 通用讨论详情页
     {
-      path: 'discussDetail/:did',
+      path: '/discussDetail/:did/:type',
       name: 'discussDetail',
       component: discussDetail
     },
     // 我的笔记详情页
     {
-      path: 'noteDetail/:nid',
+      path: '/noteDetail/:nid/:type',
       name: 'myNoteDetail',
       component: noteDetail,
       meta: NEED_LOGIN
     },
     // 通用笔记详情页
     {
-      path: 'noteDetail/:nid',
+      path: '/noteDetail/:nid/:type',
       name: 'noteDetail',
       component: noteDetail
     },

@@ -18,7 +18,7 @@
     <div class="main-content">
       <div class="left-tabs">
         <router-link :to="{name: 'courseList'}" class="tab">我的课程</router-link>
-        <router-link :to="{name: 'myNotes'}" class="tab">我的笔记</router-link>
+        <router-link :to="{name: 'note'}" class="tab">我的笔记</router-link>
         <router-link :to="{name: 'message'}" class="tab">我的消息</router-link>
         <router-link :to="{name: 'upload'}" class="tab">上传管理</router-link>
       </div>
@@ -77,6 +77,7 @@
 
       .right-content
         flex 1
+        overflow:hidden;
         background darkgrey
 
 </style>

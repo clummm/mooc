@@ -14,8 +14,8 @@
           score-template="{value}" class="rate">
         </el-rate>
         <div>{{item.learningCount}}人学过</div>
-        <span>笔记{{item.noteCount}}</span>
-        <span>讨论{{item.discussCount}}</span>
+        <router-link :to="{name:'courseNote',params: {cid:item.id}}">笔记{{item.noteCount}}</router-link>
+        <router-link :to="{name:'courseDiscuss',params: {cid:item.id}}">讨论{{item.discussCount}}</router-link>
       </div>
       <div class="leave-position">
         <div>上传学习到{{item.leavePosition.name}}</div>

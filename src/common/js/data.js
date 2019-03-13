@@ -119,4 +119,112 @@ const HISTORY = [
     }
   }
 ]
-export { USER_INFO, MY_COURSE, HISTORY }
+
+const MY_NOTE = [
+  {
+    id: 100,
+    img: COURSE,
+    title: '自己的笔记1',
+    content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    createTime: '2019-3-13',
+    likeCount: 100,
+    createPosition: {
+      cid: 1000,
+      courseName: 'Unity5.x 创造 3D VR游戏',
+      sid: 1,
+      sessionName: '课时名称1',
+      time: '记录笔记的时间节点1'
+    }
+  },
+  {
+    id: 101,
+    img: COURSE,
+    title: '自己的笔记2',
+    content: 'bbbbbbbbbbbbbbbbbbbbbbbbb',
+    createTime: '2019-3-12',
+    likeCount: 101,
+    createPosition: {
+      cid: 1001,
+      courseName: 'Unity5.x 创造 3D VR游戏',
+      sid: 2,
+      sessionName: '课时名称2',
+      time: '记录笔记的时间节点2'
+    }
+  },
+  {
+    id: 103,
+    img: COURSE,
+    title: '自己的笔记3',
+    content: 'ccccccccccccccc',
+    createTime: '2019-3-11',
+    likeCount: 102,
+    createPosition: {
+      cid: 1002,
+      courseName: 'Unity5.x 创造 3D VR游戏',
+      sid: 3,
+      sessionName: '课时名称3',
+      time: '记录笔记的时间节点3'
+    }
+  }
+]
+
+const LIKE_NOTE = [
+  {
+    id: 104,
+    img: COURSE,
+    title: '收藏的笔记1',
+    content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    createTime: '2019-3-13',
+    likeCount: 104,
+    creator: {
+      id: 1001,
+      name: '笔记创建者姓名1'
+    },
+    createPosition: {
+      cid: 100,
+      courseName: 'Unity5.x 创造 3D VR游戏',
+      sid: 1,
+      sessionName: '课时名称1',
+      time: '记录笔记的时间节点1'
+    }
+  },
+  {
+    id: 105,
+    img: COURSE,
+    title: '收藏的笔记2',
+    content: 'bbbbbbbbbbbbbbbbbbbbbbbbb',
+    createTime: '2019-3-12',
+    likeCount: 105,
+    creator: {
+      id: 1002,
+      name: '笔记创建者姓名2'
+    },
+    createPosition: {
+      cid: 100,
+      courseName: 'Unity5.x 创造 3D VR游戏',
+      sid: 2,
+      sessionName: '课时名称2',
+      time: '记录笔记的时间节点2'
+    }
+  },
+  {
+    id: 106,
+    img: COURSE,
+    title: '收藏的笔记3',
+    content: 'ccccccccccccccc',
+    createTime: '2019-3-11',
+    likeCount: 106,
+    creator: {
+      id: 1003,
+      name: '笔记创建者姓名3'
+    },
+    createPosition: {
+      cid: 100,
+      courseName: 'Unity5.x 创造 3D VR游戏',
+      sid: 3,
+      sessionName: '课时名称3',
+      time: '记录笔记的时间节点3'
+    }
+  }
+]
+export { USER_INFO, MY_COURSE, HISTORY, MY_NOTE, LIKE_NOTE }
