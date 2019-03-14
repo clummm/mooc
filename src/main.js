@@ -9,13 +9,14 @@ import './plugins/element.js'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Cookies from 'js-cookie'
+import routerHelp from './common/js/ruoterHelp'
 /* 全局引入ElementUI */
 Vue.use(ElementUI)
 /* 全局引入axios */
 Vue.prototype.$http = axios
 Vue.prototype.$cookies = Cookies
 Vue.config.productionTip = false
-
+Vue.prototype.rHelp = routerHelp
 /* eslint-disable no-new */
 new Vue({
   router,

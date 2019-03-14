@@ -27,17 +27,16 @@
            @mouseleave="isInfoMenuShow=false">
         <span @click="openUserChild('message')">消息</span>
         <ul class="info-menu" v-show="isInfoMenuShow&&userInfo">
-          <router-link class="info-menu-item" :to="{ name: 'course', params: { cid: 123 } }">课程提醒消息</router-link>
-          <router-link class="info-menu-item" :to="{ name: 'myDiscussDetail', params: { did: 123,type:'myDiscuss' } }">讨论互动消息
-          </router-link>
+          <div class="info-menu-item"  @click="rHelp.openCourseNewWindow(103)">课程提醒消息</div>
+          <div class="info-menu-item" @click="rHelp.openDiscussDetailNewWindow(101)">讨论互动消息</div>
         </ul>
       </div>
       <div class="my-course" @mouseenter="isCourseMenuShow=true"
            @mouseleave="isCourseMenuShow=false">
         <span @click="openUserChild('course')">我的课程</span>
         <ul class="course-menu" v-show="isCourseMenuShow&&userInfo">
-          <router-link class="course-menu-item" :to="{ name: 'course', params: { cid: 100 } }">课程1</router-link>
-          <router-link class="course-menu-item" :to="{ name: 'course', params: { cid: 101 } }">课程2</router-link>
+          <div class="course-menu-item"  @click="rHelp.openCourseNewWindow(101)">课程1</div>
+          <div class="course-menu-item" @click="rHelp.openCourseNewWindow(102)">课程2</div>
         </ul>
       </div>
     </div>
@@ -115,6 +114,7 @@
         if (this.$route.meta === 'needLogin') {
           this.$router.push({ name: 'Home' })
         }
+        location.reload()
       },
       ...mapActions('account', {
         setUserInfo: 'setUserInfo',

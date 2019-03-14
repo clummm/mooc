@@ -126,29 +126,15 @@ const router = new Router({
       meta: NEED_LOGIN
 
     },
-    // 我的讨论详情页
+    // 讨论详情页
     {
-      path: '/discussDetail/:did/:type',
-      name: 'myDiscussDetail',
-      component: discussDetail,
-      meta: NEED_LOGIN
-    },
-    // 通用讨论详情页
-    {
-      path: '/discussDetail/:did/:type',
+      path: '/discussDetail/:did',
       name: 'discussDetail',
       component: discussDetail
     },
-    // 我的笔记详情页
+    // 笔记详情页
     {
-      path: '/noteDetail/:nid/:type',
-      name: 'myNoteDetail',
-      component: noteDetail,
-      meta: NEED_LOGIN
-    },
-    // 通用笔记详情页
-    {
-      path: '/noteDetail/:nid/:type',
+      path: '/noteDetail/:nid',
       name: 'noteDetail',
       component: noteDetail
     },

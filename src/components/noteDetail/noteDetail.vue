@@ -6,13 +6,10 @@
       <div v-if="isMyNote">我的笔记</div>
       <div v-else>{{note.creator.name}}的笔记</div>
       <div>笔记创建于{{note.createTime}}</div>
-      <router-link :to="{name:'course',params:{cid:note.createPosition.cid}}">{{note.createPosition.courseName}}
-      </router-link>
+      <span @click="rHelp.openCourseNewWindow(note.createPosition.cid)">{{note.createPosition.courseName}}
+      </span>
       <span>{{note.createPosition.sessionName}}</span>
-      <router-link
-        :to="{name: 'courseVideo',params: {cid: note.createPosition.cid,sid:note.createPosition.sid,time:note.createPosition.time}}">
-        点击跳转到指定节点
-      </router-link>
+      <span @click="rHelp.openVideoNewWindow(note.createPosition)">点击跳转到指定节点</span>
     </div>
     <div class="content">
       <div>{{note.title}}</div>
@@ -26,15 +23,20 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { LIKE_NOTE } from '../../common/js/data'
+  import { LIKE_NOTE, MY_NOTE } from '../../common/js/data'
+  import { mapGetters } from 'vuex'
   import noteEditor from '../noteEditor/noteEditor'
 
   export default {
     name: 'noteDetail',
     created () {
-      this.type = this.$route.params.type
       // 从后台请求note
-      this.note = LIKE_NOTE[0]
+      let nid = this.$route.params.nid
+      if (nid >= 100 && nid <= 102) {
+        this.note = MY_NOTE[0]
+      } else {
+        this.note = LIKE_NOTE[0]
+      }
     },
     data () {
       return {
@@ -58,8 +60,14 @@
     },
     computed: {
       isMyNote () {
-        return this.type === 'myNote'
-      }
+        // 未登录直接判断为不是我的笔记
+        if (!this.userInfo) return false
+        // 已登录则通过对比笔记创建者id和当前用户id来得到结果
+        return this.note.creator.id === this.userInfo.id
+      },
+      ...mapGetters('account', {
+        userInfo: 'getUserInfo'
+      })
     },
     components: {
       'v-noteEditor': noteEditor

@@ -1,11 +1,11 @@
-import ICON from '../user.jpg'
+import AVATAR from '../user.jpg'
 import COURSE from '../course.png'
 
 const USER_INFO = {
-  id: '123',
+  id: 123,
   phone: '13676010795',
   name: '张三',
-  icon: ICON,
+  icon: AVATAR,
   sex: '男',
   age: ['1995', '12', '22'],
   job: 'android开发工程师',
@@ -128,6 +128,11 @@ const MY_NOTE = [
     content: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     createTime: '2019-3-13',
     likeCount: 100,
+    creator: {
+      id: 123,
+      avatar: AVATAR,
+      name: '张三'
+    },
     createPosition: {
       cid: 1000,
       courseName: 'Unity5.x 创造 3D VR游戏',
@@ -143,6 +148,11 @@ const MY_NOTE = [
     content: 'bbbbbbbbbbbbbbbbbbbbbbbbb',
     createTime: '2019-3-12',
     likeCount: 101,
+    creator: {
+      id: 123,
+      avatar: AVATAR,
+      name: '张三'
+    },
     createPosition: {
       cid: 1001,
       courseName: 'Unity5.x 创造 3D VR游戏',
@@ -158,6 +168,11 @@ const MY_NOTE = [
     content: 'ccccccccccccccc',
     createTime: '2019-3-11',
     likeCount: 102,
+    creator: {
+      id: 123,
+      avatar: AVATAR,
+      name: '张三'
+    },
     createPosition: {
       cid: 1002,
       courseName: 'Unity5.x 创造 3D VR游戏',
@@ -178,6 +193,7 @@ const LIKE_NOTE = [
     likeCount: 104,
     creator: {
       id: 1001,
+      avatar: AVATAR,
       name: '笔记创建者姓名1'
     },
     createPosition: {
@@ -197,6 +213,7 @@ const LIKE_NOTE = [
     likeCount: 105,
     creator: {
       id: 1002,
+      avatar: AVATAR,
       name: '笔记创建者姓名2'
     },
     createPosition: {
@@ -216,6 +233,7 @@ const LIKE_NOTE = [
     likeCount: 106,
     creator: {
       id: 1003,
+      avatar: AVATAR,
       name: '笔记创建者姓名3'
     },
     createPosition: {
@@ -227,4 +245,294 @@ const LIKE_NOTE = [
     }
   }
 ]
-export { USER_INFO, MY_COURSE, HISTORY, MY_NOTE, LIKE_NOTE }
+
+const MY_DISCUSS = [
+  {
+    id: 200,
+    title: '讨论标题1',
+    createTime: '讨论创建时间1',
+    replyCount: '回复数1',
+    pageViews: '浏览数1',
+    likeCount: '关注人数1',
+    creator: {
+      id: 123,
+      avatar: AVATAR,
+      name: '张三'
+    },
+    createPosition: {
+      cid: 3001,
+      courseName: '课程名字1',
+      image: COURSE,
+      sid: '课时id1',
+      sessionName: '课时名称1',
+      time: '记录笔记的时间节点1'
+    }
+  },
+  {
+    id: 201,
+    title: '讨论标题2',
+    createTime: '讨论创建时间2',
+    replyCount: '回复数2',
+    pageViews: '浏览数2',
+    likeCount: '关注人数2',
+    creator: {
+      id: 123,
+      avatar: AVATAR,
+      name: '张三'
+    },
+    createPosition: {
+      cid: 3002,
+      courseName: '课程名字2',
+      image: COURSE,
+      sid: null,
+      sessionName: null,
+      time: null
+    }
+  },
+  {
+    id: 203,
+    title: '讨论标题3',
+    createTime: '讨论创建时间3',
+    replyCount: '回复数3',
+    pageViews: '浏览数3',
+    likeCount: '关注人数3',
+    creator: {
+      id: 123,
+      avatar: AVATAR,
+      name: '张三'
+    },
+    createPosition: {
+      cid: 3003,
+      courseName: '课程名字3',
+      image: COURSE,
+      sid: '课时id3',
+      sessionName: '课时名称3',
+      time: '记录笔记的时间节点3'
+    }
+  }
+]
+
+const LIKE_DISCUSS = [
+  {
+    id: 204,
+    title: '讨论标题1',
+    createTime: '讨论创建时间1',
+    replyCount: '回复数1',
+    pageViews: '浏览数1',
+    likeCount: '关注人数1',
+    creator: {
+      id: 124,
+      avatar: AVATAR,
+      name: '李四'
+    },
+    createPosition: {
+      cid: 3001,
+      courseName: '课程名字1',
+      image: COURSE,
+      sid: '课时id1',
+      sessionName: '课时名称1',
+      time: '记录笔记的时间节点1'
+    }
+  },
+  {
+    id: 205,
+    title: '讨论标题2',
+    createTime: '讨论创建时间2',
+    replyCount: '回复数2',
+    pageViews: '浏览数2',
+    likeCount: '关注人数2',
+    creator: {
+      id: 125,
+      avatar: AVATAR,
+      name: '王五'
+    },
+    createPosition: {
+      cid: 3002,
+      courseName: '课程名字2',
+      image: COURSE,
+      sid: null,
+      sessionName: null,
+      time: null
+    }
+  },
+  {
+    id: 206,
+    title: '讨论标题3',
+    createTime: '讨论创建时间3',
+    replyCount: '回复数3',
+    pageViews: '浏览数3',
+    likeCount: '关注人数3',
+    creator: {
+      id: 126,
+      avatar: AVATAR,
+      name: '哈哈哈'
+    },
+    createPosition: {
+      cid: 3003,
+      courseName: '课程名字3',
+      image: COURSE,
+      sid: '课时id3',
+      sessionName: '课时名称3',
+      time: '记录笔记的时间节点3'
+    }
+  }
+]
+
+const DISCUSS_DETAIL_MINE = {
+  id: 200,
+  title: '讨论标题1',
+  content: '讨论内容',
+  createTime: '讨论创建时间1',
+  replyCount: '回复数1',
+  pageViews: '浏览数1',
+  likeCount: '关注人数1',
+  creator: {
+    id: 123,
+    avatar: AVATAR,
+    name: '张三'
+  },
+  createPosition: {
+    cid: 3001,
+    courseName: '课程名字1',
+    image: COURSE,
+    sid: '课时id1',
+    sessionName: '课时名称1',
+    time: '记录笔记的时间节点1'
+  },
+  related: [
+    {
+      id: 2001,
+      title: '讨论标题1'
+    },
+    {
+      id: 2002,
+      title: '讨论标题2'
+    },
+    {
+      id: 2003,
+      title: '讨论标题3'
+    }
+  ],
+  reply: [
+    {
+      id: 2010,
+      date: '回复时间1',
+      content: '回复内容1',
+      likeCount: '点赞人数1',
+      replyer: {
+        id: '2020',
+        avatar: AVATAR,
+        name: '回复者昵称1'
+      },
+      replyName: '被回复者昵称1'
+    },
+    {
+      id: 2011,
+      date: '回复时间2',
+      content: '回复内容2',
+      likeCount: '点赞人数2',
+      replyer: {
+        id: '2021',
+        avatar: AVATAR,
+        name: '回复者昵称2'
+      },
+      replyName: null
+    }, {
+      id: 2013,
+      date: '回复时间3',
+      content: '回复内容3',
+      likeCount: '点赞人数3',
+      replyer: {
+        id: '2023',
+        avatar: AVATAR,
+        name: '回复者昵称3'
+      },
+      replyName: '被回复者昵称3'
+    }
+  ]
+}
+
+const DISCUSS_DETAIL_OTHER = {
+  id: 200,
+  title: '讨论标题1',
+  content: '讨论内容',
+  createTime: '讨论创建时间1',
+  replyCount: '回复数1',
+  pageViews: '浏览数1',
+  likeCount: '关注人数1',
+  creator: {
+    id: 1234,
+    avatar: AVATAR,
+    name: '李三'
+  },
+  createPosition: {
+    cid: 3001,
+    courseName: '课程名字1',
+    image: COURSE,
+    sid: '课时id1',
+    sessionName: '课时名称1',
+    time: '记录笔记的时间节点1'
+  },
+  related: [
+    {
+      id: 2001,
+      title: '讨论标题1'
+    },
+    {
+      id: 2002,
+      title: '讨论标题2'
+    },
+    {
+      id: 2003,
+      title: '讨论标题3'
+    }
+  ],
+  reply: [
+    {
+      id: 2010,
+      date: '回复时间1',
+      content: '回复内容1',
+      likeCount: '点赞人数1',
+      replyer: {
+        id: '2020',
+        avatar: AVATAR,
+        name: '回复者昵称1'
+      },
+      replyName: '被回复者昵称1'
+    },
+    {
+      id: 2011,
+      date: '回复时间2',
+      content: '回复内容2',
+      likeCount: '点赞人数2',
+      replyer: {
+        id: '2021',
+        avatar: AVATAR,
+        name: '回复者昵称2'
+      },
+      replyName: null
+    }, {
+      id: 2013,
+      date: '回复时间3',
+      content: '回复内容3',
+      likeCount: '点赞人数3',
+      replyer: {
+        id: '2023',
+        avatar: AVATAR,
+        name: '回复者昵称3'
+      },
+      replyName: '被回复者昵称3'
+    }
+  ]
+}
+export {
+  USER_INFO,
+  MY_COURSE,
+  HISTORY,
+  MY_NOTE,
+  LIKE_NOTE,
+  MY_DISCUSS,
+  LIKE_DISCUSS,
+  DISCUSS_DETAIL_MINE,
+  DISCUSS_DETAIL_OTHER
+}
