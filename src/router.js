@@ -14,6 +14,11 @@ import discuss from './components/user/discuss/discuss'
 import courseNote from './components/user/courseNote/courseNote'
 import courseDiscuss from './components/user/courseDiscuss/courseDiscuss'
 
+import catalog from './components/course/catalog/catalog'
+import forum from './components/course/forum/forum'
+import notes from './components/course/notes/notes'
+import comments from './components/course/comments/comments'
+
 import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
 import store from './store/'
@@ -115,8 +120,40 @@ const router = new Router({
     // 课程页
     {
       path: '/course/:cid',
-      name: 'course',
-      component: course
+      // name: 'course',
+      component: course,
+      children: [
+        // 重定向路由'/course/:cid'为catalog组件
+        {
+          path: '/',
+          redirect: 'catalog',
+          name: 'course'
+        },
+        // 课程章节
+        {
+          path: 'catalog',
+          name: 'catalog',
+          component: catalog
+        },
+        // 课程笔记
+        {
+          path: 'notes',
+          name: 'notes',
+          component: notes
+        },
+        // 课程讨论
+        {
+          path: 'forum',
+          name: 'forum',
+          component: forum
+        },
+        // 课程评价
+        {
+          path: 'comments',
+          name: 'comments',
+          component: comments
+        }
+      ]
     },
     // 播放页
     {
@@ -164,8 +201,6 @@ const router = new Router({
 
 // 在每次进入路由前判断
 router.beforeEach((to, from, next) => {
-  // console.log(from)
-  // console.log(to)
   //  从cookie中获取token
   let token = Cookies.get('token')
   // 从vuex中获取用户基本信息

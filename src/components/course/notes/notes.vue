@@ -1,6 +1,6 @@
 <!-- 课程笔记 -->
 <template>
-  <div></div>
+  <div>课程笔记</div>
 </template>
 
 <script>

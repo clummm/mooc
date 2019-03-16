@@ -1,11 +1,11 @@
-<!-- 问答 -->
+<!-- 课程讨论 -->
 <template>
-  <div></div>
+  <div>课程讨论</div>
 </template>
 
 <script>
   export default {
-    name: 'discuss',
+    name: 'forum',
     data () {
       return {}
     }

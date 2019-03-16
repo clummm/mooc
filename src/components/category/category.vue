@@ -28,7 +28,7 @@
       <div class="course-list">
         <div>伪造假数据用于展示</div>
         <div class="course-container" v-for="(course, i) in this.courses" :key="i">
-          <router-link class="course" :to="{name: 'course', params:{cid: course.id}}">
+          <router-link class="course" target="_blank" :to="{name: 'course', params:{cid: course.id}}">
             {{course.name}}
           </router-link>
         </div>

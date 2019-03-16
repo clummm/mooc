@@ -25,7 +25,7 @@
             </div>
             <div class="recommend-box">
               <router-link class="recommend" v-for="(course, i) in item.recommend" :key="i"
-                           :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
+                           target="_blank" :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
               </router-link>
             </div>
           </div>
@@ -75,7 +75,7 @@
     <div class="recommend-box" v-for="(item, index) in recommendCourseOnSubCate" :key="index">
       <div class="recommend-title">{{item.name}}</div>
       <router-link class="recommend" v-for="(course, i) in item.recommend" :key="i"
-                   :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
+                   target="_blank" :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
       </router-link>
     </div>
   </div>
@@ -131,7 +131,7 @@
       },
       // 打开兴趣对话框前检查登录状态
       checkLoginBeforeInterestDialog () {
-        if (window.localStorage.token) {
+        if (this.userInfo) {
           this.interestDialogVisible = true
         } else {
           this.$store.dispatch('account/setAccountWindowShow', {
@@ -182,7 +182,8 @@
     },
     computed: {
       ...mapGetters('account', {
-        interest: 'getUserInterest'
+        interest: 'getUserInterest',
+        userInfo: 'getUserInfo'
       })
     }
   }

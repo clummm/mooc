@@ -1,6 +1,6 @@
 <!-- 用户评价 -->
 <template>
-  <div></div>
+  <div>课程评价</div>
 </template>
 
 <script>
