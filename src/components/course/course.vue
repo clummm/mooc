@@ -126,13 +126,7 @@
       handleSelect (index, path) {
         console.log(`course's name: ${this.$route.name}`)
         console.log(`index's name: ${index}`)
-        if (this.$route.name !== index) {
-          // if (index === 'course') {
-          // this.$router.push({ name: index, meta: { leavePosition: this.course.leavePosition } })
-          // } else {
-          this.$router.push({ name: index })
-          // }
-        }
+        this.$router.push({ name: index })
       },
       playVideo () {
         // 未登录时无法播放课程，弹出登录窗口提示登录
