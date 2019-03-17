@@ -9,7 +9,10 @@
         <ul class="sessions">
           <li class="session" v-for="(session, i) in chapter.sessions" :key="i" @click="playVideo(session.id, session.leaveTime)">
             {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.time)})`}}
-            <i :class="getLearningState(session.finish)"></i>
+            <div class="learningState">
+              <span v-if="leavePosition.chapter === chapter.id && leavePosition.sid === session.id">最近学习</span>
+              <i :class="getLearningState(session.finish)"></i>
+            </div>
           </li>
         </ul>
       </div>
@@ -18,7 +21,7 @@
 </template>
 
 <script>
-  import { CATALOG } from '../js/course'
+  import { CATALOG, CATALOG_LOGOUT } from '../js/course'
   import { mapGetters } from 'vuex'
   import { secToTimer } from '../../../common/js/Time'
 
@@ -27,7 +30,9 @@
     data () {
       return {
         cid: '',
-        catalog: {}
+        catalog: {},
+        // 用户最近学习的课时
+        leavePosition: {}
       }
     },
     methods: {
@@ -81,7 +86,10 @@
       this.cid = this.$route.params.cid
       // 后台获取课程章节
       // ...post({cid: this.$route.params.cid})
-      this.catalog = CATALOG
+      this.catalog = this.userInfo ? CATALOG : CATALOG_LOGOUT
+      this.leavePosition = this.$route.meta.leavePosition
+      console.log(`catalog's name: ${this.$route.name}`)
+      console.log(this.leavePosition)
     }
   }
 </script>
@@ -112,8 +120,11 @@
           left 0
           &:hover
             background-color silver
-          i
+          .learningState
             position absolute
             right 10px
-            top 35%
+            top 0px
+            span
+              font-size 14px
+              padding-right 10px
 </style>

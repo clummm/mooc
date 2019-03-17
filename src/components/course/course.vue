@@ -49,7 +49,7 @@
     </div>
     <div class="course-info-menu">
       <el-menu :default-active="this.$route.name" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="catalog">课程章节</el-menu-item>
+        <el-menu-item index="course">课程章节</el-menu-item>
         <el-menu-item index="forum">课程讨论</el-menu-item>
         <el-menu-item index="notes">课程笔记</el-menu-item>
         <el-menu-item index="comments">课程评价</el-menu-item>
@@ -84,7 +84,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import { COURSE } from './js/course'
+  import { COURSE, COURSE_LOGOUT } from './js/course'
   import { secToTimer } from '../../common/js/Time'
 
   export default {
@@ -124,7 +124,15 @@
       },
       // 处理 menu 的点击事件
       handleSelect (index, path) {
-        this.$router.push({ name: index })
+        console.log(`course's name: ${this.$route.name}`)
+        console.log(`index's name: ${index}`)
+        if (this.$route.name !== index) {
+          // if (index === 'course') {
+          // this.$router.push({ name: index, meta: { leavePosition: this.course.leavePosition } })
+          // } else {
+          this.$router.push({ name: index })
+          // }
+        }
       },
       playVideo () {
         // 未登录时无法播放课程，弹出登录窗口提示登录
@@ -153,13 +161,23 @@
         userInfo: 'getUserInfo'
       })
     },
+    watch: {
+      '$route' (to, from) {
+        // 对路由变化作出响应...
+        if (to.name === 'course') {
+          to.meta.leavePosition = this.course.leavePosition
+        }
+      }
+    },
     created () {
       this.cid = this.$route.params.cid
+      console.log(`course's name: ${this.$route.name}`)
       // 后台获取课程信息
       // ...post({uid: this.userInfo.uid, cid: this.cid, token: token})
-      this.course = COURSE
+      this.course = this.userInfo ? COURSE : COURSE_LOGOUT
       this.favorite = this.course.favorite
-      console.log(this.$route)
+      // catalog 子组件需要 course 父组件传递最新学习进度的信息
+      this.$route.meta.leavePosition = this.course.leavePosition
     }
   }
 </script>

@@ -105,3 +105,10 @@ html, body {
 .clearfix {
   zoom: 1;
 }
+
+/* 限定单行文本显示，剩余用...表示 */
+.line-limit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

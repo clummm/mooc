@@ -123,16 +123,10 @@ const router = new Router({
       // name: 'course',
       component: course,
       children: [
-        // 重定向路由'/course/:cid'为catalog组件
-        {
-          path: '/',
-          redirect: 'catalog',
-          name: 'course'
-        },
         // 课程章节
         {
-          path: 'catalog',
-          name: 'catalog',
+          path: '',
+          name: 'course',
           component: catalog
         },
         // 课程笔记
