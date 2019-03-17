@@ -1,10 +1,10 @@
 import user from '../../../../common/user.jpg'
 
-const FORUM = {
-  forum: [
+const NOTES = {
+  notes: [
     {
       id: 100,
-      title: '讨论标题',
+      title: '笔记标题',
       createTime: '2019-01-10',
       replyCount: 2,
       pageViews: 10,
@@ -25,7 +25,7 @@ const FORUM = {
     },
     {
       id: 100,
-      title: '讨论标题',
+      title: '笔记标题',
       createTime: '2018-07-10',
       replyCount: 2,
       pageViews: 10,
@@ -40,4 +40,4 @@ const FORUM = {
   notesNum: 100
 }
 
-export { FORUM }
+export { NOTES }

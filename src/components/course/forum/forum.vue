@@ -83,7 +83,7 @@
       return {
         // 当前页
         currentPage: 1,
-        // 当前分类下的总讨论数
+        // 当前课程下的总讨论数
         forumNum: 0,
         pageSize: 5,
         // 讨论列表
@@ -116,6 +116,11 @@
         this.forum = FORUM.forum
         this.forumNum = FORUM.forumNum
       },
+      /**
+       * *********************************
+       * 发布讨论
+       * *********************************
+       * */
       // 取消发布讨论
       cancelPublish (done) {
         this.discuss.title = ''
@@ -160,6 +165,11 @@
           console.log('提交失败')
         }
       },
+      /**
+       * *******************************************
+       * 讨论列表的逻辑处理
+       * *******************************************
+       * */
       // 前往讨论详情页
       discussDetail (id) {
         if (!this.userInfo) {
