@@ -34,6 +34,14 @@ const NOTES = {
         id: 123,
         avatar: user,
         name: '张三'
+      },
+      createPosition: {
+        cid: 0,
+        courseName: 'Unity5.x 创造 3D VR游戏',
+        chapter: 2,
+        sid: 2,
+        sessionName: '课时标题2',
+        time: 123
       }
     }
   ],

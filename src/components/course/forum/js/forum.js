@@ -37,7 +37,7 @@ const FORUM = {
       }
     }
   ],
-  notesNum: 100
+  forumNum: 100
 }
 
 export { FORUM }

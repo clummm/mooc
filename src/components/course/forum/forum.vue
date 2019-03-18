@@ -75,7 +75,7 @@
 
 <script>
   import { FORUM } from './js/forum'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     name: 'forum',
@@ -102,6 +102,9 @@
       }
     },
     methods: {
+      ...mapActions('account', {
+        setAccountWindowShow: 'setAccountWindowShow'
+      }),
       // 当前页变化
       handleCurrentChange (page) {
         this.$router.push({ name: 'forum', params: this.$route.params, query: { p: page, type: String(this.sortingType) } })
@@ -136,7 +139,15 @@
           })
         } else {
           // 弹出填写框
-          this.dialogVisible = true
+          if (this.leavePosition) {
+            this.dialogVisible = true
+          } else {
+            this.$message({
+              showClose: true,
+              message: '您尚未学习该课程，不能对课程发表讨论',
+              duration: 3000
+            })
+          }
         }
       },
       // 检查是否讨论标题是够符合要求
@@ -217,6 +228,9 @@
     computed: {
       ...mapGetters('account', {
         userInfo: 'getUserInfo'
+      }),
+      ...mapGetters('leavePosition', {
+        leavePosition: 'getLeavePosition'
       })
     },
     created () {
@@ -270,6 +284,7 @@
               border-radius 100%
 
           .content
+            padding-right 120px
             .content-footer
               font-size 12px
 

@@ -58,8 +58,7 @@ const CATALOG = {
           title: '课时标题1',
           url: '#',
           time: 123,
-          finish: 0,
-          leaveTime: 50,
+          leaveTime: -1,
           nodes: [
             {
               name: '节点名',
@@ -73,7 +72,6 @@ const CATALOG = {
           url: '#',
           time: 123,
           leaveTime: 50,
-          finish: 1,
           nodes: [
             {
               name: '节点名',
@@ -93,8 +91,7 @@ const CATALOG = {
           title: '课时标题1',
           url: '#',
           time: 123,
-          leaveTime: 50,
-          finish: 2,
+          leaveTime: 123,
           nodes: [
             {
               name: '节点名',
@@ -142,9 +139,7 @@ const COURSE_LOGOUT = {
   totalTime: 8100,
   learningCount: 2200,
   rating: 4.8,
-  favorite: false,
-  leavePosition: {
-  }
+  favorite: false
 }
 
 const CATALOG_LOGOUT = {

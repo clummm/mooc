@@ -10,8 +10,10 @@
           <li class="session" v-for="(session, i) in chapter.sessions" :key="i" @click="playVideo(session.id, session.leaveTime)">
             {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.time)})`}}
             <div class="learningState">
-              <span v-if="leavePosition.chapter === chapter.id && leavePosition.sid === session.id">最近学习</span>
-              <i :class="getLearningState(session.finish)"></i>
+              <span v-if="leavePosition && leavePosition.chapter === chapter.id && leavePosition.sid === session.id">
+                最近学习
+              </span>
+              <i :class="getLearningState(session.leaveTime, session.time)"></i>
             </div>
           </li>
         </ul>
@@ -22,7 +24,7 @@
 
 <script>
   import { CATALOG, CATALOG_LOGOUT } from '../js/course'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   import { secToTimer } from '../../../common/js/Time'
 
   export default {
@@ -30,31 +32,29 @@
     data () {
       return {
         cid: '',
-        catalog: {},
-        // 用户最近学习的课时
-        leavePosition: {}
+        catalog: {}
       }
     },
     methods: {
+      ...mapActions('account', {
+        setAccountWindowShow: 'setAccountWindowShow'
+      }),
       timeFormatter (second) {
         return secToTimer(second)
       },
       // 根据课时学习进度更改图标
-      getLearningState (finish) {
+      getLearningState (leaveTime, time) {
+        leaveTime = Number(leaveTime)
+        time = Number(time)
         let className = 'el-icon-warning'
-        switch (finish) {
-        // 未学习
-        case 0:
-          break
-        // 未学习完
-        case 1:
+        if (leaveTime === -1) {
+          className = 'el-icon-warning'
+        } else if (leaveTime < time) {
+          // 未学习完
           className = 'el-icon-question'
-          break
-        case 2:
+        } else if (leaveTime === time) {
+          // 学习完
           className = 'el-icon-success'
-          break
-        default:
-          break
         }
         return className
       },
@@ -80,6 +80,9 @@
     computed: {
       ...mapGetters('account', {
         userInfo: 'getUserInfo'
+      }),
+      ...mapGetters('course', {
+        leavePosition: 'getLeavePosition'
       })
     },
     created () {
@@ -87,8 +90,8 @@
       // 后台获取课程章节
       // ...post({cid: this.$route.params.cid})
       this.catalog = this.userInfo ? CATALOG : CATALOG_LOGOUT
-      this.leavePosition = this.$route.meta.leavePosition
-      console.log(`catalog's name: ${this.$route.name}`)
+      // this.leavePosition = this.$route.meta.leavePosition
+      // console.log(`catalog's name: ${this.$route.name}`)
       console.log(this.leavePosition)
     }
   }

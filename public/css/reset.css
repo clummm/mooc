@@ -112,3 +112,11 @@ html, body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* 左右浮动 */
+.left {
+  float:  left;
+}
+.right {
+  float: right;
+}

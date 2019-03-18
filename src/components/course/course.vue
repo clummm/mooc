@@ -59,7 +59,7 @@
       <div class="aside">
         <div class="aside-wrapper">
           <div class="learn">
-            <el-button round @click="playVideo">开始学习</el-button>
+            <el-button round @click="playVideo">{{course.leavePosition ? '继续学习' : '开始学习'}}</el-button>
           </div>
           <div class="course-info-tip">
             <dl class="needToKnow">
@@ -139,29 +139,27 @@
           this.$router.push({
             name: 'courseVideo',
             params: {
-              cid: this.cid,
-              sid: 1,
-              time: 0
+              cid: this.course.id,
+              sid: this.course.leavePosition ? this.course.leavePosition.sid : 1,
+              time: this.course.leavePosition ? this.course.leavePosition.time : 0
             }
           })
         }
       },
       ...mapActions('account', {
         setAccountWindowShow: 'setAccountWindowShow'
+      }),
+      ...mapActions('course', {
+        setLeavePosition: 'setLeavePosition'
       })
     },
     computed: {
       ...mapGetters('account', {
         userInfo: 'getUserInfo'
+      }),
+      ...mapGetters('course', {
+        leavePosition: 'getLeavePosition'
       })
-    },
-    watch: {
-      '$route' (to, from) {
-        // 对路由变化作出响应...
-        if (to.name === 'course') {
-          to.meta.leavePosition = this.course.leavePosition
-        }
-      }
     },
     created () {
       this.cid = this.$route.params.cid
@@ -170,8 +168,9 @@
       // ...post({uid: this.userInfo.uid, cid: this.cid, token: token})
       this.course = this.userInfo ? COURSE : COURSE_LOGOUT
       this.favorite = this.course.favorite
-      // catalog 子组件需要 course 父组件传递最新学习进度的信息
-      this.$route.meta.leavePosition = this.course.leavePosition
+
+      // 第一次获取到课程数据时，存储 leavePosition
+      this.setLeavePosition(this.course.leavePosition)
     }
   }
 </script>

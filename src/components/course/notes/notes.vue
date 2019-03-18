@@ -57,7 +57,7 @@
 
 <script>
   import { NOTES } from './js/NOTES'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
 
   export default {
     name: 'notes',
@@ -77,6 +77,9 @@
       }
     },
     methods: {
+      ...mapActions('account', {
+        setAccountWindowShow: 'setAccountWindowShow'
+      }),
       // 当前页变化
       handleCurrentChange (page) {
         this.handleRoute(page, this.sortingType)
@@ -101,7 +104,16 @@
       },
       // 展示自己的笔记
       showMine () {
-        this.handleRoute('1', this.sortingType)
+        console.log(`mine is ${this.mine}`)
+        if (!this.userInfo) {
+          this.mine = false
+          this.setAccountWindowShow({
+            show: true,
+            type: 'LOGIN'
+          })
+        } else {
+          this.handleRoute('1', this.sortingType)
+        }
       },
       // 后台获取笔记
       getNotes () {
@@ -221,6 +233,7 @@
               border-radius 100%
 
           .content
+            padding-right 120px
             .content-footer
               font-size 12px
 
