@@ -13,7 +13,8 @@
           <span>{{item.title}}</span>
           <span v-if="isMyNote">我在{{item.createTime}}创建</span>
           <span v-else>{{item.creator.name}}在{{item.createTime}}创建</span>
-          <span @click="rHelp.openCourseNewWindow(item.createPosition.cid)">创建于《{{item.createPosition.courseName}}》</span>
+          <span
+            @click="rHelp.openCourseNewWindow(item.createPosition.cid)">创建于《{{item.createPosition.courseName}}》</span>
           <span @click="rHelp.openVideoNewWindow(item.createPosition)">点击跳转到创建时间节点</span>
         </div>
         <div>
@@ -47,7 +48,15 @@
         currentEditIndex: null
       }
     },
+    props: {
+      cid: null
+    },
     created () {
+      if (!this.cid) {
+        // 根据用户id取讨论
+      } else {
+        // 根据用户id和课程id取讨论
+      }
       this.myNoteList = MY_NOTE
     },
     methods: {

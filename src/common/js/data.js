@@ -532,6 +532,82 @@ const DISCUSS_DETAIL_OTHER = {
     }
   ]
 }
+
+const MESSAGES_COURSE = {
+  totalNum: 100,
+  messages: [
+    {
+      id: 1001,
+      cid: 2001,
+      name: '课程名字1',
+      subhead: '副标题1',
+      img: COURSE,
+      learningCount: 200,
+      rating: 4.3,
+      updateTime: '2019-3-18 20:00',
+      readed: false
+    },
+    {
+      id: 1002,
+      cid: 2002,
+      name: '课程名字2',
+      subhead: '副标题2',
+      img: COURSE,
+      learningCount: 201,
+      rating: 4.4,
+      updateTime: '2019-3-18 21:00',
+      readed: false
+    },
+    {
+      id: 1003,
+      cid: 2003,
+      name: '课程名字3',
+      subhead: '副标题3',
+      img: COURSE,
+      learningCount: 203,
+      rating: 4.5,
+      updateTime: '2019-3-18 22:00',
+      readed: false
+    }
+  ]
+}
+
+const MESSAGES_DISCUSS = {
+  totalNum: 100,
+  messages: [
+    {
+      id: 1000,
+      did: 2000,
+      name: '回复者名字1',
+      avatar: AVATAR,
+      content: '回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1回复内容1',
+      discussTitle: '讨论标题1',
+      replyTime: '2019-3-18 20:00',
+      readed: false
+    },
+    {
+      id: 1001,
+      did: 2001,
+      name: '回复者名字2',
+      avatar: AVATAR,
+      content: '回复内容2',
+      discussTitle: '讨论标题2',
+      replyTime: '2019-3-18 21:00',
+      readed: false
+    },
+    {
+      id: 1002,
+      did: 2002,
+      name: '回复者名字3',
+      avatar: AVATAR,
+      content: '回复内容3',
+      discussTitle: '讨论标题3',
+      replyTime: '2019-3-18 22:00',
+      readed: false
+    }
+  ]
+}
+
 export {
   USER_INFO,
   MY_COURSE,
@@ -541,5 +617,7 @@ export {
   MY_DISCUSS,
   LIKE_DISCUSS,
   DISCUSS_DETAIL_MINE,
-  DISCUSS_DETAIL_OTHER
+  DISCUSS_DETAIL_OTHER,
+  MESSAGES_COURSE,
+  MESSAGES_DISCUSS
 }
