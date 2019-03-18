@@ -6,7 +6,8 @@
         <img :src="this.userInfo.icon" width="100" height="100" class="user-icon">
         <div class="info">
           <p>{{this.userInfo.name}}</p>
-          <p>性别 {{this.userInfo.sex}}</p>
+          <p v-if="this.userInfo.sex">性别 {{this.userInfo.sex}}</p>
+          <p v-else>性别 未设置</p>
           <p>职业 {{this.userInfo.job}}</p>
           <p>所在地区 {{this.userInfo.address[0]}} {{this.userInfo.address[1]}}</p>
         </div>

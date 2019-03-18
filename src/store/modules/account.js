@@ -27,9 +27,13 @@ const actions = {
   },
   setUserInterest: ({ state, commit }, interest) => {
     commit('setUserInterest', interest)
+  },
+  updateInfo ({ state, commit }, info) {
+    commit('updateInfo', info)
   }
 }
 const mutations = {
+
   setAccountWindowShow (state, accountWindowShow) {
     state.isAccountWindowShow = accountWindowShow
   },
@@ -41,6 +45,12 @@ const mutations = {
       state.userInfo.interest = interest || []
     }
     console.log(state.userInfo)
+  },
+  updateInfo (state, info) {
+    state.userInfo.name = info.name
+    state.userInfo.sex = info.sex
+    state.userInfo.address = info.address
+    state.userInfo.job = info.job
   }
 }
 export default {

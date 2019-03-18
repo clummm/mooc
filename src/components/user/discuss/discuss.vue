@@ -49,7 +49,15 @@
         likeDiscuss: null
       }
     },
+    props: {
+      cid: null
+    },
     created () {
+      if (!this.cid) {
+        // 根据用户id取讨论
+      } else {
+        // 根据用户id和课程id取讨论
+      }
       this.myDiscuss = MY_DISCUSS
     },
     computed: {
