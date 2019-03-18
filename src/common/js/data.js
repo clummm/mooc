@@ -419,6 +419,7 @@ const DISCUSS_DETAIL_MINE = {
       date: '回复时间1',
       content: '回复内容1',
       likeCount: '点赞人数1',
+      liked: true,
       replyer: {
         id: '2020',
         avatar: AVATAR,
@@ -431,6 +432,7 @@ const DISCUSS_DETAIL_MINE = {
       date: '回复时间2',
       content: '回复内容2',
       likeCount: '点赞人数2',
+      liked: false,
       replyer: {
         id: '2021',
         avatar: AVATAR,
@@ -442,6 +444,7 @@ const DISCUSS_DETAIL_MINE = {
       date: '回复时间3',
       content: '回复内容3',
       likeCount: '点赞人数3',
+      liked: false,
       replyer: {
         id: '2023',
         avatar: AVATAR,
@@ -460,6 +463,7 @@ const DISCUSS_DETAIL_OTHER = {
   replyCount: '回复数1',
   pageViews: '浏览数1',
   likeCount: '关注人数1',
+  liked: true,
   creator: {
     id: 1234,
     avatar: AVATAR,
@@ -493,6 +497,7 @@ const DISCUSS_DETAIL_OTHER = {
       date: '回复时间1',
       content: '回复内容1',
       likeCount: '点赞人数1',
+      liked: true,
       replyer: {
         id: '2020',
         avatar: AVATAR,
@@ -505,6 +510,7 @@ const DISCUSS_DETAIL_OTHER = {
       date: '回复时间2',
       content: '回复内容2',
       likeCount: '点赞人数2',
+      liked: false,
       replyer: {
         id: '2021',
         avatar: AVATAR,
@@ -516,6 +522,7 @@ const DISCUSS_DETAIL_OTHER = {
       date: '回复时间3',
       content: '回复内容3',
       likeCount: '点赞人数3',
+      liked: true,
       replyer: {
         id: '2023',
         avatar: AVATAR,

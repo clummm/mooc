@@ -43,5 +43,15 @@ export default {
       }
     })
     window.open(routeData.href, '_blank')
+  },
+  // 当前窗口打开笔记详情页
+  openDiscussDetail (id) {
+    router.push({
+      name: 'discussDetail',
+      params: {
+        did: id,
+        type: 'myDiscuss'
+      }
+    })
   }
 }
