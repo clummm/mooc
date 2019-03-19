@@ -19,6 +19,12 @@ import forum from './components/course/forum/forum'
 import notes from './components/course/notes/notes'
 import comments from './components/course/comments/comments'
 
+import uploadMain from './components/uploadDetail/uploadMain'
+import uploadInfo from './components/uploadDetail/uploadInfo/uploadInfo'
+import uploadCatalogue from './components/uploadDetail/uploadCatalogue/uploadCatalogue'
+import uploadResource from './components/uploadDetail/uploadResource/uploadResource'
+import uploadTest from './components/uploadDetail/uploadTest/uploadTest'
+
 import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
 import store from './store/'
@@ -106,6 +112,41 @@ const router = new Router({
           path: 'upload',
           name: 'upload',
           component: upload,
+          meta: NEED_LOGIN
+        }
+      ]
+    },
+    {
+      // 上传管理详情页
+      path: '/uploadDetail/:cid',
+      component: uploadMain,
+      children: [
+        {
+          // 上传管理课程基本信息
+          path: 'info',
+          name: 'uploadInfo',
+          component: uploadInfo,
+          meta: NEED_LOGIN
+        },
+        {
+          // 上传管理课程目录
+          path: 'catalogue',
+          name: 'uploadCatalogue',
+          component: uploadCatalogue,
+          meta: NEED_LOGIN
+        },
+        {
+          // 上传管理课程课件
+          path: 'resource',
+          name: 'uploadResource',
+          component: uploadResource,
+          meta: NEED_LOGIN
+        },
+        {
+          // 上传管理课堂测试
+          path: 'test',
+          name: 'uploadTest',
+          component: uploadTest,
           meta: NEED_LOGIN
         }
       ]

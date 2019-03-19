@@ -108,7 +108,7 @@
             // 根据page获取内容
             this.coursePosition.total = MESSAGES_COURSE.totalNum
             this.courseMessages = []
-            for (let i = 1, j = this.coursePosition.total / this.coursePosition.size; i <= j; ++i) {
+            for (let i = 0, j = this.coursePosition.total / this.coursePosition.size + 1; i <= j; ++i) {
               this.courseMessages.push(null)
             }
             this.courseMessages[page] = MESSAGES_COURSE.messages
@@ -131,7 +131,7 @@
             // 根据page获取内容
             this.discussPosition.total = MESSAGES_DISCUSS.totalNum
             this.discussMessages = []
-            for (let i = 1, j = this.discussPosition.total / this.discussPosition.size; i <= j; ++i) {
+            for (let i = 0, j = this.discussPosition.total / this.discussPosition.size + 1; i <= j; ++i) {
               this.discussMessages.push(null)
             }
             this.discussMessages[page] = MESSAGES_DISCUSS.messages

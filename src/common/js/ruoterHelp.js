@@ -65,5 +65,13 @@ export default {
         p: 1
       }
     })
+  },
+  openUploadInfo (id) {
+    router.push({
+      name: 'uploadInfo',
+      params: {
+        cid: id
+      }
+    })
   }
 }
