@@ -25,7 +25,7 @@
       </div>
       <div class="message" @mouseenter="isInfoMenuShow=true"
            @mouseleave="isInfoMenuShow=false">
-        <span @click="openUserChild('message')">消息</span>
+        <span @click="rHelp.openMessage()">消息</span>
         <ul class="info-menu" v-show="isInfoMenuShow&&userInfo">
           <div class="info-menu-item"  @click="rHelp.openCourseNewWindow(103)">课程提醒消息</div>
           <div class="info-menu-item" @click="rHelp.openDiscussDetailNewWindow(101)">讨论互动消息</div>

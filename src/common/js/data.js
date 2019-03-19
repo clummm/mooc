@@ -608,6 +608,33 @@ const MESSAGES_DISCUSS = {
   ]
 }
 
+const PUBLISH_COURSES = [
+  {
+    id: 1001,
+    img: COURSE,
+    name: '课程名字1',
+    subtitle: '课程副标题1',
+    publishTime: '2019-3-19 20:00',
+    updateTime: '2019-3-19 21:00',
+    status: 1
+  },
+  {
+    id: 1002,
+    img: COURSE,
+    name: '课程名字2',
+    publishTime: '2019-3-19 20:00',
+    updateTime: '2019-3-19 21:00',
+    status: 2
+  },
+  {
+    id: 1003,
+    img: COURSE,
+    name: '课程名字3',
+    publishTime: '2019-3-19 20:00',
+    updateTime: '2019-3-19 21:00',
+    status: 3
+  }
+]
 export {
   USER_INFO,
   MY_COURSE,
@@ -619,5 +646,6 @@ export {
   DISCUSS_DETAIL_MINE,
   DISCUSS_DETAIL_OTHER,
   MESSAGES_COURSE,
-  MESSAGES_DISCUSS
+  MESSAGES_DISCUSS,
+  PUBLISH_COURSES
 }
