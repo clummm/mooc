@@ -21,7 +21,7 @@
         <router-link :to="{name: 'courseList'}" class="tab">我的课程</router-link>
         <router-link :to="{name: 'note'}" class="tab">我的笔记</router-link>
         <router-link :to="{name: 'discuss'}" class="tab">我的讨论</router-link>
-        <div @click="rHelp.openMessage()">我的消息</div>
+        <div class="tab" @click="rHelp.openMessage()">我的消息</div>
         <router-link :to="{name: 'upload'}" class="tab">上传管理</router-link>
       </div>
       <div class="right-content">
