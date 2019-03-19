@@ -32,7 +32,7 @@
           <div class="aside">
             <div class="publish-time">{{item.createTime}}</div>
             <div class="binding-session line-limit" v-if="item.createPosition"
-                 @click.stop="playVideo(item.createPosition.cid, item.createPosition.sid, item.createPosition.time)">
+                 @click.stop="playVideo(item.createPosition.cid, item.createPosition.chapter, item.createPosition.sid)">
               {{`${item.createPosition.chapter}-${item.createPosition.sid} ${item.createPosition.sessionName}`}}
             </div>
           </div>
@@ -200,7 +200,7 @@
         }
       },
       // 前往课时播放页
-      playVideo (cid, sid, time) {
+      playVideo (cid, chapter, sid) {
         // 未登录时无法播放课程，弹出登录窗口提示登录
         if (!this.userInfo) {
           this.setAccountWindowShow({
@@ -212,8 +212,8 @@
             name: 'courseVideo',
             params: {
               cid: cid,
-              sid: sid,
-              time: time
+              chapter: chapter,
+              sid: sid
             }
           })
         }

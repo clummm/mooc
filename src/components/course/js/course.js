@@ -57,7 +57,7 @@ const CATALOG = {
           id: 1,
           title: '课时标题1',
           url: '#',
-          time: 123,
+          duration: 123,
           leaveTime: -1,
           nodes: [
             {
@@ -70,7 +70,7 @@ const CATALOG = {
           id: 2,
           title: '课时标题2',
           url: '#',
-          time: 123,
+          duration: 123,
           leaveTime: 50,
           nodes: [
             {
@@ -90,7 +90,7 @@ const CATALOG = {
           id: 1,
           title: '课时标题1',
           url: '#',
-          time: 123,
+          duration: 123,
           leaveTime: 123,
           nodes: [
             {
@@ -154,8 +154,7 @@ const CATALOG_LOGOUT = {
           id: 1,
           title: '课时标题1',
           url: '#',
-          time: 123,
-          finish: 0,
+          duration: 123,
           leaveTime: -1,
           nodes: [
             {
@@ -168,9 +167,8 @@ const CATALOG_LOGOUT = {
           id: 2,
           title: '课时标题2',
           url: '#',
-          time: 123,
+          duration: 123,
           leaveTime: -1,
-          finish: 0,
           nodes: [
             {
               name: '节点名',
@@ -189,9 +187,8 @@ const CATALOG_LOGOUT = {
           id: 1,
           title: '课时标题1',
           url: '#',
-          time: 123,
+          duration: 123,
           leaveTime: -1,
-          finish: 0,
           nodes: [
             {
               name: '节点名',

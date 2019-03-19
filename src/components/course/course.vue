@@ -140,8 +140,8 @@
             name: 'courseVideo',
             params: {
               cid: this.course.id,
-              sid: this.course.leavePosition ? this.course.leavePosition.sid : 1,
-              time: this.course.leavePosition ? this.course.leavePosition.time : 0
+              chapter: this.course.leavePosition ? this.course.leavePosition.chapter : 1,
+              sid: this.course.leavePosition ? this.course.leavePosition.sid : 1
             }
           })
         }

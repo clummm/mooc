@@ -1,56 +1,114 @@
 <template>
-  <div class="video">
+  <div class="course-video-wrapper">
+    <ul class="header clearfix">
+      <li class="back left">
+        <router-link :to="{ name: 'course', cid: cid }"><i class="el-icon-back"></i></router-link>
+      </li>
+      <li class="left">
+        <span>{{`${chapter}-${sid} ${session.title}`}}</span>
+      </li>
+    </ul>
     <div class="main-content">
       <div class="player">
-        <my-video :video-src="videoSrc"></my-video>
+        <my-video :video-src="session.url"></my-video>
       </div>
-      <div class="menu" @click="toggleMenu" :style="{width:menuWidth}">我是菜单</div>
+      <div class="aside-menu">
+        <el-menu default-active="catalog" mode="horizontal" @select="handleAsideMenuSelect">
+          <el-menu-item index="catalog">课程章节</el-menu-item>
+          <el-menu-item index="forum">发起讨论</el-menu-item>
+          <el-menu-item index="note">发起笔记</el-menu-item>
+          <el-menu-item index="test">自我检测</el-menu-item>
+          <el-menu-item index="subtitles">字幕</el-menu-item>
+        </el-menu>
+      </div>
     </div>
-    <div>播放{{this.time}}</div>
+    <ul class="keywords clearfix">
+      <button @click="clickKeyword">检查关键字</button>
+      <li class="meta left">关键字</li>
+      <li class="left value" v-for="(keyword, index) in session.keywords" :key="index">
+        <div class="explain"
+             v-show="explainActive[index]"
+             @mouseenter="enterKeyword(index, true)"
+             @mouseleave="enterKeyword(index, false)"
+             @click="clickKeyword">
+          {{keyword.explain}}
+        </div>
+        <div @mouseenter="enterKeyword(index, true)"
+             @mouseleave="enterKeyword(index, false)"
+             @click="clickKeyword">
+          <el-tag class="tag">{{keyword.keyword}}</el-tag>
+        </div>
+      </li>
+    </ul>
+    <div class="subcontainer">
+      <div class="footer-menu">
+        <el-menu default-active="forum" mode="horizontal" @select="handleFootMenuSelect">
+          <el-menu-item index="forum">课程讨论</el-menu-item>
+          <el-menu-item index="notes">课程笔记</el-menu-item>
+        </el-menu>
+        <div class="footer-menu-content"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-
+  import { SESSION } from './js/session'
   import myVideo from './myVideo/myVideo'
 
   export default {
     name: 'courseVideo',
     components: { myVideo },
-    created () {
-      let storage = window.sessionStorage
-      let cid = this.$route.params.cid
-      let sid = this.$route.params.sid
-      this.time = this.$route.params.time
-      // 从路径中取得cid去后台获取播放列表
-      // 通过sid找到播放列表中需要播放的视频
-      // 如果sessionStorage中有时间记录则使用该记录，该时间记录在播放过程中与播放进度同步，在刷新当前页面时可以继续播放；
-      // 如果sessionStorage中没有则记录下来
-      if (storage[cid + '/' + sid]) {
-        this.time = storage[cid + '/' + sid]
-      } else {
-        storage[cid + '/' + sid] = this.time
-      }
-    },
     data () {
       return {
-        videoList: null, // 播放列表
-        videoSrc: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
-        menuWidth: '100px',
-        time: null
+        // 课程id
+        cid: '',
+        // 第几章节
+        chapter: '',
+        // 第几课时
+        sid: '',
+        // 课时信息
+        session: null,
+        explainActive: []
       }
     },
+    created () {
+      this.getSession()
+    },
     methods: {
-      toggleMenu () {
-        if (this.menuWidth === '100px') {
-          this.menuWidth = '400px'
-        } else {
-          this.menuWidth = '100px'
-        }
+      clickKeyword () {
+        console.log('--------------------')
+        console.log(this.explainActive)
+        console.log('--------------------')
+      },
+      enterKeyword (index, value) {
+        this.explainActive[index] = value
+        console.log(`explainActive[${index}] = ${this.explainActive[index]}`)
+      },
+
+      // 后台获取课时信息
+      getSession () {
+        this.cid = this.$route.params.cid
+        this.chapter = this.$route.params.chapter
+        this.sid = this.$route.params.sid
+        console.log(`cid: ${this.cid}, chapter: ${this.chapter}, sid: ${this.sid}`)
+        // ...post({uid, token, cid, chapter, sid}
+        this.session = SESSION
+      },
+      // 底部目录页点击处理
+      handleFootMenuSelect () {
+      },
+      // 侧边目录页点击处理
+      handleAsideMenuSelect () {
       },
       // 关闭视频前上传离开时的节点
       beforeCloseHandler (e) {
         // ...
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        // 对路由变化作出响应...
       }
     },
     destroyed () {
@@ -60,15 +118,54 @@
 </script>
 
 <style lang="stylus" scoped>
-  .main-content
-    width 100%
-    height 400px
-    display flex
+  .course-video-wrapper
+    .header
+      height 60px
 
-    .player
-      flex 1
+      li
+        font-size 24px
+        line-height 60px
 
-    .menu
-      background grey
-      transition .5s
+      .back
+        width 70px
+        text-align center
+
+        &:hover
+          background-color silver
+
+    .keywords
+      border silver solid 1px
+      margin 10px
+      padding 20px
+
+      .meta
+        padding-top 5px
+
+      .value
+        margin-left 20px
+        position relative
+        top 0
+        left 0
+
+        .explain
+          position absolute
+          bottom 100%
+          left 0
+          min-height 80px
+          min-width 100px
+          background-color #ffffff
+          font-size 12px
+          padding 5px
+
+    .main-content
+      width 100%
+      height 400px
+      display flex
+
+      .player
+        flex 1
+
+      .menu
+        background grey
+        transition .5s
 </style>

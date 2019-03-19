@@ -35,7 +35,7 @@
             {{myComment.content}}
           </div>
           <div class="content-footer clearfix">
-            <div class="thumb-up-box left" @click="thumbUp(item)">
+            <div class="thumb-up-box left" @click="thumbUp(myComment)">
               <i :class="myComment.like ? 'el-icon-star-on' : 'el-icon-star-off'">{{myComment.likeCount}}</i>
             </div>
             <div class="publish-time right">{{myComment.createTime}}</div>
@@ -124,7 +124,9 @@
       simple: 5.0,
       logical: 5.0
     },
-    createTime: ''
+    createTime: '',
+    likeCount: 0,
+    like: false
   }
 
   export default {
@@ -151,8 +153,9 @@
         myComment: null,
         // 浏览器输入区的当前用户评价
         localMyComment: template,
-        // 是否显示评论发布框
+        // 是否显示评论编辑框
         dialogVisible: false,
+        // 评价编辑框的字数提示
         showHint: false
       }
     },
@@ -222,6 +225,7 @@
           // ...post({uid, token, cid, this.localMyComment})
           // 提交成功时，刷新评价模块
           // this.getComments()
+          this.myComment = JSON.parse(JSON.stringify({ id: this.myComment.id, ...this.localMyComment }))
           this.dialogVisible = false
           console.log('发布评价')
           console.log(this.localMyComment)

@@ -151,7 +151,7 @@ const router = new Router({
     },
     // 播放页
     {
-      path: '/course/:cid/courseVideo/:sid/:time',
+      path: '/course/:cid/courseVideo/:chapter/:sid',
       name: 'courseVideo',
       component: courseVideo,
       meta: NEED_LOGIN

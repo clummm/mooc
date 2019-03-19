@@ -7,13 +7,13 @@
         <div class="chapter-title">{{chapter.title}}</div>
         <div class="chapter-intro">{{chapter.intro}}</div>
         <ul class="sessions">
-          <li class="session" v-for="(session, i) in chapter.sessions" :key="i" @click="playVideo(session.id, session.leaveTime)">
-            {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.time)})`}}
+          <li class="session" v-for="(session, i) in chapter.sessions" :key="i" @click="playVideo(chapter.id, session.id)">
+            {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.duration)})`}}
             <div class="learningState">
               <span v-if="leavePosition && leavePosition.chapter === chapter.id && leavePosition.sid === session.id">
                 最近学习
               </span>
-              <i :class="getLearningState(session.leaveTime, session.time)"></i>
+              <i :class="getLearningState(session.leaveTime, session.duration)"></i>
             </div>
           </li>
         </ul>
@@ -43,22 +43,22 @@
         return secToTimer(second)
       },
       // 根据课时学习进度更改图标
-      getLearningState (leaveTime, time) {
+      getLearningState (leaveTime, duration) {
         leaveTime = Number(leaveTime)
-        time = Number(time)
+        duration = Number(duration)
         let className = 'el-icon-warning'
         if (leaveTime === -1) {
           className = 'el-icon-warning'
-        } else if (leaveTime < time) {
+        } else if (leaveTime < duration) {
           // 未学习完
           className = 'el-icon-question'
-        } else if (leaveTime === time) {
+        } else if (leaveTime === duration) {
           // 学习完
           className = 'el-icon-success'
         }
         return className
       },
-      playVideo (sid, time) {
+      playVideo (chapter, sid) {
         // 未登录时无法播放课程，弹出登录窗口提示登录
         if (!this.userInfo) {
           this.setAccountWindowShow({
@@ -70,8 +70,8 @@
             name: 'courseVideo',
             params: {
               cid: this.cid,
-              sid: sid,
-              time: time
+              chapter: chapter,
+              sid: sid
             }
           })
         }
