@@ -2,16 +2,16 @@
 <template>
   <div>
     <div class="main-menu">
-      <span @click="changeContent(true)">课程提醒</span>
-      <span @click="changeContent(false)">互动提醒</span>
+      <span @click="changeContent(0)">课程提醒</span>
+      <span @click="changeContent(1)">互动提醒</span>
       <div class="all-menu">
         <span @click="deleteAll">全部删除</span>
         <span @click="tagAll">全部标记已读</span>
       </div>
     </div>
-    <div class="content">
-      <div v-if="isCourse&&courseMessages">
-        <div class="course-item" v-for="(item,index) in courseMessages" :key="index">
+    <div class="content" v-if="(isCourse&&courseMessages)||(!isCourse&&discussMessages)">
+      <div v-if="isCourse&&courseMessages[coursePosition.page]">
+        <div class="course-item" v-for="(item,index) in courseMessages[coursePosition.page]" :key="index">
           <div class="course-desc">
             <img :src="item.img" width="100" height="50">
             <div class="course-info">
@@ -29,8 +29,8 @@
           </div>
         </div>
       </div>
-      <div v-else-if="!isCourse&&discussMessages">
-        <div class="discuss-item" v-for="(item,index) in discussMessages" :key="index">
+      <div v-else-if="!isCourse&&discussMessages[discussPosition.page]">
+        <div class="discuss-item" v-for="(item,index) in discussMessages[discussPosition.page]" :key="index">
           <div class="discuss-info">
             <img :src="item.avatar" width="50" height="50" class="discuss-avatar">
             <span class="discuss-desc">{{item.name}}在{{item.discussTitle}}中回复了你</span>
@@ -70,67 +70,138 @@
         discussMessages: null,
         isCourse: true,
         coursePosition: {
-          page: 0,
+          page: 1,
           size: 10,
           total: null
         },
         discussPosition: {
-          page: 0,
+          page: 1,
           size: 10,
           total: null
         }
       }
     },
     created () {
-      this.courseMessages = MESSAGES_COURSE.messages
-      this.coursePosition.total = MESSAGES_COURSE.totalNum
+      this.fetchData()
+    },
+    watch: {
+      '$route': 'fetchData'
     },
     methods: {
       changeContent (type) {
-        this.isCourse = type
-        if (!type && !this.discussMessages && !this.discussPosition.total) {
-          this.discussMessages = MESSAGES_DISCUSS.messages
-          this.discussPosition.total = MESSAGES_DISCUSS.totalNum
-        }
+        let page = type === 0 ? this.coursePosition.page : this.discussPosition.page
+        this.$router.replace({ name: 'message', params: { type: type }, query: { p: page } })
       },
       handleCurrentChange (page) {
         // console.log(page)
+        this.$router.push({ name: 'message', query: { p: page } })
+      },
+      fetchData () {
+        // 获取页数 默认为1
+        let page = this.$route.query.p
+        // 判断是课程提醒还是互动提醒
+        this.isCourse = parseInt(this.$route.params.type) === 0
+        // 课程提醒
+        if (this.isCourse) {
+          // 总数未知还没有请求过数据
+          if (!this.coursePosition.total) {
+            // 根据page获取内容
+            this.coursePosition.total = MESSAGES_COURSE.totalNum
+            this.courseMessages = []
+            for (let i = 1, j = this.coursePosition.total / this.coursePosition.size; i <= j; ++i) {
+              this.courseMessages.push(null)
+            }
+            this.courseMessages[page] = MESSAGES_COURSE.messages
+            this.coursePosition.page = page
+          } else {
+            // 总数已知 在请求前先看是否有缓存
+            // 有则直接使用
+            if (this.courseMessages[page]) {
+              this.coursePosition.page = page
+            } else {
+              // 无缓存则从后台获取
+              this.coursePosition.total = MESSAGES_COURSE.totalNum
+              this.courseMessages[page] = MESSAGES_COURSE.messages
+              this.coursePosition.page = page
+            }
+          }
+        } else { // 互动消息
+          // 总数未知还没有请求过数据
+          if (!this.discussPosition.total) {
+            // 根据page获取内容
+            this.discussPosition.total = MESSAGES_DISCUSS.totalNum
+            this.discussMessages = []
+            for (let i = 1, j = this.discussPosition.total / this.discussPosition.size; i <= j; ++i) {
+              this.discussMessages.push(null)
+            }
+            this.discussMessages[page] = MESSAGES_DISCUSS.messages
+            this.discussPosition.page = page
+          } else {
+            // 总数已知 在请求前先看是否有缓存
+            // 有则直接使用
+            if (this.discussMessages[page]) {
+              this.discussPosition.page = page
+            } else {
+              // 无缓存则从后台获取
+              this.discussPosition.total = MESSAGES_DISCUSS.totalNum
+              this.discussMessages[page] = MESSAGES_DISCUSS.messages
+              this.discussPosition.page = page
+            }
+          }
+        }
       },
       // 标记为已读
       tagRead (index) {
         if (this.isCourse) {
-          this.courseMessages[index].readed = true
+          this.courseMessages[this.coursePosition.page][index].readed = true
         } else {
-          this.discussMessages[index].readed = true
+          this.discussMessages[this.discussPosition.page][index].readed = true
         }
+        this.$forceUpdate()
       },
       // 全部删除
       deleteAll () {
         if (this.isCourse) {
           this.courseMessages = null
+          this.coursePosition.total = null
         } else {
           this.discussMessages = null
+          this.discussPosition.total = null
         }
       },
       // 全部标记已读
       tagAll () {
         if (this.isCourse) {
-          for (let i = 0, j = this.courseMessages.length; i < j; ++i) {
-            this.courseMessages[i].readed = true
+          if (this.courseMessages) {
+            for (let i = 1, j = this.courseMessages.length; i <= j; ++i) {
+              if (this.courseMessages[i]) {
+                for (let k = 0, l = this.courseMessages[i].length; k < l; ++k) {
+                  this.courseMessages[i][k].readed = true
+                }
+              }
+            }
           }
         } else {
-          for (let i = 0, j = this.discussMessages.length; i < j; ++i) {
-            this.discussMessages[i].readed = true
+          if (this.discussMessages) {
+            for (let i = 1, j = this.discussMessages.length; i <= j; ++i) {
+              if (this.discussMessages[i]) {
+                for (let k = 0, l = this.discussMessages[i].length; k < l; ++k) {
+                  this.discussMessages[i][k].readed = true
+                }
+              }
+            }
           }
         }
+        this.$forceUpdate()
       },
       // 删除消息
       deleteMessage (index) {
         if (this.isCourse) {
-          this.courseMessages.splice(index, 1)
+          this.courseMessages[this.coursePosition.page].splice(index, 1)
         } else {
-          this.discussMessages.splice(index, 1)
+          this.discussMessages[this.discussPosition.page].splice(index, 1)
         }
+        this.$forceUpdate()
       }
     },
     computed: {
@@ -138,7 +209,7 @@
         return this.isCourse ? this.coursePosition.total : this.discussPosition.total
       },
       currentPage () {
-        return this.isCourse ? (this.coursePosition.page + 1) : (this.discussPosition.page + 1)
+        return this.isCourse ? parseInt(this.coursePosition.page) : parseInt(this.discussPosition.page)
       }
     }
   }

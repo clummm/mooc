@@ -89,7 +89,7 @@ const router = new Router({
         },
         // 我的消息
         {
-          path: 'message',
+          path: 'message/:type',
           name: 'message',
           component: message,
           meta: NEED_LOGIN

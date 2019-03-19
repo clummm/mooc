@@ -53,5 +53,17 @@ export default {
         type: 'myDiscuss'
       }
     })
+  },
+  // 当前窗口打开个人模块消息子模块
+  openMessage () {
+    router.push({
+      name: 'message',
+      params: {
+        type: 0
+      },
+      query: {
+        p: 1
+      }
+    })
   }
 }
