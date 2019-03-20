@@ -13,13 +13,27 @@
     <div v-if="this.courses">
       <div class="item" v-for="(item,index) in this.courses" :key="index">
         <img :src="item.img" width="150" height="100">
-        <span>
-          {{item.name}}
-        </span>
-        <span>
+        <div class="base-info">
+          <span>{{item.name}}</span>
+          <div v-if="item.subtitle">{{item.subtitle}}</div>
+          <el-rate
+            v-if="item.rating"
+            :value=parseInt(item.rating)
+            disabled
+            show-score
+            text-color="#ff9900"
+            score-template="{value}" class="rate">
+          </el-rate>
+          <span v-else>暂无评分</span>
+          <span v-if="item.learningCount">{{item.learningCount}}学过</span>
+          <span v-else>暂无人学过</span>
+        </div>
+        <span v-if="item.publishTime">
           {{item.publishTime}}
         </span>
-        <span>{{item.updateTime}}</span>
+        <span v-else>暂未发布</span>
+        <span v-if="item.updateTime">{{item.updateTime}}</span>
+        <span v-else>暂无更新</span>
         <div class="status">
           <div v-if="item.status===0">
             <div>未审核</div>
@@ -38,7 +52,7 @@
           </div>
         </div>
         <div class="menu">
-          <span @click="rHelp.openUploadInfo(item.id)">编辑</span>
+          <span @click="rHelp.openUploadInfo(item.id)">管理</span>
           <span @click="deleteCourse(index)">删除</span>
         </div>
       </div>
@@ -70,6 +84,8 @@
             img: null,
             name: '课程名字1',
             subtitle: null,
+            learningCount: null,
+            rating: null,
             publishTime: null,
             updateTime: null,
             status: 0
@@ -90,6 +106,9 @@
   .upload-wrapper
     .item
       position relative
+
+      .base-info
+        display inline-block
 
       .menu
         position absolute

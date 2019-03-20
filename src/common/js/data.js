@@ -614,6 +614,8 @@ const PUBLISH_COURSES = [
     img: COURSE,
     name: '课程名字1',
     subtitle: '课程副标题1',
+    learningCount: '200',
+    rating: '4.5',
     publishTime: '2019-3-19 20:00',
     updateTime: '2019-3-19 21:00',
     status: 1
@@ -622,6 +624,9 @@ const PUBLISH_COURSES = [
     id: 1002,
     img: COURSE,
     name: '课程名字2',
+    subtitle: '课程副标题1',
+    learningCount: '200',
+    rating: '4.5',
     publishTime: '2019-3-19 20:00',
     updateTime: '2019-3-19 21:00',
     status: 2
@@ -630,11 +635,133 @@ const PUBLISH_COURSES = [
     id: 1003,
     img: COURSE,
     name: '课程名字3',
+    subtitle: '课程副标题1',
+    learningCount: '200',
+    rating: '4.5',
     publishTime: '2019-3-19 20:00',
     updateTime: '2019-3-19 21:00',
     status: 3
   }
 ]
+
+const UPLOAD_COURSE = {
+  id: 1001,
+  img: COURSE,
+  name: '课程名字1',
+  subtitle: '课程副标题1',
+  category1: {
+    id: 0,
+    name: '前端开发'
+  },
+  category2: {
+    id: 1,
+    name: '前端框架'
+  },
+  needToKnow: '1、对es6语法有基本了解\n' +
+    '2、了解前端工程化\n' +
+    '3、了解vuejs',
+  gains: '1、通过webpack搭建vue工程workflow\n' +
+    '2、哪些是学习vue的重点\n' +
+    '3、.vue文件开发模式\n' +
+    '4、vue使用jsx进行开发的方式\n' +
+    '5、vue组件间通信的基本方式\n' +
+    '6、webpack打包优化的基本点',
+  totalTime: '2小时23分',
+  learningCount: '52523',
+  rating: '4.5',
+  intro: '简介：本课程基于一个TODO示例应用讲解VUE2的基本使用以及如何搭建一个vue的工程。首先通过webpack我们搭建了一个完善的vue的workflow，然后围绕功能实现讲解vue的使用，并介绍了vue的.vue文件以及jsx的开发模式。 对应实战课已经上线：https://coding.imooc.com/class/196.html，欢迎学习',
+  keyWords: ['关键词1', '关键词2', '关键词3', '关键词4', '关键词5'],
+  catalogue: {
+    chapters: [
+      {
+        id: 1,
+        title: '课程介绍',
+        intro: '对课程整体进行介绍',
+        sessions: [
+          {
+            id: 1,
+            url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+            duration: '2000',
+            nodes: [
+              {
+                name: '节点名1',
+                time: '节点1对应时间戳'
+              },
+              {
+                name: '节点名2',
+                time: '节点2对应时间戳'
+              }
+            ]
+          }, {
+            id: 2,
+            url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+            duration: '2000',
+            nodes: [
+              {
+                name: '节点名1',
+                time: '节点1对应时间戳'
+              },
+              {
+                name: '节点名2',
+                time: '节点2对应时间戳'
+              }
+            ]
+          }
+
+        ]
+      }
+
+    ]
+  },
+  resources: [
+    {
+      id: 100,
+      name: '文件名1',
+      url: '文件地址1',
+      description: '文件描述1',
+      uploadTime: '2019-3-20',
+      size: '23.5M'
+    },
+    {
+      id: 100,
+      name: '文件名1',
+      url: '文件地址1',
+      description: '文件描述1',
+      uploadTime: '2019-3-20',
+      size: '23.5M'
+    },
+    {
+      id: 100,
+      name: '文件名1',
+      url: '文件地址1',
+      description: '文件描述1',
+      uploadTime: '2019-3-20',
+      size: '23.5M'
+    }
+
+  ],
+  tests: [
+    {
+      id: 200,
+      name: '测试名字1',
+      count: 3,
+      description: '测试描述1'
+    },
+    {
+      id: 200,
+      name: '测试名字1',
+      count: 3,
+      description: '测试描述1'
+    },
+    {
+      id: 200,
+      name: '测试名字1',
+      count: 3,
+      description: '测试描述1'
+    }
+
+  ]
+}
 export {
   USER_INFO,
   MY_COURSE,
@@ -647,5 +774,6 @@ export {
   DISCUSS_DETAIL_OTHER,
   MESSAGES_COURSE,
   MESSAGES_DISCUSS,
-  PUBLISH_COURSES
+  PUBLISH_COURSES,
+  UPLOAD_COURSE
 }

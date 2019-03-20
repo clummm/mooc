@@ -62,7 +62,11 @@
         currentName: null,
         currentJob: null,
         currentAddress: null,
-        currentSex: null
+        currentSex: null,
+        tempName: null,
+        tempJob: null,
+        tempAddress: null,
+        tempSex: null
       }
     },
     created () {
@@ -80,11 +84,19 @@
       }),
       showEditor () {
         this.isEditorShow = true
+        this.tempAddress = this.currentAddress
+        this.tempJob = this.currentJob
+        this.tempName = this.currentName
+        this.tempSex = this.currentSex
       },
       cancel () {
         this.isEditorShow = false
       },
       save () {
+        this.currentAddress = this.tempAddress
+        this.currentJob = this.tempJob
+        this.currentName = this.tempName
+        this.currentSex = this.tempSex
         let info = {
           name: this.currentName,
           job: this.currentJob,
