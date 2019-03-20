@@ -10,7 +10,7 @@
     </ul>
     <div class="main-content">
       <div class="player">
-        <my-video :video-src="session.url"></my-video>
+        <my-video :video-src="session.url" :play-time="playTime"></my-video>
       </div>
       <div class="aside-menu">
         <el-menu default-active="catalog" mode="horizontal" @select="handleAsideMenuSelect">
@@ -20,21 +20,22 @@
           <el-menu-item index="test">自我检测</el-menu-item>
           <el-menu-item index="subtitles">字幕</el-menu-item>
         </el-menu>
+        <div class="aside-menu-content"></div>
       </div>
     </div>
     <ul class="keywords clearfix">
-      <button @click="clickKeyword">检查关键字</button>
       <li class="meta left">关键字</li>
       <li class="left value" v-for="(keyword, index) in session.keywords" :key="index">
         <div class="explain"
              v-show="explainActive[index]"
-             @mouseenter="enterKeyword(index, true)"
-             @mouseleave="enterKeyword(index, false)"
+             @mouseenter="$set(explainActive, index, true)"
+             @mouseleave="$set(explainActive, index, false)"
              @click="clickKeyword">
           {{keyword.explain}}
+          <a>查看更多>>></a>
         </div>
-        <div @mouseenter="enterKeyword(index, true)"
-             @mouseleave="enterKeyword(index, false)"
+        <div @mouseenter="$set(explainActive, index, true)"
+             @mouseleave="$set(explainActive, index, false)"
              @click="clickKeyword">
           <el-tag class="tag">{{keyword.keyword}}</el-tag>
         </div>
@@ -67,13 +68,18 @@
         chapter: '',
         // 第几课时
         sid: '',
+        // 播放点：-1 -> 未观看
+        playTime: 0,
         // 课时信息
         session: null,
+        // 是否显示关键字解释
         explainActive: []
       }
     },
     created () {
       this.getSession()
+      // let sessionStorage = window.sessionStorage
+      // sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] = this.leaveTime
     },
     methods: {
       clickKeyword () {
@@ -91,7 +97,9 @@
         this.cid = this.$route.params.cid
         this.chapter = this.$route.params.chapter
         this.sid = this.$route.params.sid
-        console.log(`cid: ${this.cid}, chapter: ${this.chapter}, sid: ${this.sid}`)
+        this.playTime = this.$route.params.playTime || 0
+        this.playTime = this.playTime < 0 ? 0 : this.playTime
+        console.log(`cid: ${this.cid}, chapter: ${this.chapter}, sid: ${this.sid}, leaveTime: ${this.playTime}`)
         // ...post({uid, token, cid, chapter, sid}
         this.session = SESSION
       },
@@ -152,10 +160,14 @@
           bottom 100%
           left 0
           min-height 80px
-          min-width 100px
+          min-width 150px
           background-color #ffffff
           font-size 12px
           padding 5px
+          a
+            position absolute
+            right 0
+            bottom 0
 
     .main-content
       width 100%
@@ -165,7 +177,4 @@
       .player
         flex 1
 
-      .menu
-        background grey
-        transition .5s
 </style>

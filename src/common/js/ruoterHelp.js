@@ -16,12 +16,25 @@ export default {
     let routeData = router.resolve({
       name: 'courseVideo',
       params: {
-        cid: position.cid,
-        sid: position.sid,
-        time: position.time
+        cid: position.cid, // 课程id
+        chapter: position.chapter, // 第几章节
+        sid: position.sid, // 第几课时
+        playTime: position.playTime // 希望播放的时间点
       }
     })
     window.open(routeData.href, '_blank')
+  },
+  // 当前窗口打开视频播放页
+  openVideoWindow: function (position) {
+    router.push({
+      name: 'courseVideo',
+      params: {
+        cid: position.cid, // 课程id
+        chapter: position.chapter, // 第几章节
+        sid: position.sid, // 第几课时
+        playTime: position.playTime // 希望播放的时间点
+      }
+    })
   },
   // 新窗口打开笔记详情页
   openDiscussDetailNewWindow (id) {

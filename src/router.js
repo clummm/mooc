@@ -63,56 +63,72 @@ const router = new Router({
           path: '/',
           redirect: 'courseList',
           name: 'user',
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 我的课程下与我相关的笔记
         {
           path: 'courseList/:cid/courseNote',
           name: 'courseNote',
           component: courseNote,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 我的课程下与我相关的讨论
         {
           path: 'courseList/:cid/courseDiscuss',
           name: 'courseDiscuss',
           component: courseDiscuss,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 我的课程
         {
           path: 'courseList',
           name: 'courseList',
           component: courseList,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 我的笔记
         {
           path: 'note',
           name: 'note',
           component: note,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 我的消息
         {
           path: 'message/:type',
           name: 'message',
           component: message,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 我的讨论
         {
           path: 'discuss',
           name: 'discuss',
           component: discuss,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         // 上传管理
         {
           path: 'upload',
           name: 'upload',
           component: upload,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         }
       ]
     },
@@ -126,28 +142,36 @@ const router = new Router({
           path: 'info',
           name: 'uploadInfo',
           component: uploadInfo,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         {
           // 上传管理课程目录
           path: 'catalogue',
           name: 'uploadCatalogue',
           component: uploadCatalogue,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         {
           // 上传管理课程课件
           path: 'resource',
           name: 'uploadResource',
           component: uploadResource,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         },
         {
           // 上传管理课堂测试
           path: 'test',
           name: 'uploadTest',
           component: uploadTest,
-          meta: NEED_LOGIN
+          meta: {
+            login: NEED_LOGIN
+          }
         }
       ]
     },
@@ -156,7 +180,9 @@ const router = new Router({
       path: '/user/settings',
       name: 'settings',
       component: settings,
-      meta: NEED_LOGIN
+      meta: {
+        login: NEED_LOGIN
+      }
     },
     // 课程页
     {
@@ -195,8 +221,9 @@ const router = new Router({
       path: '/course/:cid/courseVideo/:chapter/:sid',
       name: 'courseVideo',
       component: courseVideo,
-      meta: NEED_LOGIN
-
+      meta: {
+        login: NEED_LOGIN
+      }
     },
     // 讨论详情页
     {
@@ -249,7 +276,7 @@ router.beforeEach((to, from, next) => {
     // token有效且用户信息正常则无操作
   } else {
     // token无效 拦截直接通过url访问需要登录权限的页面，如果token失效则返回首页并显示登录窗口
-    if (to.meta === NEED_LOGIN) {
+    if (to.meta.login === NEED_LOGIN) {
       store.dispatch('account/setAccountWindowShow', {
         show: true,
         type: 'LOGIN'

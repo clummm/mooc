@@ -111,7 +111,7 @@
         window.sessionStorage.clear()
         this.$cookies.remove('token')
         // 如果当前页面是需要登录权限的则返回首页
-        if (this.$route.meta === 'needLogin') {
+        if (this.$route.meta.login === 'needLogin') {
           this.$router.push({ name: 'Home' })
         }
         location.reload()

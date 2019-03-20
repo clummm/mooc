@@ -37,11 +37,12 @@ const COURSE = {
   learningCount: 2200,
   rating: 4.8,
   favorite: true,
+  // 对课程的最近学习时间点
   leavePosition: {
     chapter: 2,
     sid: 1,
     name: '课时名称',
-    time: '离开时学到课时的时间点'
+    time: '123'
   }
 }
 

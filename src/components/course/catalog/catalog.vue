@@ -7,7 +7,8 @@
         <div class="chapter-title">{{chapter.title}}</div>
         <div class="chapter-intro">{{chapter.intro}}</div>
         <ul class="sessions">
-          <li class="session" v-for="(session, i) in chapter.sessions" :key="i" @click="playVideo(chapter.id, session.id)">
+          <li class="session" v-for="(session, i) in chapter.sessions" :key="i"
+              @click="playVideo(chapter.id, session.id, session.leaveTime)">
             {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.duration)})`}}
             <div class="learningState">
               <span v-if="leavePosition && leavePosition.chapter === chapter.id && leavePosition.sid === session.id">
@@ -58,7 +59,8 @@
         }
         return className
       },
-      playVideo (chapter, sid) {
+      playVideo (chapter, sid, leaveTime) {
+        console.log(`catalog, leaveTime: ${leaveTime}`)
         // 未登录时无法播放课程，弹出登录窗口提示登录
         if (!this.userInfo) {
           this.setAccountWindowShow({
@@ -66,13 +68,11 @@
             type: 'LOGIN'
           })
         } else {
-          this.$router.push({
-            name: 'courseVideo',
-            params: {
-              cid: this.cid,
-              chapter: chapter,
-              sid: sid
-            }
+          this.rHelp.openVideoWindow({
+            cid: this.cid,
+            chapter: chapter,
+            sid: sid,
+            playTime: leaveTime
           })
         }
       }
@@ -126,7 +126,7 @@
           .learningState
             position absolute
             right 10px
-            top 0px
+            top 0
             span
               font-size 14px
               padding-right 10px

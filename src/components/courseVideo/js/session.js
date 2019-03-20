@@ -13,11 +13,13 @@ const SESSION = {
   keywords: [
     {
       keyword: '关键字1',
-      explain: '解释1'
+      explain: '解释1',
+      active: false
     },
     {
       keyword: '关键字2',
-      explain: '解释2'
+      explain: '解释2',
+      active: false
     }
   ]
 }

@@ -37,7 +37,7 @@
           <div class="aside">
             <div class="publish-time">{{item.createTime}}</div>
             <div class="binding-session line-limit" v-if="item.createPosition"
-                 @click.stop="playVideo(item.createPosition.cid, item.createPosition.chapter, item.createPosition.sid)">
+                 @click.stop="playVideo(item.createPosition)">
               {{`${item.createPosition.chapter}-${item.createPosition.sid} ${item.createPosition.sessionName}`}}
             </div>
           </div>
@@ -120,8 +120,6 @@
         this.currentPage = Number(this.$route.query.p) || 1
         this.sortingType = Number(this.$route.query.type) || 0
         this.mine = this.$route.query.filter === 'mine'
-        console.log(`sotring type is ${this.sortingType}`)
-        console.log(`this.$route.query.filter === 'mine'? ${this.mine}`)
         // 后台获取笔记
         if (this.mine) {
           // 获取自己的笔记
@@ -153,7 +151,7 @@
         }
       },
       // 前往课时播放页
-      playVideo (cid, chapter, sid) {
+      playVideo (position) {
         // 未登录时无法播放课程，弹出登录窗口提示登录
         if (!this.userInfo) {
           this.setAccountWindowShow({
@@ -161,13 +159,11 @@
             type: 'LOGIN'
           })
         } else {
-          this.$router.push({
-            name: 'courseVideo',
-            params: {
-              cid: cid,
-              chapter: chapter,
-              sid: sid
-            }
+          this.rHelp.openVideoWindow({
+            cid: position.cid,
+            chapter: position.chapter,
+            sid: position.sid,
+            playTime: position.time
           })
         }
       }

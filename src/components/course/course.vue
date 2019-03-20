@@ -124,8 +124,6 @@
       },
       // 处理 menu 的点击事件
       handleSelect (index, path) {
-        console.log(`course's name: ${this.$route.name}`)
-        console.log(`index's name: ${index}`)
         this.$router.push({ name: index })
       },
       playVideo () {
@@ -136,13 +134,11 @@
             type: 'LOGIN'
           })
         } else {
-          this.$router.push({
-            name: 'courseVideo',
-            params: {
-              cid: this.course.id,
-              chapter: this.course.leavePosition ? this.course.leavePosition.chapter : 1,
-              sid: this.course.leavePosition ? this.course.leavePosition.sid : 1
-            }
+          this.rHelp.openVideoWindow({
+            cid: this.course.id,
+            chapter: this.course.leavePosition ? this.course.leavePosition.chapter : 1,
+            sid: this.course.leavePosition ? this.course.leavePosition.sid : 1,
+            playTime: this.course.leavePosition ? this.course.leavePosition.time : 0
           })
         }
       },
@@ -163,13 +159,12 @@
     },
     created () {
       this.cid = this.$route.params.cid
-      console.log(`course's name: ${this.$route.name}`)
       // 后台获取课程信息
       // ...post({uid: this.userInfo.uid, cid: this.cid, token: token})
       this.course = this.userInfo ? COURSE : COURSE_LOGOUT
       this.favorite = this.course.favorite
 
-      // 第一次获取到课程数据时，存储 leavePosition
+      // 第一次获取到课程数据时，存储用户对课程的最近学习时间点 leavePosition
       this.setLeavePosition(this.course.leavePosition)
     }
   }
