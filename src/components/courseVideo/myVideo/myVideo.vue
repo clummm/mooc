@@ -3,7 +3,7 @@
        @pointerup.prevent="stopDragging"
        @pointermove.prevent="handleMouseMove" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
     <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd">
-      <source :src="`${videoSrc}#t=${currentTime}`"/>
+      <source :src="`${videoSrc}#t=${playTime}`"/>
     </video>
     <div class="controller" v-show="isControlVisible">
       <div class="controller-progress-wrapper">
@@ -61,8 +61,7 @@
         dotOffsetX: 0,
         draggingStartX: 0,
         isDragging: false,
-        isControlVisible: true,
-        currentTime: this.playTime
+        isControlVisible: true
       }
     },
     computed: {
@@ -195,6 +194,15 @@
       },
       showCursor () {
         document.body.style.cursor = 'default'
+      },
+      // 跳转到某个时间点播放
+    },
+    watch: {
+      '$route' (to, from) {
+        console.log('in video')
+        if (this.video) {
+          this.video.currentTime = this.playTime || 0
+        }
       }
     },
     mounted () {
@@ -204,8 +212,8 @@
       // 当加载的时候获取video对象的duration时长为NaN
       // 当浏览器能够开始播放指定的音频/视频时，更新播放器时长显示
       self.video.oncanplay = function () {
-        self.handleTimeUpdate()
-        console.log(`currentTime is ${self.currentTime}[${typeof self.currentTime}]`)
+        // self.handleTimeUpdate()
+        // console.log(`currentTime is ${self.currentTime}[${typeof self.currentTime}]`)
         // self.video.currentTime = self.currentTime
       }
     }

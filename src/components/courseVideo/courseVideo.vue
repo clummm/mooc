@@ -125,9 +125,13 @@
       }
     },
     created () {
+      console.log('-------------courseVideo--------------')
+      console.log(this.$route)
       this.getSession()
       // let sessionStorage = window.sessionStorage
-      // sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] = this.leaveTime
+      // if (sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`]) {
+      //   sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] = this.playTime
+      // }
     },
     methods: {
       // 后台获取课时信息
@@ -138,6 +142,13 @@
         this.playTime = this.$route.params.playTime || 0
         this.playTime = this.playTime < 0 ? 0 : this.playTime
         console.log(`cid: ${this.cid}, chapter: ${this.chapter}, sid: ${this.sid}, leaveTime: ${this.playTime}`)
+        // 保存到 sessionStorage
+        let sessionStorage = window.sessionStorage
+        if (this.$route.params.playTime) {
+          sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] = this.playTime
+        } else {
+          this.playTime = sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] || 0
+        }
         // ...post({uid, token, cid, chapter, sid}
         this.session = SESSION
       },
@@ -157,6 +168,10 @@
     watch: {
       '$route' (to, from) {
         // 对路由变化作出响应...
+        console.log('-------------route change--------------')
+        console.log(this.$route)
+        this.getSession()
+        console.log('in courseVideo')
       }
     },
     destroyed () {

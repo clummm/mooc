@@ -222,6 +222,8 @@
       // 前往课时播放页
       playVideo (position) {
         // 未登录时无法播放课程，弹出登录窗口提示登录
+        console.log('play')
+        console.log(position)
         if (!this.userInfo) {
           this.setAccountWindowShow({
             show: true,
