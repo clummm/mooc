@@ -2,10 +2,12 @@
 <template>
   <div class="forum-wrapper">
     <div class="forum-header clearfix">
-      <span :class="Number(sortingType) === 0 ? 'sorting-type-on' : 'sorting-type'"
-            @click="sorting(0)">最新</span>
-      <span :class="Number(sortingType) === 1 ? 'sorting-type-on' : 'sorting-type'"
-            @click="sorting(1)">最热</span>
+      <div class="left">
+        <slot name="sortingType"
+              :sortingWithQuery="sortingWithQuery"
+              :sortingWithoutQuery="sortingWithoutQuery"
+              :getSortingTypeClass="getSortingTypeClass"></slot>
+      </div>
       <div class="publish">
         <el-button round @click="showPublishDialog">我要发布</el-button>
       </div>
@@ -40,12 +42,11 @@
       </div>
     </div>
     <div class="pagination">
-      <el-pagination
-        layout="prev, pager, next"
-        :total="forumNum"
-        :current-page="currentPage"
-        @current-change="handleCurrentChange">
-      </el-pagination>
+      <slot name="pagination"
+            :totalNum="forumNum"
+            :currentPage="currentPage"
+            :handleCurrentChangeWithQuery="handleCurrentChangeWithQuery"
+            :handleCurrentChangeWithoutQuery="handleCurrentChangeWithoutQuery"></slot>
     </div>
     <div class="publish-dialog">
       <el-dialog
@@ -105,9 +106,18 @@
       ...mapActions('account', {
         setAccountWindowShow: 'setAccountWindowShow'
       }),
-      // 当前页变化
-      handleCurrentChange (page) {
+      // url带页码的形式进行当前页变化
+      handleCurrentChangeWithQuery (page) {
         this.$router.push({ name: 'forum', params: this.$route.params, query: { p: page, type: String(this.sortingType) } })
+      },
+      // url不带页码的形式进行当前页变化
+      handleCurrentChangeWithoutQuery (page) {
+        this.currentPage = page
+        console.log(`sotring type is ${this.sortingType}`)
+        // 后台获取讨论
+        // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
+        this.forum = FORUM.forum
+        this.forumNum = FORUM.forumNum
       },
       // 后台获取讨论
       getForum () {
@@ -193,10 +203,20 @@
           this.$router.push({ name: 'discussDetail', params: { did: id } })
         }
       },
-      // 更改讨论列表排序规则
-      sorting (sortingType) {
+      // 获取排序规则的样式
+      getSortingTypeClass (sortingType) {
+        return Number(this.sortingType) === sortingType ? 'sorting-type-on' : 'sorting-type'
+      },
+      // url保留排序规则的方式，更改讨论列表排序规则
+      sortingWithQuery (sortingType) {
         if (this.sortingType !== sortingType) {
           this.$router.push({ name: 'forum', params: this.$route.params, query: { p: '1', type: sortingType } })
+        }
+      },
+      // url不保留排序规则的方式，更改讨论列表排序规则
+      sortingWithoutQuery (sortingType) {
+        if (this.sortingType !== sortingType) {
+          this.sortingType = sortingType
         }
       },
       // 前往课时播放页
@@ -254,7 +274,7 @@
       span
         padding-left 5px
 
-      div
+      .publish
         float right
         display inline-block
 

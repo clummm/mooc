@@ -29,14 +29,12 @@
         <div class="explain"
              v-show="explainActive[index]"
              @mouseenter="$set(explainActive, index, true)"
-             @mouseleave="$set(explainActive, index, false)"
-             @click="clickKeyword">
+             @mouseleave="$set(explainActive, index, false)">
           {{keyword.explain}}
           <a>查看更多>>></a>
         </div>
         <div @mouseenter="$set(explainActive, index, true)"
-             @mouseleave="$set(explainActive, index, false)"
-             @click="clickKeyword">
+             @mouseleave="$set(explainActive, index, false)">
           <el-tag class="tag">{{keyword.keyword}}</el-tag>
         </div>
       </li>
@@ -47,7 +45,47 @@
           <el-menu-item index="forum">课程讨论</el-menu-item>
           <el-menu-item index="notes">课程笔记</el-menu-item>
         </el-menu>
-        <div class="footer-menu-content"></div>
+        <div class="footer-menu-content">
+          <forum v-show="footMenuActive === 'forum'">
+            <template v-slot:sortingType="sortingSlotProps">
+              <span @click="sortingSlotProps.sortingWithoutQuery(0)"
+                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
+              <span @click="sortingSlotProps.sortingWithoutQuery(1)"
+                    :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
+            </template>
+            <template v-slot:pagination="listSlotProps">
+              <el-pagination
+                layout="prev, pager, next"
+                :total="listSlotProps.totalNum"
+                :current-page="listSlotProps.currentPage"
+                @current-change="listSlotProps.handleCurrentChangeWithoutQuery">
+              </el-pagination>
+            </template>
+          </forum>
+          <notes v-show="footMenuActive === 'notes'">
+            <template v-slot:sortingType="sortingSlotProps">
+              <span @click="sortingSlotProps.sortingWithoutQuery(0)"
+                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
+              <span @click="sortingSlotProps.sortingWithoutQuery(1)"
+                    :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
+            </template>
+            <template v-slot:showMine="mineSlotProps">
+              <el-switch
+                v-model="mineSlotProps.mine"
+                active-color="#13ce66"
+                @change="mineSlotProps.showMineWithoutQuery">
+              </el-switch>
+            </template>
+            <template v-slot:pagination="listSlotProps">
+              <el-pagination
+                layout="prev, pager, next"
+                :total="listSlotProps.totalNum"
+                :current-page="listSlotProps.currentPage"
+                @current-change="listSlotProps.handleCurrentChangeWithoutQuery">
+              </el-pagination>
+            </template>
+          </notes>
+        </div>
       </div>
     </div>
   </div>
@@ -56,10 +94,16 @@
 <script type="text/ecmascript-6">
   import { SESSION } from './js/session'
   import myVideo from './myVideo/myVideo'
+  import forum from '../course/forum/forum'
+  import notes from '../course/notes/notes'
 
   export default {
     name: 'courseVideo',
-    components: { myVideo },
+    components: {
+      myVideo,
+      forum,
+      notes
+    },
     data () {
       return {
         // 课程id
@@ -73,7 +117,11 @@
         // 课时信息
         session: null,
         // 是否显示关键字解释
-        explainActive: []
+        explainActive: [],
+        // 侧边菜单激活项
+        asideMenuActive: 'catalog',
+        // 底部菜单激活项
+        footMenuActive: 'forum'
       }
     },
     created () {
@@ -82,16 +130,6 @@
       // sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] = this.leaveTime
     },
     methods: {
-      clickKeyword () {
-        console.log('--------------------')
-        console.log(this.explainActive)
-        console.log('--------------------')
-      },
-      enterKeyword (index, value) {
-        this.explainActive[index] = value
-        console.log(`explainActive[${index}] = ${this.explainActive[index]}`)
-      },
-
       // 后台获取课时信息
       getSession () {
         this.cid = this.$route.params.cid
@@ -104,10 +142,12 @@
         this.session = SESSION
       },
       // 底部目录页点击处理
-      handleFootMenuSelect () {
+      handleFootMenuSelect (key) {
+        this.footMenuActive = key
       },
       // 侧边目录页点击处理
-      handleAsideMenuSelect () {
+      handleAsideMenuSelect (key, keyPath) {
+        console.log(key, keyPath)
       },
       // 关闭视频前上传离开时的节点
       beforeCloseHandler (e) {
@@ -177,4 +217,9 @@
       .player
         flex 1
 
+    .subcontainer
+      .footer-menu
+        .footer-menu-content
+          padding-top 36px
+          padding-right 352px
 </style>

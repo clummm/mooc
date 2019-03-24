@@ -2,16 +2,17 @@
 <template>
   <div class="notes-wrapper">
     <div class="notes-header clearfix">
-      <span :class="Number(sortingType) === 0 ? 'sorting-type-on' : 'sorting-type'"
-            @click="sorting(0)">最新</span>
-      <span :class="Number(sortingType) === 1 ? 'sorting-type-on' : 'sorting-type'"
-            @click="sorting(1)">最热</span>
+      <div class="left">
+        <slot name="sortingType"
+              :sortingWithQuery="sortingWithQuery"
+              :sortingWithoutQuery="sortingWithoutQuery"
+              :getSortingTypeClass="getSortingTypeClass"></slot>
+      </div>
       <div class="mine">
-        <el-switch
-          v-model="mine"
-          active-color="#13ce66"
-          @change="showMine">
-        </el-switch>
+        <slot name="showMine"
+              :mine="mine"
+              :showMineWithQuery="showMineWithQuery"
+              :showMineWithoutQuery="showMineWithoutQuery"></slot>
         <span>只看自己</span>
       </div>
     </div>
@@ -45,12 +46,11 @@
       </div>
     </div>
     <div class="pagination">
-      <el-pagination
-        layout="prev, pager, next"
-        :total="notesNum"
-        :current-page="currentPage"
-        @current-change="handleCurrentChange">
-      </el-pagination>
+      <slot name="pagination"
+            :totalNum="notesNum"
+            :currentPage="currentPage"
+            :handleCurrentChangeWithQuery="handleCurrentChangeWithQuery"
+            :handleCurrentChangeWithoutQuery="handleCurrentChangeWithoutQuery"></slot>
     </div>
   </div>
 </template>
@@ -80,9 +80,14 @@
       ...mapActions('account', {
         setAccountWindowShow: 'setAccountWindowShow'
       }),
-      // 当前页变化
-      handleCurrentChange (page) {
+      // url带页码的形式进行当前页变化
+      handleCurrentChangeWithQuery (page) {
         this.handleRoute(page, this.sortingType)
+      },
+      // url不带页码的形式进行当前页变化
+      handleCurrentChangeWithoutQuery (page) {
+        this.currentPage = page
+        this.fetchNotes()
       },
       // 笔记页的路由逻辑处理
       handleRoute (page, sortingType) {
@@ -103,7 +108,8 @@
         }
       },
       // 展示自己的笔记
-      showMine () {
+      showMineWithQuery () {
+        this.mine = !this.mine
         console.log(`mine is ${this.mine}`)
         if (!this.userInfo) {
           this.mine = false
@@ -115,11 +121,19 @@
           this.handleRoute('1', this.sortingType)
         }
       },
-      // 后台获取笔记
+      // 展示自己的笔记
+      showMineWithoutQuery () {
+        this.mine = !this.mine
+        this.fetchNotes()
+      },
       getNotes () {
         this.currentPage = Number(this.$route.query.p) || 1
         this.sortingType = Number(this.$route.query.type) || 0
         this.mine = this.$route.query.filter === 'mine'
+        this.fetchNotes()
+      },
+      // 后台获取笔记
+      fetchNotes () {
         // 后台获取笔记
         if (this.mine) {
           // 获取自己的笔记
@@ -132,10 +146,20 @@
         this.notes = NOTES.notes
         this.notesNum = NOTES.notesNum
       },
-      // 更改讨论列表排序规则
-      sorting (sortingType) {
+      // 获取排序规则的样式
+      getSortingTypeClass (sortingType) {
+        return Number(this.sortingType) === sortingType ? 'sorting-type-on' : 'sorting-type'
+      },
+      // url保留排序规则的方式，更改讨论列表排序规则
+      sortingWithQuery (sortingType) {
         if (this.sortingType !== sortingType) {
           this.handleRoute('1', sortingType)
+        }
+      },
+      // url不保留排序规则的方式，更改讨论列表排序规则
+      sortingWithoutQuery (sortingType) {
+        if (this.sortingType !== sortingType) {
+          this.sortingType = sortingType
         }
       },
       // 前往笔记详情页
