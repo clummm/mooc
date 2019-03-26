@@ -13,7 +13,7 @@
         <span @click="$router.replace({name:'uploadTest'})">课程测试</span>
       </div>
       <router-view :course="course" @hideShadow="hideShadow"
-                   @showShadow="showShadow" @saveBaseInfo="saveBaseInfo"></router-view>
+                   @showShadow="showShadow" @saveInfo="saveInfo"></router-view>
     </div>
   </div>
 </template>
@@ -30,7 +30,13 @@
       }
     },
     created () {
+      for (let i = 0, j = UPLOAD_COURSE.keyWords.length; i < j; ++i) {
+        UPLOAD_COURSE.keyWords[i].isMeaningShow = false
+      }
       this.course = UPLOAD_COURSE
+      this.course.needToKnow = this.course.needToKnow.replace(/\n/g, '<br>')
+      this.course.gains = this.course.gains.replace(/\n/g, '<br>')
+      // 新增属性是否显示关键词解释
     },
     methods: {
       showShadow () {
@@ -39,12 +45,8 @@
       hideShadow () {
         this.isShadowShow = false
       },
-      saveBaseInfo (baseInfo) {
-        this.course.name = baseInfo.name
-        this.course.subtitle = baseInfo.subtitle
-        this.course.img = baseInfo.image
-        this.course.category1 = baseInfo.category1
-        this.course.category2 = baseInfo.category2
+      saveInfo (tempInfo) {
+        this.course = tempInfo
       }
     }
   }
