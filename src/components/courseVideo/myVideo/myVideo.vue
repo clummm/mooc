@@ -15,6 +15,8 @@
                @pointerdown="startDragging">
             <div class="controller-inner-dot"></div>
           </div>
+          <div class="node-dot" v-for="(node,index) in nodes" @click.stop="jump2Node(index)" :key="index"
+               :style="{left:nodePlace(node.time)}"></div>
         </div>
       </div>
       <div class="controller-btn-wrapper">
@@ -46,10 +48,18 @@
 
   export default {
     name: 'myVideo',
-    props: [
-      'videoSrc',
-      'playTime'
-    ],
+    props: {
+      videoSrc: {
+        default: null
+      },
+      playTime: {
+        default: 0
+      },
+      nodes: {
+        type: Array,
+        default: null
+      }
+    },
     data () {
       return {
         video: null,
@@ -70,7 +80,22 @@
         return `${this.videoProgress * 100}%`
       }
     },
+    watch: {
+      // 切换视频源时需要重新加载一下播放器来更新视频源
+      videoSrc: function () {
+        this.video.load()
+        this.video.currentTime = this.playTime
+      }
+    },
     methods: {
+      // 计算节点位置
+      nodePlace (time) {
+        return `${(time / 60.095011) * 100}%`
+      },
+      jump2Node (index) {
+        this.videoProgress = this.nodes[index].time / this.video.duration
+        this.video.currentTime = this.video.duration * this.videoProgress
+      },
       toggleFullscreen () {
         let element = this.$refs.vcontainer
         if (this.fullscreen) {
@@ -136,6 +161,7 @@
         this.isMuted = this.video.muted
       },
       handleProgressClick (event) {
+        console.log('click2')
         const clickX = event.clientX
         this.setProgress(clickX)
       },
@@ -264,6 +290,19 @@
           top: 0;
           left: 0;
           background: #409EFF;
+
+        .node-dot
+          position: absolute;
+          z-index: 49;
+          left: 0;
+          top: -2.5px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
         .controller-dot
           position: absolute;

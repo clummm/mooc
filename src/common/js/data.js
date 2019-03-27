@@ -670,7 +670,28 @@ const UPLOAD_COURSE = {
   learningCount: '52523',
   rating: '4.5',
   intro: '简介：本课程基于一个TODO示例应用讲解VUE2的基本使用以及如何搭建一个vue的工程。首先通过webpack我们搭建了一个完善的vue的workflow，然后围绕功能实现讲解vue的使用，并介绍了vue的.vue文件以及jsx的开发模式。 对应实战课已经上线：https://coding.imooc.com/class/196.html，欢迎学习',
-  keyWords: ['关键词1', '关键词2', '关键词3', '关键词4', '关键词5'],
+  keyWords: [
+    {
+      keyword: '关键词1',
+      meaning: '关键词1的解释'
+    },
+    {
+      keyword: '关键词2',
+      meaning: '关键词2的解释'
+    },
+    {
+      keyword: '关键词3',
+      meaning: '关键词3的解释'
+    },
+    {
+      keyword: '关键词4',
+      meaning: '关键词4的解释'
+    },
+    {
+      keyword: '关键词5',
+      meaning: '关键词5的解释'
+    }
+  ],
   catalogue: {
     chapters: [
       {
@@ -680,30 +701,46 @@ const UPLOAD_COURSE = {
         sessions: [
           {
             id: 1,
+            name: '课时1',
             url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
             duration: '2000',
+            keyWords: [{
+              keyword: '关键词1',
+              meaning: '关键词1的解释'
+            }, {
+              keyword: '关键词2',
+              meaning: '关键词2的解释'
+            }],
             nodes: [
               {
                 name: '节点名1',
-                time: '节点1对应时间戳'
+                time: '15'
               },
               {
                 name: '节点名2',
-                time: '节点2对应时间戳'
+                time: '30'
               }
             ]
           }, {
             id: 2,
-            url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+            name: '课时2',
+            url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
             duration: '2000',
+            keyWords: [{
+              keyword: '关键词1',
+              meaning: '关键词1的解释'
+            }, {
+              keyword: '关键词2',
+              meaning: '关键词2的解释'
+            }],
             nodes: [
               {
                 name: '节点名1',
-                time: '节点1对应时间戳'
+                time: '20'
               },
               {
                 name: '节点名2',
-                time: '节点2对应时间戳'
+                time: '40'
               }
             ]
           }
@@ -759,9 +796,9 @@ const UPLOAD_COURSE = {
       count: 3,
       description: '测试描述1'
     }
-
   ]
 }
+
 export {
   USER_INFO,
   MY_COURSE,
