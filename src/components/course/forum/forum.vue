@@ -178,12 +178,12 @@
           this.discuss.content = this.discuss.content.trim()
           // 向后台提交讨论
           // ...post(uid, cid, discuss)
-          console.log('提交成功')
+          alert('提交成功')
           this.discuss.title = ''
           this.discuss.content = ''
           this.dialogVisible = false
         } else {
-          console.log('提交失败')
+          alert('提交失败')
         }
       },
       /**
@@ -249,7 +249,7 @@
       ...mapGetters('account', {
         userInfo: 'getUserInfo'
       }),
-      ...mapGetters('leavePosition', {
+      ...mapGetters('course', {
         leavePosition: 'getLeavePosition'
       })
     },

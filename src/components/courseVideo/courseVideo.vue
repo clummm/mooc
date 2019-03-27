@@ -23,6 +23,7 @@
         <div class="aside-menu-content">
           <!--<catalog v-show="asideMenuActive === 'catalog'"></catalog>-->
           <session-list v-show="asideMenuActive === 'catalog'" @jump-to="jumpTo"></session-list>
+          <publish-discuss v-show="asideMenuActive === 'forum'"></publish-discuss>
         </div>
       </div>
     </div>
@@ -53,10 +54,12 @@
   import myVideo from './myVideo/myVideo'
   import footerMenu from './footerMenu/footerMenu'
   import sessionList from './sessionList/sessionList'
+  import publishDiscuss from './publishDiscuss/publishDiscuss'
 
   export default {
     name: 'courseVideo',
     components: {
+      publishDiscuss,
       myVideo,
       footerMenu,
       sessionList
