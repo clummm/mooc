@@ -37,6 +37,7 @@
         </div>
       </div>
     </div>
+    {{playTime}}
   </div>
 </template>
 
@@ -194,14 +195,20 @@
       },
       showCursor () {
         document.body.style.cursor = 'default'
-      },
-      // 跳转到某个时间点播放
+      }
     },
     watch: {
       '$route' (to, from) {
-        console.log('in video')
+      },
+      playTime: function (newVal, oldVal) {
+        console.log(`in myVideo, playTime changed from ${oldVal} to ${newVal}`)
         if (this.video) {
-          this.video.currentTime = this.playTime || 0
+          this.video.currentTime = newVal || 0
+        }
+      },
+      videoSrc: function (newVal, oldVal) {
+        if (this.video) {
+          this.video.src = `${newVal}#t=${this.playTime}` || '#'
         }
       }
     },
@@ -212,9 +219,7 @@
       // 当加载的时候获取video对象的duration时长为NaN
       // 当浏览器能够开始播放指定的音频/视频时，更新播放器时长显示
       self.video.oncanplay = function () {
-        // self.handleTimeUpdate()
-        // console.log(`currentTime is ${self.currentTime}[${typeof self.currentTime}]`)
-        // self.video.currentTime = self.currentTime
+        self.handleTimeUpdate()
       }
     }
   }

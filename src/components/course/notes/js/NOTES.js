@@ -38,9 +38,9 @@ const NOTES = {
       createPosition: {
         cid: 0,
         courseName: 'Unity5.x 创造 3D VR游戏',
-        chapter: 2,
+        chapter: 1,
         sid: 2,
-        sessionName: '课时标题2',
+        sessionName: '课时标题1',
         time: 123
       }
     }

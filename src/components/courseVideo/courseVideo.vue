@@ -20,7 +20,10 @@
           <el-menu-item index="test">自我检测</el-menu-item>
           <el-menu-item index="subtitles">字幕</el-menu-item>
         </el-menu>
-        <div class="aside-menu-content"></div>
+        <div class="aside-menu-content">
+          <!--<catalog v-show="asideMenuActive === 'catalog'"></catalog>-->
+          <session-list v-show="asideMenuActive === 'catalog'" @jump-to="jumpTo"></session-list>
+        </div>
       </div>
     </div>
     <ul class="keywords clearfix">
@@ -40,69 +43,23 @@
       </li>
     </ul>
     <div class="subcontainer">
-      <div class="footer-menu">
-        <el-menu default-active="forum" mode="horizontal" @select="handleFootMenuSelect">
-          <el-menu-item index="forum">课程讨论</el-menu-item>
-          <el-menu-item index="notes">课程笔记</el-menu-item>
-        </el-menu>
-        <div class="footer-menu-content">
-          <forum v-show="footMenuActive === 'forum'">
-            <template v-slot:sortingType="sortingSlotProps">
-              <span @click="sortingSlotProps.sortingWithoutQuery(0)"
-                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
-              <span @click="sortingSlotProps.sortingWithoutQuery(1)"
-                    :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
-            </template>
-            <template v-slot:pagination="listSlotProps">
-              <el-pagination
-                layout="prev, pager, next"
-                :total="listSlotProps.totalNum"
-                :current-page="listSlotProps.currentPage"
-                @current-change="listSlotProps.handleCurrentChangeWithoutQuery">
-              </el-pagination>
-            </template>
-          </forum>
-          <notes v-show="footMenuActive === 'notes'">
-            <template v-slot:sortingType="sortingSlotProps">
-              <span @click="sortingSlotProps.sortingWithoutQuery(0)"
-                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
-              <span @click="sortingSlotProps.sortingWithoutQuery(1)"
-                    :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
-            </template>
-            <template v-slot:showMine="mineSlotProps">
-              <el-switch
-                v-model="mineSlotProps.mine"
-                active-color="#13ce66"
-                @change="mineSlotProps.showMineWithoutQuery">
-              </el-switch>
-            </template>
-            <template v-slot:pagination="listSlotProps">
-              <el-pagination
-                layout="prev, pager, next"
-                :total="listSlotProps.totalNum"
-                :current-page="listSlotProps.currentPage"
-                @current-change="listSlotProps.handleCurrentChangeWithoutQuery">
-              </el-pagination>
-            </template>
-          </notes>
-        </div>
-      </div>
+      <footer-menu></footer-menu>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import { SESSION } from './js/session'
+  import { CATALOG } from '../course/js/course'
   import myVideo from './myVideo/myVideo'
-  import forum from '../course/forum/forum'
-  import notes from '../course/notes/notes'
+  import footerMenu from './footerMenu/footerMenu'
+  import sessionList from './sessionList/sessionList'
 
   export default {
     name: 'courseVideo',
     components: {
       myVideo,
-      forum,
-      notes
+      footerMenu,
+      sessionList
     },
     data () {
       return {
@@ -119,22 +76,14 @@
         // 是否显示关键字解释
         explainActive: [],
         // 侧边菜单激活项
-        asideMenuActive: 'catalog',
-        // 底部菜单激活项
-        footMenuActive: 'forum'
+        asideMenuActive: 'catalog'
       }
     },
     created () {
-      console.log('-------------courseVideo--------------')
-      console.log(this.$route)
       this.getSession()
-      // let sessionStorage = window.sessionStorage
-      // if (sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`]) {
-      //   sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] = this.playTime
-      // }
     },
     methods: {
-      // 后台获取课时信息
+      // 后台获取课程目录结构信息
       getSession () {
         this.cid = this.$route.params.cid
         this.chapter = this.$route.params.chapter
@@ -142,6 +91,7 @@
         this.playTime = this.$route.params.playTime || 0
         this.playTime = this.playTime < 0 ? 0 : this.playTime
         console.log(`cid: ${this.cid}, chapter: ${this.chapter}, sid: ${this.sid}, leaveTime: ${this.playTime}`)
+
         // 保存到 sessionStorage
         let sessionStorage = window.sessionStorage
         if (this.$route.params.playTime) {
@@ -149,20 +99,33 @@
         } else {
           this.playTime = sessionStorage[`${this.cid}/${this.chapter}/${this.sid}`] || 0
         }
+
         // ...post({uid, token, cid, chapter, sid}
-        this.session = SESSION
-      },
-      // 底部目录页点击处理
-      handleFootMenuSelect (key) {
-        this.footMenuActive = key
-      },
-      // 侧边目录页点击处理
-      handleAsideMenuSelect (key, keyPath) {
-        console.log(key, keyPath)
+        // 得到当前播放的课时信息
+        this.session = CATALOG.catalog[Number(this.chapter) - 1].sessions[Number(this.sid) - 1]
+        // this.session = SESSION
       },
       // 关闭视频前上传离开时的节点
       beforeCloseHandler (e) {
         // ...
+        console.log('beforeCloseHandler')
+      },
+      // 侧边目录页点击处理
+      handleAsideMenuSelect (key) {
+        this.asideMenuActive = key
+      },
+      // 跳转到某个节点
+      jumpTo (chapter, sid, sec) {
+        if (Number(chapter) === Number(this.chapter) && Number(sid) === Number(this.sid)) {
+          this.playTime = sec
+        } else {
+          this.rHelp.openVideoWindow({
+            cid: this.cid,
+            chapter: chapter,
+            sid: sid,
+            playTime: sec
+          })
+        }
       }
     },
     watch: {
@@ -171,7 +134,6 @@
         console.log('-------------route change--------------')
         console.log(this.$route)
         this.getSession()
-        console.log('in courseVideo')
       }
     },
     destroyed () {
@@ -232,9 +194,4 @@
       .player
         flex 1
 
-    .subcontainer
-      .footer-menu
-        .footer-menu-content
-          padding-top 36px
-          padding-right 352px
 </style>

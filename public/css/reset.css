@@ -93,10 +93,12 @@ html, body {
 }
 
 /* 消除浮动 */
-.clearfix:before,
+/*.clearfix:before,*/
 .clearfix:after {
   content: " ";
-  display: table;
+  display: block;
+  visibility: hidden;
+  height: 0;
 }
 .clearfix:after {
   clear: both;

@@ -56,27 +56,46 @@ const CATALOG = {
       sessions: [
         {
           id: 1,
-          title: '课时标题1',
-          url: '#',
-          duration: 123,
+          title: 'big_buck_bunny',
+          url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+          duration: 150,
           leaveTime: -1,
           nodes: [
             {
               name: '节点名',
-              time: 60
+              time: 10
+            }
+          ],
+          keywords: [
+            {
+              keyword: 'bunny',
+              explain: '兔子',
+              active: false
+            },
+            {
+              keyword: 'buck',
+              explain: '雄鹿',
+              active: false
             }
           ]
         },
         {
           id: 2,
-          title: '课时标题2',
-          url: '#',
-          duration: 123,
+          title: 'trailer',
+          url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+          duration: 52,
           leaveTime: 50,
           nodes: [
             {
               name: '节点名',
-              time: 60
+              time: 20
+            }
+          ],
+          keywords: [
+            {
+              keyword: 'trailer',
+              explain: '火车',
+              active: false
             }
           ]
         }
@@ -89,14 +108,26 @@ const CATALOG = {
       sessions: [
         {
           id: 1,
-          title: '课时标题1',
-          url: '#',
-          duration: 123,
-          leaveTime: 123,
+          title: 'mov_bbb',
+          url: 'http://www.w3school.com.cn/example/html5/mov_bbb.mp4',
+          duration: 10,
+          leaveTime: 5,
           nodes: [
             {
               name: '节点名',
-              time: 60
+              time: 30
+            }
+          ],
+          keywords: [
+            {
+              keyword: 'mov',
+              explain: 'move',
+              active: false
+            },
+            {
+              keyword: 'bbb',
+              explain: 'bbb',
+              active: false
             }
           ]
         }
