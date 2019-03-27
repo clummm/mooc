@@ -82,9 +82,17 @@
     },
     watch: {
       // 切换视频源时需要重新加载一下播放器来更新视频源
-      videoSrc: function () {
-        this.video.load()
-        this.video.currentTime = this.playTime
+      videoSrc: function (newVal, oldVal) {
+        if (this.video) {
+          this.video.load()
+          this.video.src = `${newVal}#t=${this.playTime}` || '#'
+        }
+      },
+      // 跳转到其他视频播放点
+      playTime: function (newVal, oldVal) {
+        if (this.video) {
+          this.video.currentTime = newVal || 0
+        }
       }
     },
     methods: {
@@ -221,21 +229,6 @@
       },
       showCursor () {
         document.body.style.cursor = 'default'
-      }
-    },
-    watch: {
-      '$route' (to, from) {
-      },
-      playTime: function (newVal, oldVal) {
-        console.log(`in myVideo, playTime changed from ${oldVal} to ${newVal}`)
-        if (this.video) {
-          this.video.currentTime = newVal || 0
-        }
-      },
-      videoSrc: function (newVal, oldVal) {
-        if (this.video) {
-          this.video.src = `${newVal}#t=${this.playTime}` || '#'
-        }
       }
     },
     mounted () {
