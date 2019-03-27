@@ -701,32 +701,46 @@ const UPLOAD_COURSE = {
         sessions: [
           {
             id: 1,
+            name: '课时1',
             url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
             duration: '2000',
-            keyWords: ['关键词1', '关键词2'],
+            keyWords: [{
+              keyword: '关键词1',
+              meaning: '关键词1的解释'
+            }, {
+              keyword: '关键词2',
+              meaning: '关键词2的解释'
+            }],
             nodes: [
               {
                 name: '节点名1',
-                time: '节点1对应时间戳'
+                time: '15'
               },
               {
                 name: '节点名2',
-                time: '节点2对应时间戳'
+                time: '30'
               }
             ]
           }, {
             id: 2,
-            url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+            name: '课时2',
+            url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
             duration: '2000',
-            keyWords: ['关键词1', '关键词2'],
+            keyWords: [{
+              keyword: '关键词1',
+              meaning: '关键词1的解释'
+            }, {
+              keyword: '关键词2',
+              meaning: '关键词2的解释'
+            }],
             nodes: [
               {
                 name: '节点名1',
-                time: '节点1对应时间戳'
+                time: '20'
               },
               {
                 name: '节点名2',
-                time: '节点2对应时间戳'
+                time: '40'
               }
             ]
           }
@@ -798,6 +812,5 @@ export {
   MESSAGES_COURSE,
   MESSAGES_DISCUSS,
   PUBLISH_COURSES,
-  UPLOAD_COURSE,
-  DICTIONARY
+  UPLOAD_COURSE
 }

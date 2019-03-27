@@ -120,6 +120,7 @@
 <style lang="stylus" scoped>
   .setting-wrapper
     width 1024px
+    height 500px
     margin auto
     position relative
 
