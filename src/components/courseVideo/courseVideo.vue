@@ -24,6 +24,9 @@
           <!--<catalog v-show="asideMenuActive === 'catalog'"></catalog>-->
           <session-list v-show="asideMenuActive === 'catalog'" @jump-to="jumpTo"></session-list>
           <publish-discuss v-show="asideMenuActive === 'forum'"></publish-discuss>
+          <publish-note v-show="asideMenuActive === 'note'"></publish-note>
+          <self-test v-show="asideMenuActive === 'test'"></self-test>
+          <subtitles v-show="asideMenuActive === 'subtitles'"></subtitles>
         </div>
       </div>
     </div>
@@ -55,11 +58,17 @@
   import footerMenu from './footerMenu/footerMenu'
   import sessionList from './sessionList/sessionList'
   import publishDiscuss from './publishDiscuss/publishDiscuss'
+  import publishNote from './publishNote/publishNote'
+  import selfTest from './selfTest/selfTest'
+  import subtitles from './subtitles/subtitles'
 
   export default {
     name: 'courseVideo',
     components: {
       publishDiscuss,
+      publishNote,
+      selfTest,
+      subtitles,
       myVideo,
       footerMenu,
       sessionList
@@ -196,5 +205,13 @@
 
       .player
         flex 1
+
+      .aside-menu
+        display flex
+        flex-direction column
+        .aside-menu-content
+          flex 1
+          overflow auto
+          width 450px
 
 </style>
