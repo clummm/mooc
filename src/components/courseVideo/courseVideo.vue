@@ -10,7 +10,7 @@
     </ul>
     <div class="main-content">
       <div class="player">
-        <my-video :video-src="session.url" :play-time="playTime"></my-video>
+        <my-video :video-src="session.url" :play-time="playTime" @time-update="timeUpdate"></my-video>
       </div>
       <div class="aside-menu">
         <el-menu default-active="catalog" mode="horizontal" @select="handleAsideMenuSelect">
@@ -20,13 +20,15 @@
           <el-menu-item index="test">自我检测</el-menu-item>
           <el-menu-item index="subtitles">字幕</el-menu-item>
         </el-menu>
-        <div class="aside-menu-content">
-          <!--<catalog v-show="asideMenuActive === 'catalog'"></catalog>-->
+        <div class="aside-menu-content" ref="aside">
           <session-list v-show="asideMenuActive === 'catalog'" @jump-to="jumpTo"></session-list>
           <publish-discuss v-show="asideMenuActive === 'forum'"></publish-discuss>
           <publish-note v-show="asideMenuActive === 'note'"></publish-note>
           <self-test v-show="asideMenuActive === 'test'"></self-test>
-          <subtitles v-show="asideMenuActive === 'subtitles'"></subtitles>
+          <subtitles v-show="asideMenuActive === 'subtitles'"
+                     :current-time="currentTime"
+                     @jump-to="playTime = $event"
+                     @scroll-to="scrollTo"></subtitles>
         </div>
       </div>
     </div>
@@ -81,14 +83,16 @@
         chapter: '',
         // 第几课时
         sid: '',
-        // 播放点：-1 -> 未观看
+        // 播放点，用于跳转某个时间点播放：-1 -> 未观看
         playTime: 0,
         // 课时信息
         session: null,
         // 是否显示关键字解释
         explainActive: [],
         // 侧边菜单激活项
-        asideMenuActive: 'catalog'
+        asideMenuActive: 'catalog',
+        // 当前播放点，用于高亮字幕
+        currentTime: 0
       }
     },
     created () {
@@ -126,6 +130,11 @@
       handleAsideMenuSelect (key) {
         this.asideMenuActive = key
       },
+      // 侧边目录滚动，滚动距离=滚动条长度/数组长度*当前数组的index -默认不滚动的距离
+      scrollTo (length, index) {
+        this.$refs.aside.scrollTop = this.$refs.aside.scrollHeight / length * index - 100
+        this.$refs.aside.scrollTop = this.$refs.aside.scrollTop < 0 ? 0 : this.$refs.aside.scrollTop
+      },
       // 跳转到某个节点
       jumpTo (chapter, sid, sec) {
         if (Number(chapter) === Number(this.chapter) && Number(sid) === Number(this.sid)) {
@@ -138,6 +147,11 @@
             playTime: sec
           })
         }
+      },
+      // 视频的播放点更新
+      timeUpdate (currentTime) {
+        // console.log(`currentTime is ${currentTime}`)
+        this.currentTime = currentTime
       }
     },
     watch: {

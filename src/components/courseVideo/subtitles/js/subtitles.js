@@ -1,28 +1,33 @@
 const subtitles = [
   {
-    content: '这是一句字幕',
+    content: '请把你的锅',
+    start: 0,
+    end: 1
+  },
+  {
+    content: '带回你的虾',
     start: 1,
     end: 3
   },
   {
-    content: '这是一句长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长字幕',
-    start: 5,
-    end: 6
+    content: '请把你的微笑留下……',
+    start: 3,
+    end: 7
   },
   {
-    content: '这是一句字幕',
+    content: '请把你的锅',
+    start: 7,
+    end: 10
+  },
+  {
+    content: '带回你的虾',
     start: 10,
-    end: 13
+    end: 12
   },
   {
-    content: '这是一句字幕',
-    start: 15,
-    end: 20
-  },
-  {
-    content: '这是一句字幕',
-    start: 21,
-    end: 30
+    content: '请把你的微笑留下',
+    start: 12,
+    end: 15
   }
 ]
 
