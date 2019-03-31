@@ -4,6 +4,7 @@
        @pointermove.prevent="handleMouseMove" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
     <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd">
       <source :src="`${videoSrc}#t=${playTime}`"/>
+      <track :src="webvtt" kind="subtitles" label="中文字幕" srclang="zh" default/>
     </video>
     <div class="controller" v-show="isControlVisible">
       <div class="controller-progress-wrapper">
@@ -57,6 +58,10 @@
       nodes: {
         type: Array,
         default: null
+      },
+      webvtt: {
+        type: String,
+        default: '/example.vtt'
       }
     },
     data () {
@@ -238,6 +243,9 @@
       // 当浏览器能够开始播放指定的音频/视频时，更新播放器时长显示
       self.video.oncanplay = function () {
         self.handleTimeUpdate()
+      }
+      self.video.ontimeupdate = function () {
+        self.$emit('time-update', self.video.currentTime)
       }
     }
   }
