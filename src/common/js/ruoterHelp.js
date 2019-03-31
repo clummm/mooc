@@ -79,6 +79,13 @@ export default {
       }
     })
   },
+  // 当前窗口打开个人模块课程子模块
+  openCourse () {
+    router.push({
+      name: 'courseList'
+    })
+  },
+  // 跳转上传管理详情页 基本信息
   openUploadInfo (id) {
     router.push({
       name: 'uploadInfo',

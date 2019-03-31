@@ -33,7 +33,7 @@
       </div>
       <div class="my-course" @mouseenter="isCourseMenuShow=true"
            @mouseleave="isCourseMenuShow=false">
-        <span @click="openUserChild('course')">我的课程</span>
+        <span @click="rHelp.openCourse()">我的课程</span>
         <ul class="course-menu" v-show="isCourseMenuShow&&userInfo">
           <div class="course-menu-item"  @click="rHelp.openCourseNewWindow(101)">课程1</div>
           <div class="course-menu-item" @click="rHelp.openCourseNewWindow(102)">课程2</div>

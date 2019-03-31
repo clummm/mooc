@@ -32,8 +32,12 @@
           {{item.publishTime}}
         </span>
         <span v-else>暂未发布</span>
-        <span v-if="item.updateTime">{{item.updateTime}}</span>
-        <span v-else>暂无更新</span>
+        <div class="update">
+          <span v-if="item.updateTime">上次更新：{{item.updateTime}}</span>
+          <span v-else>暂无更新</span>
+          <div v-if="item.updateStatus===1&&item.updateTime" @click="item.updateStatus=2">提交更新</div>
+          <div v-else-if="item.updateStatus===2">更新审核中...</div>
+        </div>
         <div class="status">
           <div v-if="item.status===0">
             <div>未审核</div>
@@ -88,6 +92,7 @@
             rating: null,
             publishTime: null,
             updateTime: null,
+            updateStatus: 1,
             status: 0
           }
         this.courses.push(newCourse)
@@ -115,6 +120,6 @@
         right 20px
         top 10px
 
-      .status
+      .status, .update
         display inline-block
 </style>

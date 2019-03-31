@@ -39,7 +39,6 @@
         </div>
       </div>
     </div>
-    {{playTime}}
   </div>
 </template>
 

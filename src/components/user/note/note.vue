@@ -21,7 +21,7 @@
           <p class="text-ellipsis">{{item.content}}</p>
         </div>
         <div>
-          <span @click="rHelp.openNoteDetailNewWindow(item.id)">查看全部</span>
+          <span @click="rHelp.openNoteDetailNewWindow(item.id)">查看详情</span>
           <span>收藏人数{{item.likeCount}}</span>
           <span v-if="isMyNote" @click="deleteMyNote(index)">删除笔记</span>
           <span v-else @click="deleteLikeNote(index)">取消收藏</span>
