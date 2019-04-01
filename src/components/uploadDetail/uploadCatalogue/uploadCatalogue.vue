@@ -1,60 +1,116 @@
 <template>
   <div class="catalogue-wrapper">
-    <div class="editor-wrapper edit-chapter" v-if="isEditChapter">
-      <div>
-        <label>章节名</label>
-        <input type="text" placeholder="请输入章节名" v-model="tempChapter.title">
-      </div>
-      <div>
-        <label>章节简介</label>
-        <input type="text" placeholder="请输入章节简介" v-model="tempChapter.intro">
-      </div>
-      <div>
-        <span @click="saveChapter">完成</span>
-        <span @click="cancelChapter">取消</span>
+    <div v-if="isEditChapter">
+      <div class="shadow"></div>
+      <div class="editor-wrapper edit-chapter">
+        <div>
+          <label>章节名</label>
+          <input type="text" placeholder="请输入章节名" v-model="tempChapter.title">
+        </div>
+        <div>
+          <label>章节简介</label>
+          <input type="text" placeholder="请输入章节简介" v-model="tempChapter.intro">
+        </div>
+        <div>
+          <span @click="saveChapter">完成</span>
+          <span @click="cancelChapter">取消</span>
+        </div>
       </div>
     </div>
-    <div class="editor-wrapper edit-session" v-if="isEditSession">
-      <div>
-        <label>课时名称</label>
-        <input type="text" placeholder="请输入课时名称" v-model="tempSession.name">
+    <div v-if="isEditSession">
+      <div class="shadow"></div>
+      <div class="editor-wrapper edit-session">
+        <div>
+          <label>课时名称</label>
+          <input type="text" placeholder="请输入课时名称" v-model="tempSession.name">
+        </div>
+        <div>
+          <span>上传课时视频</span>
+        </div>
+        <div>
+          <span @click="saveSession">完成</span>
+          <span @click="cancelSession">取消</span>
+        </div>
       </div>
-      <div>
-        <span>上传课时视频</span>
-      </div>
-      <div>
-        <span @click="saveSession">完成</span>
-        <span @click="cancelSession">取消</span>
+    </div>
+    <div v-if="isEditResource">
+      <div class="shadow"></div>
+      <div class="editor-wrapper editor-resource">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"></el-form>
       </div>
     </div>
     <div class="left">
-      <div>课程目录</div>
       <div>
-        <div v-for="(chapter,index) in course.catalogue.chapters" :key="index">
-          <div>
-            <span>第{{number2character(index+1)}}章</span>
-            <span>{{chapter.title}}</span>
-            <span @click="editChapter(index)">编辑</span>
-            <span @click="deleteChapter(index)">删除</span>
-          </div>
-          <div>{{chapter.intro}}</div>
-          <div>
-            <div v-if="chapter.sessions">
-              <div v-for="(session,sIndex) in chapter.sessions" :key="sIndex"
-                   :class="{'session-chosen':isSessionChosen(session.id)}">
-                <div @click="chooseSession(index,sIndex)">
-                  <span>{{index+1}}.{{sIndex+1}}</span>
-                  <span>{{session.name}}</span>
-                  <span>{{session.duration}}</span>
-                  <span @click="editSession(index,sIndex)">编辑</span>
-                  <span @click="deleteSession(index,sIndex)">删除</span>
+        <p>课程目录</p>
+        <div>
+          <div v-for="(chapter,index) in course.catalogue.chapters" :key="index">
+            <div>
+              <span>第{{number2character(index+1)}}章</span>
+              <span>{{chapter.title}}</span>
+              <span @click="editChapter(index)">编辑</span>
+              <span @click="deleteChapter(index)">删除</span>
+            </div>
+            <div>{{chapter.intro}}</div>
+            <div>
+              <div v-if="chapter.sessions">
+                <div v-for="(session,sIndex) in chapter.sessions" :key="sIndex"
+                     :class="{'session-chosen':isSessionChosen(session.id)}">
+                  <div @click="chooseSession(index,sIndex)">
+                    <span>{{index+1}}.{{sIndex+1}}</span>
+                    <span>{{session.name}}</span>
+                    <span>{{session.duration}}</span>
+                    <span @click="editSession(index,sIndex)">编辑</span>
+                    <span @click="deleteSession(index,sIndex)">删除</span>
+                  </div>
                 </div>
               </div>
+              <div @click="editSession(index,-1)">添加课时</div>
             </div>
-            <div @click="editSession(index,-1)">添加课时</div>
           </div>
+          <div @click="editChapter(-1)">添加章节</div>
         </div>
-        <div @click="editChapter(-1)">添加章节</div>
+      </div>
+      <div>
+        <span>课程课件</span>
+        <el-button size="mini" @click="editResource('-1')">添加课件</el-button>
+        <el-table
+          :data="course.resources"
+          style="width: 100%;overflow: auto">
+          <el-table-column
+            label="课件名称"
+            width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="课件大小"
+            width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.size }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="上传时间"
+            width="100">
+            <template slot-scope="scope">
+              <span>{{ scope.row.uploadTime }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="editResource(scope.$index)">编辑
+              </el-button>
+              <el-button
+                size="mini"
+                type="danger"
+                @click="deleteResource(scope.$index)">删除
+              </el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
     </div>
     <div class="right">
@@ -86,11 +142,31 @@
         chapterIndex: null,
         sessionIndex: null,
         tempSession: null,
+        tempResource: null,
         isEditChapter: false,
-        isEditSession: false
+        isEditSession: false,
+        isEditResource: false
       }
     },
     methods: {
+      // 编辑课件
+      editResource (index) {
+        if (index === -1) {
+          this.tempResource = {
+            id: 100,
+            name: null,
+            url: '文件地址1',
+            description: '文件描述1',
+            uploadTime: '2019-3-20',
+            size: '23.5M'
+          }
+        }
+        console.log(index)
+      },
+      // 删除课件
+      deleteResource (index, row) {
+        this.course.resources.splice(index, 1)
+      },
       isSessionChosen (id) {
         if (!this.currentSession) {
           return false
@@ -106,12 +182,6 @@
         if (this.course.catalogue.chapters[0].sessions[0]) {
           this.currentSession = this.course.catalogue.chapters[0].sessions[0]
         }
-      },
-      hideShadow () {
-        this.$emit('hideShadow')
-      },
-      showShadow () {
-        this.$emit('showShadow')
       },
       number2character (n) {
         return number2character(n)
@@ -142,7 +212,6 @@
           }
         }
         this.isEditChapter = true
-        this.showShadow()
       },
       saveChapter () {
         if (this.chapterIndex !== -1) {
@@ -152,11 +221,9 @@
         }
         this.$emit('saveInfo', this.course)
         this.isEditChapter = false
-        this.hideShadow()
       },
       cancelChapter () {
         this.isEditChapter = false
-        this.hideShadow()
       },
       deleteChapter (index) {
         this.course.catalogue.chapters.splice(index, 1)
@@ -178,7 +245,6 @@
           }
         }
         this.isEditSession = true
-        this.showShadow()
       },
       saveSession () {
         this.tempSession.id = this.tempSession.name
@@ -192,7 +258,6 @@
       },
       cancelSession () {
         this.isEditSession = false
-        this.hideShadow()
       }
     },
     components: {
@@ -204,7 +269,7 @@
 <style lang="stylus" scoped>
   .catalogue-wrapper
     .editor-wrapper
-      position absolute
+      position fixed
       top 0
       bottom 0
       right 0
@@ -221,9 +286,13 @@
       width 400px
       height 400px
 
+    .editor-resource
+      width 400px
+      height 400px
+
     .left
       display inline-block
-      width 500px
+      width 450px
 
       .session-chosen
         background grey

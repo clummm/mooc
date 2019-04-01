@@ -93,5 +93,11 @@ export default {
         cid: id
       }
     })
+  },
+  // 返回首页
+  goHome () {
+    router.push({
+      name: 'Home'
+    })
   }
 }
