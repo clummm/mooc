@@ -49,15 +49,15 @@ const PRIMARY_CATEGORY = [
     recommend: [
       {
         id: 0,
-        img: '#',
+        img: '/images/course.png',
         name: '前端课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
-        rating: 5.0
+        rating: 4.0
       },
       {
         id: 1,
-        img: '#',
+        img: '/images/course.png',
         name: '前端课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -65,7 +65,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 2,
-        img: '#',
+        img: '/images/course.png',
         name: '前端课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -73,7 +73,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 3,
-        img: '#',
+        img: '/images/course.png',
         name: '前端课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -102,7 +102,7 @@ const PRIMARY_CATEGORY = [
     recommend: [
       {
         id: 4,
-        img: '#',
+        img: '/images/course.png',
         name: '编程课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -110,7 +110,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 5,
-        img: '#',
+        img: '/images/course.png',
         name: '编程课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -118,7 +118,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 6,
-        img: '#',
+        img: '/images/course.png',
         name: '编程课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -126,7 +126,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 7,
-        img: '#',
+        img: '/images/course.png',
         name: '编程课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -155,7 +155,7 @@ const PRIMARY_CATEGORY = [
     recommend: [
       {
         id: 8,
-        img: '#',
+        img: '/images/course.png',
         name: '移动课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -163,7 +163,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 9,
-        img: '#',
+        img: '/images/course.png',
         name: '移动课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -171,7 +171,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 10,
-        img: '#',
+        img: '/images/course.png',
         name: '移动课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -179,7 +179,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 11,
-        img: '#',
+        img: '/images/course.png',
         name: '移动课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -208,7 +208,7 @@ const PRIMARY_CATEGORY = [
     recommend: [
       {
         id: 12,
-        img: '#',
+        img: '/images/course.png',
         name: '前沿课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -216,7 +216,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 13,
-        img: '#',
+        img: '/images/course.png',
         name: '前沿课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -224,7 +224,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 14,
-        img: '#',
+        img: '/images/course.png',
         name: '前沿课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -232,7 +232,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 15,
-        img: '#',
+        img: '/images/course.png',
         name: '前沿课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -257,7 +257,7 @@ const PRIMARY_CATEGORY = [
     recommend: [
       {
         id: 16,
-        img: '#',
+        img: '/images/course.png',
         name: '网络安全课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -265,7 +265,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 17,
-        img: '#',
+        img: '/images/course.png',
         name: '网络安全课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -273,7 +273,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 18,
-        img: '#',
+        img: '/images/course.png',
         name: '网络安全课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -281,7 +281,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 19,
-        img: '#',
+        img: '/images/course.png',
         name: '网络安全课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -314,7 +314,7 @@ const PRIMARY_CATEGORY = [
     recommend: [
       {
         id: 20,
-        img: '#',
+        img: '/images/course.png',
         name: '后端课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -322,7 +322,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 21,
-        img: '#',
+        img: '/images/course.png',
         name: '后端课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -330,7 +330,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 22,
-        img: '#',
+        img: '/images/course.png',
         name: '后端课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -338,7 +338,7 @@ const PRIMARY_CATEGORY = [
       },
       {
         id: 23,
-        img: '#',
+        img: '/images/course.png',
         name: '后端课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -356,15 +356,15 @@ const SECOND_CATEGORY = [
     recommend: [
       {
         id: 0,
-        img: '#',
+        img: '/images/course.png',
         name: '前端框架课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
-        rating: 5.0
+        rating: 4.0
       },
       {
         id: 1,
-        img: '#',
+        img: '/images/course.png',
         name: '前端框架课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -372,7 +372,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 2,
-        img: '#',
+        img: '/images/course.png',
         name: '前端框架课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -380,7 +380,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 3,
-        img: '#',
+        img: '/images/course.png',
         name: '前端框架课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -394,7 +394,7 @@ const SECOND_CATEGORY = [
     recommend: [
       {
         id: 0,
-        img: '#',
+        img: '/images/course.png',
         name: '小程序课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -402,7 +402,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 1,
-        img: '#',
+        img: '/images/course.png',
         name: '小程序课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -410,7 +410,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 2,
-        img: '#',
+        img: '/images/course.png',
         name: '小程序课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -418,7 +418,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 3,
-        img: '#',
+        img: '/images/course.png',
         name: '小程序课程3',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -432,7 +432,7 @@ const SECOND_CATEGORY = [
     recommend: [
       {
         id: 0,
-        img: '#',
+        img: '/images/course.png',
         name: '语言基础课程0',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -440,7 +440,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 1,
-        img: '#',
+        img: '/images/course.png',
         name: '语言基础课程1',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -448,7 +448,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 2,
-        img: '#',
+        img: '/images/course.png',
         name: '语言基础课程2',
         subtitle: '课程副标题',
         learningCount: 1000,
@@ -456,7 +456,7 @@ const SECOND_CATEGORY = [
       },
       {
         id: 3,
-        img: '#',
+        img: '/images/course.png',
         name: '语言基础课程3',
         subtitle: '课程副标题',
         learningCount: 1000,

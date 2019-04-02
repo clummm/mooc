@@ -23,6 +23,12 @@
 <script>
   export default {
     name: 'publishNote',
+    props: {
+      currentTime: {
+        type: Number,
+        default: 0
+      }
+    },
     data () {
       return {
         // 要发布的笔记
@@ -51,8 +57,16 @@
         if (this.note.title.trim().length >= 5) {
           this.note.title = this.note.title.trim()
           this.note.content = this.note.content.trim()
+          this.note.createPosition = {
+            cid: this.$route.params.cid,
+            chapter: this.$route.params.chapter,
+            sid: this.$route.params.sid,
+            time: this.currentTime
+          }
           // 向后台提交讨论
           // ...post(uid, cid, note)
+          console.log(`提交成功：`)
+          console.log(this.note)
           alert('提交成功')
           this.note.title = ''
           this.note.content = ''

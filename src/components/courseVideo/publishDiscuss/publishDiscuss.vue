@@ -23,6 +23,12 @@
 <script>
   export default {
     name: 'publishDiscuss',
+    props: {
+      currentTime: {
+        type: Number,
+        default: 0
+      }
+    },
     data () {
       return {
         // 要发布的讨论
@@ -51,8 +57,16 @@
         if (this.discuss.title.trim().length >= 5) {
           this.discuss.title = this.discuss.title.trim()
           this.discuss.content = this.discuss.content.trim()
+          this.discuss.createPosition = {
+            cid: this.$route.params.cid,
+            chapter: this.$route.params.chapter,
+            sid: this.$route.params.sid,
+            time: this.currentTime
+          }
           // 向后台提交讨论
           // ...post(uid, cid, discuss)
+          console.log(`提交成功：`)
+          console.log(this.discuss)
           alert('提交成功')
           this.discuss.title = ''
           this.discuss.content = ''
