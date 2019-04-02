@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="form-menu">
-        <el-button type="primary" @click="submitForm('testForm')">保存</el-button>
+        <el-button type="primary" @click="submitForm('testForm')" :loading="isLoading">保存</el-button>
         <el-button @click="cancelEdit">取消</el-button>
       </div>
     </div>
@@ -241,8 +241,11 @@
                   this.course.tests[index].description = this.test.description
                   this.course.tests[index].count = this.test.list.length
                 }
-                this.$emit('saveInfo', this.course)
-                this.$router.push({ name: 'uploadTest' })
+                this.isLoading = true
+                setTimeout(() => {
+                  this.$emit('saveInfo', this.course)
+                  this.$router.push({ name: 'uploadTest' })
+                }, 500)
               }
             } else {
               return false
