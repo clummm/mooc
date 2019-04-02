@@ -22,8 +22,8 @@
         </el-menu>
         <div class="aside-menu-content" ref="aside">
           <session-list v-show="asideMenuActive === 'catalog'" @jump-to="jumpTo"></session-list>
-          <publish-discuss v-show="asideMenuActive === 'forum'"></publish-discuss>
-          <publish-note v-show="asideMenuActive === 'note'"></publish-note>
+          <publish-discuss v-show="asideMenuActive === 'forum'" :current-time="currentTime"></publish-discuss>
+          <publish-note v-show="asideMenuActive === 'note'" :current-time="currentTime"></publish-note>
           <self-test v-show="asideMenuActive === 'test'"></self-test>
           <subtitles v-show="asideMenuActive === 'subtitles'"
                      :current-time="currentTime"
