@@ -10,7 +10,7 @@ import {
   RadioGroup,
   Table,
   Tabs,
-  Breadcrumb, Form
+  Breadcrumb, Form, Upload, MessageBox,Card
 } from 'element-ui'
 
 // 引入 element-ui
@@ -26,3 +26,6 @@ Vue.use(Table)
 Vue.use(Tabs)
 Vue.use(Breadcrumb)
 Vue.use(Form)
+Vue.use(Upload)
+Vue.use(Card)
+Vue.component(MessageBox.name, MessageBox)

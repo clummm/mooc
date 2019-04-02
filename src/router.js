@@ -23,6 +23,7 @@ import uploadMain from './components/uploadDetail/uploadMain'
 import uploadInfo from './components/uploadDetail/uploadInfo/uploadInfo'
 import uploadCatalogue from './components/uploadDetail/uploadCatalogue/uploadCatalogue'
 import uploadTest from './components/uploadDetail/uploadTest/uploadTest'
+import testDetail from './components/uploadDetail/uploadTest/testDetail/testDetail'
 
 import searchResult from './components/searchResult/searchResult'
 import protocol from './components/help/protocol/protocol'
@@ -159,6 +160,15 @@ const router = new Router({
           path: 'test',
           name: 'uploadTest',
           component: uploadTest,
+          meta: {
+            login: NEED_LOGIN
+          }
+        },
+        {
+          // 上传管理课堂测试详情页
+          path: 'test/:index',
+          name: 'testDetail',
+          component: testDetail,
           meta: {
             login: NEED_LOGIN
           }

@@ -757,7 +757,7 @@ const UPLOAD_COURSE = {
     {
       id: 100,
       name: '文件名1',
-      url: '文件地址1',
+      url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
       description: '文件描述1',
       uploadTime: '2019-3-20',
       size: '23.5M'
@@ -765,7 +765,7 @@ const UPLOAD_COURSE = {
     {
       id: 100,
       name: '文件名1',
-      url: '文件地址1',
+      url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
       description: '文件描述1',
       uploadTime: '2019-3-20',
       size: '23.5M'
@@ -773,7 +773,7 @@ const UPLOAD_COURSE = {
     {
       id: 100,
       name: '文件名1',
-      url: '文件地址1',
+      url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
       description: '文件描述1',
       uploadTime: '2019-3-20',
       size: '23.5M'
@@ -785,7 +785,7 @@ const UPLOAD_COURSE = {
       id: 200,
       name: '测试名字1',
       count: 3,
-      description: '测试描述1'
+      description: '测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1'
     },
     {
       id: 200,
@@ -798,6 +798,40 @@ const UPLOAD_COURSE = {
       name: '测试名字1',
       count: 3,
       description: '测试描述1'
+    }
+  ]
+}
+const TEST_DETAIL = {
+  id: 1,
+  name: '',
+  description: '',
+  list: [
+    {
+      query: '问题内容1？',
+      choiceA: '选项A内容',
+      choiceB: '选项B内容',
+      choiceC: '选项C内容',
+      choiceD: '选项D内容',
+      answer: 'A',
+      explain: '解析1'
+    },
+    {
+      query: '问题内容1？',
+      choiceA: '选项A内容',
+      choiceB: '选项B内容',
+      choiceC: '选项C内容',
+      choiceD: '选项D内容',
+      answer: 'A',
+      explain: '解析1'
+    },
+    {
+      query: '问题内容1？',
+      choiceA: '选项A内容',
+      choiceB: '选项B内容',
+      choiceC: '选项C内容',
+      choiceD: '选项D内容',
+      answer: 'A',
+      explain: '解析1'
     }
   ]
 }
@@ -815,5 +849,6 @@ export {
   MESSAGES_COURSE,
   MESSAGES_DISCUSS,
   PUBLISH_COURSES,
-  UPLOAD_COURSE
+  UPLOAD_COURSE,
+  TEST_DETAIL
 }

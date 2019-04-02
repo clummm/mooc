@@ -45,7 +45,7 @@
           this.currentType = '0'
         } else if (name === 'uploadCatalogue') {
           this.currentType = '1'
-        } else if (name === 'uploadTest') {
+        } else if (name === 'uploadTest' || name === 'testDetail') {
           this.currentType = '2'
         }
       },
@@ -55,7 +55,7 @@
         } else if (key === '1') {
           this.$router.push('catalogue')
         } else if (key === '2') {
-          this.$router.push('test')
+          this.$router.push({ name: 'uploadTest' })
         }
       },
       saveInfo (tempInfo) {

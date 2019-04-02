@@ -33,12 +33,6 @@
         </div>
       </div>
     </div>
-    <div v-if="isEditResource">
-      <div class="shadow"></div>
-      <div class="editor-wrapper editor-resource">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"></el-form>
-      </div>
-    </div>
     <div class="left">
       <div>
         <p>课程目录</p>
@@ -72,45 +66,19 @@
       </div>
       <div>
         <span>课程课件</span>
-        <el-button size="mini" @click="editResource('-1')">添加课件</el-button>
-        <el-table
-          :data="course.resources"
-          style="width: 100%;overflow: auto">
-          <el-table-column
-            label="课件名称"
-            width="100">
-            <template slot-scope="scope">
-              <span>{{ scope.row.name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="课件大小"
-            width="100">
-            <template slot-scope="scope">
-              <span>{{ scope.row.size }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="上传时间"
-            width="100">
-            <template slot-scope="scope">
-              <span>{{ scope.row.uploadTime }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button
-                size="mini"
-                @click="editResource(scope.$index)">编辑
-              </el-button>
-              <el-button
-                size="mini"
-                type="danger"
-                @click="deleteResource(scope.$index)">删除
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+        <el-upload
+          class="upload-demo"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :on-success="uploadResourceSuccess"
+          :on-error="uploadResourceError"
+          :on-progress="uploadResourceProgress"
+          :on-preview="handleResourcePreview"
+          :on-remove="handleResourceRemove"
+          :before-remove="beforeResourceRemove"
+          :file-list="course.resources"
+          multiple>
+          <el-button size="small" type="primary">添加课件</el-button>
+        </el-upload>
       </div>
     </div>
     <div class="right">
@@ -149,23 +117,19 @@
       }
     },
     methods: {
-      // 编辑课件
-      editResource (index) {
-        if (index === -1) {
-          this.tempResource = {
-            id: 100,
-            name: null,
-            url: '文件地址1',
-            description: '文件描述1',
-            uploadTime: '2019-3-20',
-            size: '23.5M'
-          }
-        }
-        console.log(index)
+      uploadResourceSuccess (response, file, fileList) {
+        this.course.resources = fileList
+        this.$emit('saveInfo', this.course)
       },
-      // 删除课件
-      deleteResource (index, row) {
-        this.course.resources.splice(index, 1)
+      uploadResourceError (err, file, fileList) {
+        console.log('error:' + err)
+      },
+      handleResourceRemove (file, fileList) {
+        this.course.resources = fileList
+        this.$emit('saveInfo', this.course)
+      },
+      beforeResourceRemove (file, fileList) {
+        return this.$confirm(`此操作将永久删除 ${file.name},是否继续?`)
       },
       isSessionChosen (id) {
         if (!this.currentSession) {
@@ -268,6 +232,7 @@
 
 <style lang="stylus" scoped>
   .catalogue-wrapper
+    height 500px
     .editor-wrapper
       position fixed
       top 0
@@ -283,10 +248,6 @@
       height 400px
 
     .edit-session
-      width 400px
-      height 400px
-
-    .editor-resource
       width 400px
       height 400px
 
