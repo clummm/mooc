@@ -20,9 +20,7 @@
                 </router-link>
               </div>
               <div class="recommend-box">
-                <router-link class="recommend" v-for="(course, i) in item.recommend" :key="i"
-                             target="_blank" :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
-                </router-link>
+                <course-card-horizon v-for="(course, i) in item.recommend" :key="i" :course="course"></course-card-horizon>
               </div>
             </div>
           </li>
@@ -39,8 +37,10 @@
     <div class="main-content">
       <div class="interest-guide-container">
         <div class="interest-guide-wrapper">
-          <span>{{interestHint}}</span>
-          <el-button type="text" class="interest-change" @click="checkLoginBeforeInterestDialog">修改兴趣</el-button>
+          <div class="interest-hint clearfix">
+            <span>{{interestHint}}</span>
+            <el-button type="text" class="interest-change right" @click="checkLoginBeforeInterestDialog">修改兴趣</el-button>
+          </div>
           <el-dialog
             title="修改兴趣"
             :visible.sync="interestDialogVisible"
@@ -71,9 +71,7 @@
       </div>
       <div class="recommend-box" v-for="(item, index) in recommendCourseOnSubCate" :key="index">
         <div class="recommend-title">{{item.name}}</div>
-        <router-link class="recommend" v-for="(course, i) in item.recommend" :key="i"
-                     target="_blank" :to="{name: 'course', params:{cid: course.id}}">{{course.name}}
-        </router-link>
+        <course-card-vertical v-for="(course, i) in item.recommend" :key="i" :course="course"></course-card-vertical>
       </div>
     </div>
   </div>
@@ -82,9 +80,15 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import { CATEGORY_TYPE, PRIMARY_CATEGORY, SECOND_CATEGORY } from './js/category'
+  import courseCardHorizon from '../courseCardHorizon/courseCardHorizon'
+  import courseCardVertical from '../courseCardVertical/courseCardVertical'
 
   export default {
     name: 'home',
+    components: {
+      courseCardHorizon,
+      courseCardVertical
+    },
     data () {
       return {
         // 是否显示修改兴趣对话框
@@ -107,9 +111,6 @@
       }
     },
     methods: {
-      // randomCourse () {
-      //   this.$router.push({ path: '/course/' + Math.floor((Math.random() * 100) + 1) })
-      // }
       // 显示前2个子分类
       show2SubCategory (arr) {
         return arr.slice(0, 2)
@@ -136,7 +137,7 @@
         // window.localStorage.interest = JSON.stringify(this.interest)
         this.setUserInterest(this.localInterest)
         this.interestDialogVisible = false
-        this.interestHint = this.interest.length <= 0 ? '未选择学习兴趣，随机推荐课程' : '兴趣推荐'
+        this.interestHint = this.interest.length <= 0 ? '未选择学习兴趣，随机推荐课程' : '兴 / 趣 / 推 / 荐'
       },
       // 取消兴趣更改
       cancelInterestChange (done) {
@@ -156,7 +157,7 @@
     created () {
       // 获取用户兴趣
       if (this.interest && this.interest.length > 0) {
-        this.interestHint = '兴趣推荐'
+        this.interestHint = '兴 / 趣 / 推 / 荐'
       } else {
         this.interestHint = '未选择学习兴趣，随机推荐课程'
       }
@@ -237,21 +238,40 @@
             top 0
             left 265px
             z-index 3
-            width 500px
+            width 720px
             background-color #fff
             box-shadow 0 2px 6px 0 rgba(0,0,0,0.26)
 
             .inner-box
-              height 60px
+              padding 40px 30px 20px 30px
+              a
+                padding-right 20px
+                font-size 14px
+                font-family PingFangSC-Regular
+                font-weight 400
+                color rgba(51,51,51,1)
+                line-height 20px
+
+            .recommend-box
+              padding 0 0 50px 30px
 
     .main-content
       width 1024px
       margin auto
-
-    .recommend
-      border silver solid 1px
-      width 200px
-      height 100px
-      margin 10px 30px 10px 10px
-      display inline-block
+      .interest-hint
+        text-align center
+        padding-top 36px
+        >span
+          font-size 20px
+          font-weight 400
+          color rgba(51,51,51,1)
+          line-height 28px
+      .recommend-box
+        font-family PingFangSC-Regular
+        margin 30px 0
+        .recommend-title
+          font-size 20px
+          font-weight 400
+          color rgba(51,51,51,1)
+          line-height 28px
 </style>
