@@ -1,53 +1,59 @@
 <template>
   <div class="upload-info-wrapper">
-    <div class="editor-base-info editor" v-if="isEditBaseInfo">
-      <div>
-        <span>课程基本信息</span>
-        <span @click="cancelBaseInfo">关闭</span>
-      </div>
-      <div>
-        <span>课程封面</span>
+    <div class="transition" v-if="isEditBaseInfo">
+      <div class="shadow"></div>
+      <div class="editor-base-info editor">
         <div>
-          <img :src="tempCourse.img" width="250" height="150">
-          <span>点击更换图片</span>
+          <span>课程基本信息</span>
+          <span @click="cancelBaseInfo">关闭</span>
         </div>
-      </div>
-      <div>
-        <span>标题：</span>
-        <input type="text" v-model="tempCourse.name">
-      </div>
-      <div>
-        <span>副标题：</span>
-        <input type="text" v-model="tempCourse.subtitle" placeholder="请输入课程副标题">
-      </div>
-      <div>
-        <span>分类：</span>
-        <el-cascader
-          expand-trigger="hover"
-          size="small"
-          :options="options"
-          :props="props"
-          v-model="tempOptions">
-        </el-cascader>
-      </div>
-      <div>
-        <span @click="saveBaseInfo">保存</span>
-        <span @click="cancelBaseInfo">取消</span>
+        <div>
+          <span>课程封面</span>
+          <div>
+            <img :src="tempCourse.img" width="250" height="150">
+            <span>点击更换图片</span>
+          </div>
+        </div>
+        <div>
+          <span>标题：</span>
+          <input type="text" v-model="tempCourse.name">
+        </div>
+        <div>
+          <span>副标题：</span>
+          <input type="text" v-model="tempCourse.subtitle" placeholder="请输入课程副标题">
+        </div>
+        <div>
+          <span>分类：</span>
+          <el-cascader
+            expand-trigger="hover"
+            size="small"
+            :options="options"
+            :props="props"
+            v-model="tempOptions">
+          </el-cascader>
+        </div>
+        <div>
+          <span @click="saveBaseInfo">保存</span>
+          <span @click="cancelBaseInfo">取消</span>
+        </div>
       </div>
     </div>
     <v-keywords class="editor" :words="tempCourse.keyWords" v-if="isEditKeywords" @saveKeywords="saveKeywords"
                 @cancelKeywords="cancelKeywords"></v-keywords>
-    <div class="editor editor-area" v-if="isEditArea">
-      <div>{{areaTitle}}</div>
-      <v-quill-editor
-        class="quill-editor-size"
-        v-model="areaContent"
-        :options="editorOption"
-      >
-      </v-quill-editor>
-      <div>
-        <span @click="saveArea">保存</span>
-        <span @click="cancelArea">取消</span>
+    <div v-if="isEditArea">
+      <div class="shadow"></div>
+      <div class="editor editor-area">
+        <div>{{areaTitle}}</div>
+        <v-quill-editor
+          class="quill-editor-size"
+          v-model="areaContent"
+          :options="editorOption"
+        >
+        </v-quill-editor>
+        <div>
+          <span @click="saveArea">保存</span>
+          <span @click="cancelArea">取消</span>
+        </div>
       </div>
     </div>
     <div>
@@ -161,12 +167,6 @@
       }
     },
     methods: {
-      hideShadow () {
-        this.$emit('hideShadow')
-      },
-      showShadow () {
-        this.$emit('showShadow')
-      },
       editBaseInfo () {
         this.tempCourse = Object.assign({}, this.course)
         if (this.course.category1) {
@@ -175,7 +175,6 @@
           this.tempOptions = []
         }
         this.isEditBaseInfo = true
-        this.showShadow()
       },
       saveBaseInfo () {
         let c1 = SELECT_CATEGORY[this.tempOptions[0] / 4]
@@ -189,11 +188,9 @@
         }
         this.$emit('saveInfo', this.tempCourse)
         this.isEditBaseInfo = false
-        this.hideShadow()
       },
       cancelBaseInfo () {
         this.isEditBaseInfo = false
-        this.hideShadow()
       },
       showMeaning (index) {
         this.course.keyWords[index].isMeaningShow = true
@@ -208,7 +205,6 @@
         this.areaContent = this.course.keyWords[index].meaning
         this.areaPlaceholder = '请输入' + this.course.keyWords[index].keyword + '在本课程的解释'
         this.isEditArea = true
-        this.showShadow()
         this.hideMeaning(index)
       },
       editKeyword () {
@@ -218,18 +214,15 @@
           this.tempCourse.keyWords.push(this.course.keyWords[i])
         }
         this.isEditKeywords = true
-        this.showShadow()
       },
       // 保存手动编辑关键词结果
       saveKeywords () {
         this.$emit('saveInfo', this.tempCourse)
         this.isEditKeywords = false
-        this.hideShadow()
       },
       // 取消手动编辑关键词
       cancelKeywords () {
         this.isEditKeywords = false
-        this.hideShadow()
       },
       // 自动生成关键词
       autoKeywords () {
@@ -276,7 +269,6 @@
           this.areaPlaceholder = '请告诉学生本课程能学到什么'
         }
         this.isEditArea = true
-        this.showShadow()
       },
       saveArea () {
         if (this.currentArea === INTRO) {
@@ -290,11 +282,9 @@
         }
         this.$emit('saveInfo', this.course)
         this.isEditArea = false
-        this.hideShadow()
       },
       cancelArea () {
         this.isEditArea = false
-        this.hideShadow()
       }
     },
     components: {
@@ -305,9 +295,10 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../common/style/popwindow.css"
   .upload-info-wrapper
     .editor
-      position absolute
+      position fixed
       top 0
       bottom 0
       right 0

@@ -618,6 +618,7 @@ const PUBLISH_COURSES = [
     rating: '4.5',
     publishTime: '2019-3-19 20:00',
     updateTime: '2019-3-19 21:00',
+    updateStatus: 1, // 1 无更新 2 更新审核中
     status: 1
   },
   {
@@ -629,6 +630,7 @@ const PUBLISH_COURSES = [
     rating: '4.5',
     publishTime: '2019-3-19 20:00',
     updateTime: '2019-3-19 21:00',
+    updateStatus: 2,
     status: 2
   },
   {
@@ -640,6 +642,7 @@ const PUBLISH_COURSES = [
     rating: '4.5',
     publishTime: '2019-3-19 20:00',
     updateTime: '2019-3-19 21:00',
+    updateStatus: 1,
     status: 3
   }
 ]

@@ -1,5 +1,6 @@
 <template>
   <div class="keywordsEditor-wrapper">
+    <div class="shadow"></div>
     <div>关键词</div>
     <div class="words-wrapper">
       <div class="item-wrapper" v-for="(item,index) in words" :key="index">
@@ -58,6 +59,7 @@
 </script>
 
 <style lang="stylus" scoped>
+  @import "../../../common/style/popwindow.css"
   .keywordsEditor-wrapper
     width 800px
     height 300px

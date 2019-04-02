@@ -22,7 +22,6 @@ import comments from './components/course/comments/comments'
 import uploadMain from './components/uploadDetail/uploadMain'
 import uploadInfo from './components/uploadDetail/uploadInfo/uploadInfo'
 import uploadCatalogue from './components/uploadDetail/uploadCatalogue/uploadCatalogue'
-import uploadResource from './components/uploadDetail/uploadResource/uploadResource'
 import uploadTest from './components/uploadDetail/uploadTest/uploadTest'
 
 import searchResult from './components/searchResult/searchResult'
@@ -151,15 +150,6 @@ const router = new Router({
           path: 'catalogue',
           name: 'uploadCatalogue',
           component: uploadCatalogue,
-          meta: {
-            login: NEED_LOGIN
-          }
-        },
-        {
-          // 上传管理课程课件
-          path: 'resource',
-          name: 'uploadResource',
-          component: uploadResource,
           meta: {
             login: NEED_LOGIN
           }
