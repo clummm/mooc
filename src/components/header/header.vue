@@ -23,13 +23,24 @@
           </div>
         </div>
       </div>
-      <div class="my-course" @mouseenter="isCourseMenuShow=true"
-           @mouseleave="isCourseMenuShow=false">
-        <span @click="rHelp.openCourse()">我的课程</span>
-        <ul class="course-menu" v-show="isCourseMenuShow&&userInfo">
-          <div class="course-menu-item" @click="rHelp.openCourseNewWindow(101)">课程1</div>
-          <div class="course-menu-item" @click="rHelp.openCourseNewWindow(102)">课程2</div>
-        </ul>
+      <div class="user" @mouseenter="isUserMenuShow=true" @mouseleave="isUserMenuShow=false">
+        <img v-if="userInfo" :src="this.userInfo.icon" @click="openUser" width="32" height="32" class="user-icon">
+        <img v-else src="./avatar.png" width="32" height="32" class="user-icon" @click="showAccountWindow('LOGIN')">
+        <div class="user-menu" v-if="userInfo" v-show="isUserMenuShow">
+          <p v-if="userInfo" @click="openUser">{{userInfo.name}}</p>
+          <ul>
+            <router-link class="user-menu-item" :to="{ name: 'note', params: { type: 0 }, query: { p: 1 } }">我的笔记
+            </router-link>
+            <router-link class="user-menu-item" :to="{name: 'upload'}">上传管理</router-link>
+            <router-link class="user-menu-item" :to="{name: 'settings'}">个人设置</router-link>
+            <li class="user-menu-item" @click="quit">安全退出</li>
+          </ul>
+        </div>
+      </div>
+      <div class="login-register" v-if="!userInfo">
+        <span class="login " @click="showAccountWindow('LOGIN')">登录</span>
+        <span class="separator">/</span>
+        <span class="register " @click="showAccountWindow('REGISTER')">注册</span>
       </div>
       <div class="message" @mouseenter="isInfoMenuShow=true"
            @mouseleave="isInfoMenuShow=false">
@@ -39,23 +50,13 @@
           <div class="info-menu-item" @click="rHelp.openDiscussDetailNewWindow(101)">讨论互动消息</div>
         </ul>
       </div>
-      <div class="user" @mouseenter="isUserMenuShow=true" @mouseleave="isUserMenuShow=false">
-        <img v-if="userInfo" :src="this.userInfo.icon" @click="openUser" width="32" height="32" class="user-icon">
-        <img v-else src="./avatar.png" width="32" height="32" class="user-icon"  @click="showAccountWindow('LOGIN')">
-        <div class="user-menu" v-if="userInfo" v-show="isUserMenuShow">
-          <p v-if="userInfo" @click="openUser">{{userInfo.name}}</p>
-          <ul>
-            <router-link class="user-menu-item" :to="{name: 'note'}">我的笔记</router-link>
-            <router-link class="user-menu-item" :to="{name: 'upload'}">上传管理</router-link>
-            <router-link class="user-menu-item" :to="{name: 'settings'}">个人设置</router-link>
-            <li class="user-menu-item" @click="quit">安全退出</li>
-          </ul>
-        </div>
-      </div>
-      <div class="login-register" >
-        <span class="login " @click="showAccountWindow('LOGIN')">登录</span>
-        <span class="separator">/</span>
-        <span class="register " @click="showAccountWindow('REGISTER')">注册</span>
+      <div class="my-course" @mouseenter="isCourseMenuShow=true"
+           @mouseleave="isCourseMenuShow=false">
+        <span @click="rHelp.openCourse()">我的课程</span>
+        <ul class="course-menu" v-show="isCourseMenuShow&&userInfo">
+          <div class="course-menu-item" @click="rHelp.openCourseNewWindow(101)">课程1</div>
+          <div class="course-menu-item" @click="rHelp.openCourseNewWindow(102)">课程2</div>
+        </ul>
       </div>
     </div>
   </div>
@@ -105,7 +106,7 @@
       openUser () {
         let userInfo = this.userInfo
         if (userInfo) {
-          this.$router.push({ name: 'user' })
+          this.rHelp.openCourse()
         }
       },
       // 打开用户个人模块,并进入指定子模块
@@ -249,7 +250,8 @@
       .my-course
         display inline-block
         vertical-align top
-        margin 39px 25px 0 73px
+        margin-top: 39px
+        float right
         width: 48px;
         height: 17px;
         font-size: 12px;
@@ -271,7 +273,9 @@
       .message
         display inline-block
         vertical-align top
+        margin-left 25px
         margin-top 39px
+        float right
         cursor pointer
 
         .info-menu
@@ -286,18 +290,21 @@
       .login-register
         display inline-block
         margin-top 39px
+        margin-left 25px
         float right
-        width:70px;
-        height:17px;
-        font-size:12px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(51,51,51,1);
-        line-height:17px;
+        width: 70px;
+        height: 17px;
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 17px;
         cursor pointer
+
         .separator
           margin 0 5px
-        .login,.register
+
+        .login, .register
           &:hover
             color rgba(4, 156, 255, 1);
 

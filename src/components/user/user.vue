@@ -20,7 +20,9 @@
     </div>
     <div class="main-content">
       <div class="left-tabs">
-        <div @click="changeTab('courseList')" class="tab" :class="{'selected':currentTab==='courseList'}">我的课程
+        <div @click="changeTab('courseList')" class="tab"
+             :class="{'selected':currentTab==='courseList'||currentTab==='courseNote'||currentTab==='courseDiscuss'}">
+          我的课程
         </div>
         <div @click="changeTab('note')" class="tab" :class="{'selected':currentTab==='note'}">我的笔记</div>
         <div @click="changeTab('discuss')" class="tab" :class="{'selected':currentTab==='discuss'}">我的讨论</div>
@@ -47,12 +49,18 @@
     created () {
       this.currentTab = this.$route.name
     },
+    watch: {
+      '$route': 'setTab'
+    },
     methods: {
+      setTab () {
+        this.currentTab = this.$route.name
+      },
       changeTab (name) {
-        if (name !== 'message') {
-          this.$router.push({ name: name })
+        if (name !== 'upload') {
+          this.$router.push({ name: name, params: { type: 0 }, query: { p: 1 } })
         } else {
-          this.rHelp.openMessage()
+          this.$router.push({ name: 'upload' })
         }
         this.currentTab = name
       }
@@ -168,6 +176,5 @@
         margin-top 17px
         display inline-block
         overflow: hidden;
-        background darkgrey
 
 </style>

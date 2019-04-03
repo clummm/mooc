@@ -87,7 +87,7 @@ const router = new Router({
         },
         // 我的课程
         {
-          path: 'courseList',
+          path: 'courseList/:type',
           name: 'courseList',
           component: courseList,
           meta: {
@@ -96,7 +96,7 @@ const router = new Router({
         },
         // 我的笔记
         {
-          path: 'note',
+          path: 'note/:type',
           name: 'note',
           component: note,
           meta: {
@@ -114,7 +114,7 @@ const router = new Router({
         },
         // 我的讨论
         {
-          path: 'discuss',
+          path: 'discuss/:type',
           name: 'discuss',
           component: discuss,
           meta: {

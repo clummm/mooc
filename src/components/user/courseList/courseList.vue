@@ -1,11 +1,12 @@
 <!-- 我的课程 -->
 <template>
   <div class="main-wrapper">
-    <div class="top-tabs">
-      <span class="my-course" @click="changMyCourse">我的收藏</span>
-      <span class="history" @click="changeHistory">历史足迹</span>
-    </div>
-    <div class="content-wrapper" :is="currentComponent" :data="isCurrentMyCourse?myCourse:history"
+    <el-menu :default-active="activeIndex" class="el-menu-demo menu-text" mode="horizontal" @select="handleSelect"
+             text-color="#666666" active-text-color="#049CFF">
+      <el-menu-item index="0">收藏课程</el-menu-item>
+      <el-menu-item index="1">学习记录</el-menu-item>
+    </el-menu>
+    <div :is="currentComponent" :data="isCurrentMyCourse?myCourse:history"
          @deleteCourse="deleteCourse" @addCourse="addCourse" @deleteHistory="deleteHistory"
          @deleteCourseById="deleteCourseById"></div>
   </div>
@@ -20,25 +21,25 @@
     name: 'courseList',
     data () {
       return {
+        activeIndex: null,
         myCourse: null,
         history: null,
         currentComponent: myCourse
       }
     },
     created () {
+      this.activeIndex = this.$route.params.type + ''
+      this.currentComponent = this.activeIndex === '0' ? myCourse : myHistory
       // 向后台请求我收藏的课程列表
       this.myCourse = MY_COURSE
     },
     methods: {
-      changeHistory () {
-        this.currentComponent = myHistory
-        // 如果历史记录还未请求则向后台请求历史记录
-        if (!this.history) {
+      // 处理tab切换
+      handleSelect (index, indexPath) {
+        this.currentComponent = index === '0' ? myCourse : myHistory
+        if (index === '1' && !this.history) {
           this.history = HISTORY
         }
-      },
-      changMyCourse () {
-        this.currentComponent = myCourse
       },
       // 删除收藏的课程
       deleteCourse (index) {
@@ -87,7 +88,11 @@
 
 <style lang="stylus" scoped>
   .main-wrapper
-    .top-tabs
-      .my-course
-        margin 5px 10px
+    .menu-text
+      font-size: 18px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      line-height: 25px;
+      margin-bottom 7px
+
 </style>

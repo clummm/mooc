@@ -6,7 +6,7 @@ const USER_INFO = {
   phone: '13676010795',
   name: '张三',
   icon: AVATAR,
-  sex: null,
+  sex: '男',
   age: ['1995', '12', '22'],
   job: 'android开发工程师',
   address: ['四川', '成都'],
@@ -30,7 +30,7 @@ const MY_COURSE = [
     noteCount: 0,
     leavePosition: {
       sid: 1,
-      name: '课时名称',
+      name: 'java入门01-10',
       time: '离开时学到课时的时间点'
     }
   },
@@ -45,7 +45,7 @@ const MY_COURSE = [
     noteCount: 1,
     leavePosition: {
       sid: 1,
-      name: '课时名称',
+      name: 'java入门01-10',
       time: '离开时学到课时的时间点'
     }
   },
@@ -60,13 +60,109 @@ const MY_COURSE = [
     noteCount: 0,
     leavePosition: {
       sid: 1,
-      name: '课时名称',
+      name: 'java入门01-10',
+      time: '离开时学到课时的时间点'
+    }
+  },
+  {
+    id: '100',
+    img: COURSE,
+    name: 'Unity5.x 创造 3D VR游戏',
+    subtitle: '零基础入门游戏行业',
+    learningCount: 802,
+    rating: 4.8,
+    discussCount: 3,
+    noteCount: 0,
+    leavePosition: {
+      sid: 1,
+      name: 'java入门01-10',
+      time: '离开时学到课时的时间点'
+    }
+  },
+  {
+    id: '101',
+    img: COURSE,
+    name: 'Unity5.x 创造 3D VR游戏',
+    subtitle: '零基础入门游戏行业',
+    learningCount: 740,
+    rating: 4.0,
+    discussCount: 2,
+    noteCount: 1,
+    leavePosition: {
+      sid: 1,
+      name: 'java入门01-10',
+      time: '离开时学到课时的时间点'
+    }
+  },
+  {
+    id: '102',
+    img: COURSE,
+    name: 'Unity5.x 创造 3D VR游戏',
+    subtitle: '零基础入门游戏行业',
+    learningCount: 300,
+    rating: 3.5,
+    discussCount: 0,
+    noteCount: 0,
+    leavePosition: {
+      sid: 1,
+      name: 'java入门01-10',
       time: '离开时学到课时的时间点'
     }
   }
 ]
 
 const HISTORY = [
+  {
+    id: '103',
+    img: COURSE,
+    name: 'Unity5.x 创造 3D VR游戏',
+    subtitle: '零基础入门游戏行业',
+    learningCount: 802,
+    rating: 4.8,
+    discussCount: 3,
+    noteCount: 0,
+    date: '2019-3-10',
+    like: false,
+    leavePosition: {
+      sid: 1,
+      name: '课时名称',
+      time: '离开时学到课时的时间点'
+    }
+  },
+  {
+    id: '104',
+    img: COURSE,
+    name: 'Unity5.x 创造 3D VR游戏',
+    subtitle: '零基础入门游戏行业',
+    learningCount: 740,
+    rating: 4.0,
+    discussCount: 2,
+    noteCount: 1,
+    date: '2019-3-10',
+    like: false,
+    leavePosition: {
+      sid: 1,
+      name: '课时名称',
+      time: '离开时学到课时的时间点'
+    }
+  },
+  {
+    id: '105',
+    img: COURSE,
+    name: 'Unity5.x 创造 3D VR游戏',
+    subtitle: '零基础入门游戏行业',
+    learningCount: 300,
+    rating: 3.5,
+    discussCount: 0,
+    noteCount: 0,
+    date: '2019-3-8',
+    like: false,
+    leavePosition: {
+      sid: 1,
+      name: '课时名称',
+      time: '离开时学到课时的时间点'
+    }
+  },
   {
     id: '103',
     img: COURSE,
