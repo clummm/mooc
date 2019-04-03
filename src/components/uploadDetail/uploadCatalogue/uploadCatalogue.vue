@@ -34,8 +34,8 @@
       </div>
     </div>
     <div class="left">
-      <div>
-        <p>课程目录</p>
+      <el-card class="catalogue">
+        <span class="title">课程目录</span>
         <div>
           <div v-for="(chapter,index) in course.catalogue.chapters" :key="index">
             <div>
@@ -63,29 +63,33 @@
           </div>
           <div @click="editChapter(-1)">添加章节</div>
         </div>
-      </div>
-      <div>
-        <span>课程课件</span>
+      </el-card>
+      <el-card class="resources">
+        <span class="title">课程课件</span>
         <el-upload
           class="upload-demo"
           action="https://jsonplaceholder.typicode.com/posts/"
           :on-success="uploadResourceSuccess"
           :on-error="uploadResourceError"
-          :on-progress="uploadResourceProgress"
-          :on-preview="handleResourcePreview"
           :on-remove="handleResourceRemove"
           :before-remove="beforeResourceRemove"
           :file-list="course.resources"
           multiple>
           <el-button size="small" type="primary">添加课件</el-button>
         </el-upload>
-      </div>
+      </el-card>
     </div>
     <div class="right">
       <div>
-        <v-my-video :videoSrc="currentSession.url" :nodes="currentSession.nodes"></v-my-video>
+        <v-my-video :videoSrc="currentSession.url" :nodes="currentSession.nodes"
+                    :duration="currentSession.duration"></v-my-video>
       </div>
-      <div>keywords</div>
+      <el-card class="keyword-wrapper">
+        <v-keyword-tag v-for="(word,index) in currentSession.keyWords" :key="index" class="keyword-item" :word="word"
+                       :index="index"></v-keyword-tag>
+        <v-keyword-editor style="margin-top: 20px" :words="currentSession.keyWords" :sid="sessionIndex"
+                          @save="saveKeywords"></v-keyword-editor>
+      </el-card>
       <div>nodes</div>
     </div>
   </div>
@@ -93,7 +97,9 @@
 
 <script type="text/ecmascript-6">
   import { number2character } from '../../../common/js/numberChange'
-  import myvideo from '../../courseVideo/myVideo/myVideo'
+  import myvideo from '../../myVideo/myVideo'
+  import keywordTag from '../../keywordTag/keywordTag'
+  import keywordEditor from '../../keywordEditor/keywordEditor'
 
   export default {
     name: 'uploadCatalogue',
@@ -117,13 +123,27 @@
       }
     },
     methods: {
+      // 保存课时的关键词修改
+      saveKeywords (words) {
+        let cIndex = this.currentSession.cIndex
+        let sIndex = this.currentSession.sIndex
+        this.course.catalogue.chapters[cIndex].sessions[sIndex].keyWords = words
+        this.$emit('saveInfo', this.course)
+      },
+      // 上传课件成功
       uploadResourceSuccess (response, file, fileList) {
         this.course.resources = fileList
         this.$emit('saveInfo', this.course)
       },
+      // 上传课件失败
       uploadResourceError (err, file, fileList) {
-        console.log('error:' + err)
+        this.$message({
+          showClose: true,
+          message: '上传失败' + err,
+          type: 'error'
+        })
       },
+      // 删除课件
       handleResourceRemove (file, fileList) {
         this.course.resources = fileList
         this.$emit('saveInfo', this.course)
@@ -131,6 +151,7 @@
       beforeResourceRemove (file, fileList) {
         return this.$confirm(`此操作将永久删除 ${file.name},是否继续?`)
       },
+      // 判断当前课时是否被选中
       isSessionChosen (id) {
         if (!this.currentSession) {
           return false
@@ -142,9 +163,12 @@
           }
         }
       },
+      // 初始化当前选择课时
       initCurrentSession () {
         if (this.course.catalogue.chapters[0].sessions[0]) {
           this.currentSession = this.course.catalogue.chapters[0].sessions[0]
+          this.currentSession.cIndex = 0
+          this.currentSession.sIndex = 0
         }
       },
       number2character (n) {
@@ -152,7 +176,10 @@
       },
       chooseSession (index, sIndex) {
         this.currentSession = this.course.catalogue.chapters[index].sessions[sIndex]
+        this.currentSession.cIndex = index
+        this.currentSession.sIndex = sIndex
       },
+      // 删除课时
       deleteSession (index, sIndex) {
         if (this.course.catalogue.chapters[index].sessions[sIndex].id === this.currentSession.id) {
           this.course.catalogue.chapters[index].sessions.splice(sIndex, 1)
@@ -163,6 +190,7 @@
         this.course.catalogue.chapters[index].sessions.splice(sIndex, 1)
         this.$emit('saveInfo', this.course)
       },
+      // 编辑章节
       editChapter (index) {
         this.chapterIndex = index
         if (this.chapterIndex !== -1) {
@@ -177,6 +205,7 @@
         }
         this.isEditChapter = true
       },
+      // 保存章节
       saveChapter () {
         if (this.chapterIndex !== -1) {
           this.course.catalogue.chapters[this.chapterIndex] = this.tempChapter
@@ -225,14 +254,17 @@
       }
     },
     components: {
-      'v-my-video': myvideo
+      'v-my-video': myvideo,
+      'v-keyword-tag': keywordTag,
+      'v-keyword-editor': keywordEditor
     }
   }
 </script>
 
 <style lang="stylus" scoped>
   .catalogue-wrapper
-    height 500px
+    height 800px
+
     .editor-wrapper
       position fixed
       top 0
@@ -255,11 +287,35 @@
       display inline-block
       width 450px
 
+      .title
+        display inline-block
+        margin-bottom 20px
+        font-size: 20px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 28px;
+
+      .catalogue
+        margin-bottom 40px
+        height 500px
+        overflow auto
+
       .session-chosen
         background grey
 
     .right
       display inline-block
       width 500px
+
+      .keyword-wrapper
+        width 100%
+        margin-top 15px
+
+        .keyword-item
+          cursor pointer
+          display inline-block
+          margin-right 10px
+          margin-bottom 10px
 
 </style>

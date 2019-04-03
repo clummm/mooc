@@ -802,7 +802,7 @@ const UPLOAD_COURSE = {
             id: 1,
             name: '课时1',
             url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
-            duration: '2000',
+            duration: '60',
             keyWords: [{
               keyword: '关键词1',
               meaning: '关键词1的解释'
@@ -824,7 +824,7 @@ const UPLOAD_COURSE = {
             id: 2,
             name: '课时2',
             url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
-            duration: '2000',
+            duration: '52',
             keyWords: [{
               keyword: '关键词1',
               meaning: '关键词1的解释'

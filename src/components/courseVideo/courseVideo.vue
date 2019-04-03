@@ -56,7 +56,7 @@
 
 <script type="text/ecmascript-6">
   import { CATALOG } from '../course/js/course'
-  import myVideo from './myVideo/myVideo'
+  import myVideo from '../myVideo/myVideo'
   import footerMenu from './footerMenu/footerMenu'
   import sessionList from './sessionList/sessionList'
   import publishDiscuss from './publishDiscuss/publishDiscuss'

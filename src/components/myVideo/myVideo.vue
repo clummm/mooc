@@ -21,22 +21,22 @@
         </div>
       </div>
       <div class="controller-btn-wrapper">
-        <div class="controller-btn" @click="togglePlaying">
-          <button class="btn" v-show="isPaused">播放</button>
-          <button class="btn" v-show="!isPaused">暂停</button>
+        <div class="controller-btn" @click="togglePlaying" style="margin-right: 1%">
+          <img class="btn" v-show="isPaused" src="./play.png">
+          <img class="btn" v-show="!isPaused" src="./pause.png">
         </div>
-        <div class="controller-btn" @click="stopPlaying">
-          <button class="btn" @click="stopPlaying">stop</button>
-        </div>
-        <div class="controller-btn" @click="toggleMute">
-          <button class="btn" v-show="isMuted">已禁音</button>
-          <button class="btn" v-show="!isMuted">禁音</button>
+        <div class="controller-btn" @click="stopPlaying" style="margin-right: 2%">
+          <img class="stop" @click="stopPlaying" src="./stop.png" width="20" height="20">
         </div>
         <div class="controller-timer">
           {{videoTime}}
         </div>
+        <div class="controller-btn voice" @click="toggleMute">
+          <img class="btn" v-show="isMuted" src="./silence.png">
+          <img class="btn" v-show="!isMuted" src="./voice.png">
+        </div>
         <div class="controller-btn fullscreen" @click="toggleFullscreen">
-          <button class="btn">fullscreen</button>
+          <img class="btn" src="./fullscreen.png">
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { secToTimer } from '../../../common/js/Time'
+  import { secToTimer } from '../../common/js/Time'
 
   export default {
     name: 'myVideo',
@@ -54,6 +54,9 @@
       },
       playTime: {
         default: 0
+      },
+      duration: {
+        default: 60
       },
       nodes: {
         type: Array,
@@ -102,7 +105,7 @@
     methods: {
       // 计算节点位置
       nodePlace (time) {
-        return `${(time / 60.095011) * 100}%`
+        return `${(time / this.duration) * 100}%`
       },
       jump2Node (index) {
         this.videoProgress = this.nodes[index].time / this.video.duration
@@ -278,7 +281,7 @@
         align-items: center;
 
         .controller-progress
-          height: 5px;
+          height: 3px;
           position: relative;
           width: calc(100% - 30px);
           border-radius: 100px;
@@ -328,18 +331,22 @@
         height: calc(100% - 5px);
         display: flex;
         align-items: center;
+        margin-top 5px
         color: #fff;
         padding: 0 18px;
 
         .controller-btn
-          margin: 0 20px;
-          transition: .5s;
+          cursor: pointer;
 
-          .btn:hover
-            cursor: pointer;
-            background: #409eff
+          .btn
+            width 28px
+            height 28px
+
+        .voice
+          position absolute
+          right calc(3% + 28px)
 
         .fullscreen
           position absolute
-          right 15px
+          right 2%
 </style>

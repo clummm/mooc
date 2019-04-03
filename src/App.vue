@@ -32,13 +32,13 @@
     },
     created () {
       // 测试跨域请求
-      this.$http.get('/api')
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+      // this.$http.get('/api')
+      //   .then((response) => {
+      //     console.log(response)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error)
+      //   })
     }
   }
 </script>
