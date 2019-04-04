@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="cursor: pointer">
     <el-dialog :title="`修改${word.keyword}的解释`" :visible.sync="dialogFormVisible">
       <el-form :model="word">
         <el-input type="textarea" v-model="word.meaning" :rows="4"></el-input>

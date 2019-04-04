@@ -15,7 +15,7 @@
         <div>测试题目：{{test.list.length}}</div>
         <div class="test-list">
           <el-card class="box-card test-card" v-for="(item,index) in test.list" :key="index">
-            <div v-if="!isEdit(index)">
+            <div v-if="!isEdit(index)" style="line-height: 30px">
               <div>{{item.query}}</div>
               <div>A.{{item.choiceA}}</div>
               <div>B.{{item.choiceB}}</div>

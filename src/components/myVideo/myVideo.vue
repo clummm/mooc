@@ -2,7 +2,8 @@
   <div class="video" ref="vcontainer"
        @pointerup.prevent="stopDragging"
        @pointermove.prevent="handleMouseMove" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd">
+    <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd" @click="togglePlaying"
+    >
       <source :src="`${videoSrc}#t=${playTime}`"/>
       <track :src="webvtt" kind="subtitles" label="中文字幕" srclang="zh" default/>
     </video>
@@ -17,7 +18,15 @@
             <div class="controller-inner-dot"></div>
           </div>
           <div class="node-dot" v-for="(node,index) in nodes" @click.stop="jump2Node(index)" :key="index"
-               :style="{left:nodePlace(node.time)}"></div>
+               :style="{left:nodePlace(node.time)}" @mouseenter="node.show=true" @mouseleave="node.show=false">
+            <div v-if="previewSize&&preview[node.time]&&node.show" class="preview"
+                 :style="{width:previewSize.width+'px',height:previewSize.height+'px',bottom:previewSize.height*0.5+5+'px'}">
+              <img :src="preview[node.time]" :width="previewSize.width" :height="previewSize.height">
+              <div class="preview-text"
+                   :style="{fontSize:previewSize.fontSize+'px',lineHeight:previewSize.lineHeight+'px'}">{{node.name}}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="controller-btn-wrapper">
@@ -62,9 +71,17 @@
         type: Array,
         default: null
       },
+      preview: {
+        default: () => {
+          return []
+        }
+      },
       webvtt: {
         type: String,
         default: '/example.vtt'
+      },
+      size: {
+        default: 'mini'
       }
     },
     data () {
@@ -79,12 +96,36 @@
         dotOffsetX: 0,
         draggingStartX: 0,
         isDragging: false,
-        isControlVisible: true
+        isControlVisible: true,
+        pictureSrc: null,
+        videoSize: null
       }
     },
     computed: {
       videoProgressPercent () {
         return `${this.videoProgress * 100}%`
+      },
+      // 略缩图大小
+      previewSize () {
+        if (this.videoSize) {
+          if (this.fullscreen) {
+            return {
+              width: document.body.offsetWidth * 0.15,
+              height: document.body.offsetHeight * 0.15,
+              fontSize: document.body.offsetWidth * 0.015,
+              lineHeight: document.body.offsetWidth * 0.02
+            }
+          } else {
+            return {
+              width: this.videoSize.width * 0.2,
+              height: this.videoSize.height * 0.2,
+              fontSize: this.videoSize.width * 0.02,
+              lineHeight: this.videoSize.width * 0.03
+            }
+          }
+        } else {
+          return null
+        }
       }
     },
     watch: {
@@ -101,6 +142,7 @@
           this.video.currentTime = newVal || 0
         }
       }
+
     },
     methods: {
       // 计算节点位置
@@ -136,6 +178,10 @@
           }
         }
         this.fullscreen = !this.fullscreen
+        console.log('fenge')
+        console.log(this.video.offsetWidth)
+        console.log(this.previewSize)
+        console.log(this.fullscreen)
       },
       handleTimeUpdate () {
         this.videoTime = this.refreshTime()
@@ -250,6 +296,10 @@
       self.video.ontimeupdate = function () {
         self.$emit('time-update', self.video.currentTime)
       }
+      this.videoSize = {
+        width: this.video.offsetWidth,
+        height: this.video.offsetHeight
+      }
     }
   }
 </script>
@@ -306,6 +356,19 @@
           display: flex;
           justify-content: center;
           align-items: center;
+
+          .preview
+            position relative
+
+            .preview-text
+              position absolute
+              bottom 0
+              width 100%
+              background rgba(0, 0, 0, 0.5)
+              color white
+              text-align center
+              font-family: PingFangSC-Regular;
+              font-weight: 400
 
         .controller-dot
           position: absolute;

@@ -81,22 +81,49 @@
     </div>
     <div class="right">
       <div>
-        <v-my-video :videoSrc="currentSession.url" :nodes="currentSession.nodes"
-                    :duration="currentSession.duration"></v-my-video>
+        <v-my-video :videoSrc="currentSession.url" :nodes="currentSession.nodes" :preview="currentSession.preview"
+                    :duration="currentSession.duration" ref="video"></v-my-video>
       </div>
       <el-card class="keyword-wrapper">
         <v-keyword-tag v-for="(word,index) in currentSession.keyWords" :key="index" class="keyword-item" :word="word"
                        :index="index"></v-keyword-tag>
-        <v-keyword-editor style="margin-top: 20px" :words="currentSession.keyWords" :sid="sessionIndex"
+        <v-keyword-editor style="margin-top: 10px" :words="currentSession.keyWords" :sid="sessionIndex"
                           @save="saveKeywords"></v-keyword-editor>
       </el-card>
-      <div>nodes</div>
+      <el-card style="margin-top: 20px">
+        <el-button size="mini" @click="addNode">添加节点</el-button>
+        <el-button size="mini" @click="autoNode">自动生成</el-button>
+        <el-table
+          :data="currentSession.nodes"
+          style="width: 100%">
+          <el-table-column
+            label="节点名称"
+            width="180">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="时间点"
+            width="180">
+            <template slot-scope="scope">
+              <span>{{secToTimer(scope.row.time)}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column>
+            <template slot-scope="scope">
+              <i class="el-icon-circle-close-outline node-delete" @click="deleteNode(scope.$index)"></i>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-card>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import { number2character } from '../../../common/js/numberChange'
+  import { secToTimer } from '../../../common/js/Time'
   import myvideo from '../../myVideo/myVideo'
   import keywordTag from '../../keywordTag/keywordTag'
   import keywordEditor from '../../keywordEditor/keywordEditor'
@@ -123,6 +150,39 @@
       }
     },
     methods: {
+      autoNode () {
+        this.currentSession.nodes = [
+          { name: '自动生成节点1', time: 10 },
+          { name: '自动生成节点2', time: 20 },
+          { name: '自动生成节点3', time: 30 }
+        ]
+      },
+      // 添加节点
+      addNode () {
+        let time = this.$refs.video.video.currentTime
+        this.$prompt('请输入节点名称', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /^.{0,10}$/,
+          inputErrorMessage: '节点名称不能超过10个字符'
+        }).then(({ value }) => {
+          this.$message({
+            type: 'success',
+            message: '节点添加成功 '
+          })
+          this.currentSession.nodes.push({
+            name: value,
+            time: time
+          })
+        })
+      },
+      // 删除节点
+      deleteNode (index) {
+        this.currentSession.nodes.splice(index, 1)
+      },
+      secToTimer (time) {
+        return secToTimer(time)
+      },
       // 保存课时的关键词修改
       saveKeywords (words) {
         let cIndex = this.currentSession.cIndex
@@ -317,5 +377,11 @@
           display inline-block
           margin-right 10px
           margin-bottom 10px
+
+      .node-delete
+        cursor pointer
+
+        &:hover
+          color rgba(4, 156, 255, 1);
 
 </style>

@@ -1,5 +1,8 @@
 import AVATAR from '../user.jpg'
 import COURSE from '../course.png'
+import PICTURE1 from '../picture1.png'
+import PICTURE15 from '../picture15.png'
+import PICTURE30 from '../picture30.png'
 
 const USER_INFO = {
   id: 123,
@@ -802,6 +805,7 @@ const UPLOAD_COURSE = {
             id: 1,
             name: '课时1',
             url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+            preview: [PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30],
             duration: '60',
             keyWords: [{
               keyword: '关键词1',
@@ -824,6 +828,7 @@ const UPLOAD_COURSE = {
             id: 2,
             name: '课时2',
             url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+            preview: [PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE1, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE15, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30, PICTURE30],
             duration: '52',
             keyWords: [{
               keyword: '关键词1',
@@ -835,11 +840,13 @@ const UPLOAD_COURSE = {
             nodes: [
               {
                 name: '节点名1',
-                time: '20'
+                time: '20',
+                show: false
               },
               {
                 name: '节点名2',
-                time: '40'
+                time: '40',
+                show: false
               }
             ]
           }
