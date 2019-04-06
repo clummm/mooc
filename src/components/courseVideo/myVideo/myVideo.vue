@@ -88,6 +88,7 @@
       // 切换视频源时需要重新加载一下播放器来更新视频源
       videoSrc: function (newVal, oldVal) {
         if (this.video) {
+          console.log(`videoSrc changed to ${newVal}`)
           this.video.load()
           this.video.src = `${newVal}#t=${this.playTime}` || '#'
         }
@@ -95,6 +96,7 @@
       // 跳转到其他视频播放点
       playTime: function (newVal, oldVal) {
         if (this.video) {
+          console.log(`playTime changed to ${newVal}`)
           this.video.currentTime = newVal || 0
         }
       }

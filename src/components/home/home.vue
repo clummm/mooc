@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="recommend-box" v-for="(item, index) in recommendCourseOnSubCate" :key="index">
-        <div class="recommend-title">{{item.name}}</div>
+        <p class="recommend-title">{{item.name}}</p>
         <course-card-vertical v-for="(course, i) in item.recommend" :key="i" :course="course"></course-card-vertical>
       </div>
     </div>

@@ -3,8 +3,8 @@
   <div class="category-wrapper">
     <div class="nav-container">
       <div class="category-box">
-        <ul class="clearfix">
-          <li class="category-item">学习方向：</li>
+        <ul class="category-list clearfix">
+          <li class="category-item">学习方向</li>
           <li v-for="(item, index) in category" :key="index"
               :class="getCategoryClassName(item.id, item.second)">
             <router-link :to="{name: 'category', params:{cid: item.id}}">{{item.name}}</router-link>
@@ -12,8 +12,8 @@
         </ul>
       </div>
       <div class="sub-category">
-        <ul class="clearfix">
-          <li class="category-item">分类：</li>
+        <ul class="category-list clearfix">
+          <li class="category-item">分类</li>
           <li :class="currentCategoryType === 1 ? 'category-item-on' : 'category-item'">
             <router-link :to="{name: 'category', params:{cid: categoryId}}">全部</router-link>
           </li>
@@ -24,14 +24,15 @@
         </ul>
       </div>
     </div>
+    <div style="background-color: #C9C9C9; height: 1px"></div>
     <div class="course-list-container">
+      <div class="sorting">
+        <span :class="sortingType === 0 ? 'sorting-on' : ''" @click="sorting(0)">热度<img src="/images/hot.png"></span>
+        <span :class="sortingType === 1 ? 'sorting-on' : ''" @click="sorting(1)">好评<img src="/images/like.png"></span>
+        <span :class="sortingType === 2 ? 'sorting-on' : ''" @click="sorting(2)">最新<img src="/images/new.png"></span>
+      </div>
       <div class="course-list">
-        <div>伪造假数据用于展示</div>
-        <div class="course-container" v-for="(course, i) in this.courses" :key="i">
-          <router-link class="course" target="_blank" :to="{name: 'course', params:{cid: course.id}}">
-            {{course.name}}
-          </router-link>
-        </div>
+        <course-card-vertical v-for="(course, i) in courses" :key="i" :course="course"></course-card-vertical>
       </div>
       <div class="pagination">
         <el-pagination
@@ -48,9 +49,13 @@
 <script>
   import { PRIMARY_CATEGORY } from './js/category'
   import { COURSE_LIST } from './js/courseList'
+  import courseCardVertical from '../courseCardVertical/courseCardVertical'
 
   export default {
     name: 'category',
+    components: {
+      courseCardVertical
+    },
     data () {
       return {
         // 一级分类
@@ -66,7 +71,9 @@
         currentPage: 1,
         // 当前分类下的总课程数
         totalCourse: 0,
-        pageSize: 20
+        pageSize: 20,
+        // 排序规则
+        sortingType: 0
       }
     },
     created () {
@@ -89,7 +96,7 @@
     methods: {
       // 获取导航栏一级分类item的类名
       getCategoryClassName (id, second) {
-        let className = 'category-item'
+        let className = ''
         let route = String(this.$route.params.cid)
         let self = this
         if (String(id) === route) {
@@ -120,6 +127,7 @@
       // 获取分类课程
       getCourses () {
         this.currentPage = Number(this.$route.query.p) || 1
+        this.sortingType = Number(this.$route.query.type) || 0
         // 获取后台课程数据
         // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize})
         this.courses = COURSE_LIST.courses
@@ -128,6 +136,12 @@
       // 当前页变化
       handleCurrentChange (page) {
         this.$router.push({ name: 'category', params: this.$route.params, query: { p: page } })
+      },
+      // 排序
+      sorting (type) {
+        if (this.sortingType !== type) {
+          this.$router.push({ name: 'category', params: this.$route.params, query: { p: '1', type: type } })
+        }
       }
     }
   }
@@ -137,23 +151,43 @@
   .category-wrapper
     width 1024px
     margin auto
+    font-family PingFangSC-Regular
+    color rgba(51,51,51,1)
+    line-height 22px
 
     .category-item-on
-      font-weight bolder
-      float left
-      margin-right 5px
+      padding-bottom 2px
+      border-bottom solid #979797 1px
 
-    .category-item
-      float left
-      margin-right 5px
+    ul.category-list
+      padding-bottom 32px
+      li
+        float left
+        margin-right 33px
+        &:first-child
+          font-size 16px
+          font-family PingFangSC-Medium
+          font-weight 600
+        a:hover
+          text-decoration none
+          color #979797
 
-     .pagination
-       text-align center
+    .pagination
+      margin 30px 0
+      text-align center
 
-    .course-container
-      border silver solid 1px
-      width 200px
-      height 100px
-      margin 20px
-      display inline-block
+    .course-list-container
+      .sorting
+        padding-top 26px
+        span
+          cursor pointer
+          margin-right 27px
+          &:hover
+            color #979797
+        img
+          padding-left 6px
+          vertical-align middle
+
+    .sorting-on
+      font-weight 600
 </style>

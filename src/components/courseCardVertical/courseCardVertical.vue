@@ -35,7 +35,7 @@
     cursor pointer
     margin 30px 18px 10px 0
     display inline-block
-    &:last-child
+    &:nth-of-type(4n)
       margin-right 0
 
     .course-card-img
