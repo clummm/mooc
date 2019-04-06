@@ -107,7 +107,7 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import { COURSE, COURSE_LOGOUT } from './js/course'
-  import { secToTimer } from '../../common/js/Time'
+  import { secToTimer } from '../../../public/js/Time'
 
   export default {
     name: 'course',

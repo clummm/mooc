@@ -3,29 +3,33 @@
   <div class="main-wrapper">
     <v-noteEditor v-if="isEditorShow" :note="currentNote" @hideEditor="hideEditor"
                   @changeNote="changeNote"></v-noteEditor>
-    <div class="top-tabs">
-      <span class="mine" @click="toggleList(true)">我的笔记</span>
-      <span class="like" @click="toggleList(false)">收藏笔记</span>
-    </div>
+    <el-menu :default-active="activeIndex" class="el-menu-demo menu-text" mode="horizontal" @select="handleSelect"
+             text-color="#666666" active-text-color="#049CFF">
+      <el-menu-item index="0">我的笔记</el-menu-item>
+      <el-menu-item index="1">收藏笔记</el-menu-item>
+    </el-menu>
     <div v-if="currentList">
-      <div v-for="(item,index) in currentList" :key="index">
-        <div>
-          <span>{{item.title}}</span>
-          <span v-if="isMyNote">我在{{item.createTime}}创建</span>
-          <span v-else>{{item.creator.name}}在{{item.createTime}}创建</span>
-          <span
-            @click="rHelp.openCourseNewWindow(item.createPosition.cid)">创建于《{{item.createPosition.courseName}}》</span>
-          <span @click="rHelp.openVideoNewWindow(item.createPosition)">点击跳转到创建时间节点</span>
+      <div v-for="(item,index) in currentList" :key="index" class="item-wrapper">
+        <div class="create-info">
+          <span class="title">{{item.title}}</span>
+          <div v-if="!isMyNote" class="creator">
+            <img :src="item.creator.avatar" class="avatar">
+            {{item.creator.name}}
+          </div>
+          <span class="date">创建于{{item.createTime}}</span>
+          <span class="course"
+                @click="rHelp.openCourseNewWindow(item.createPosition.cid)">《{{item.createPosition.courseName}}》</span>
+          <span class="iconfont icon-shipin play" @click="rHelp.openVideoNewWindow(item.position)"></span>
         </div>
-        <div>
+        <div class="content">
           <p class="text-ellipsis">{{item.content}}</p>
         </div>
-        <div>
-          <span @click="rHelp.openNoteDetailNewWindow(item.id)">查看详情</span>
-          <span>收藏人数{{item.likeCount}}</span>
-          <span v-if="isMyNote" @click="deleteMyNote(index)">删除笔记</span>
-          <span v-else @click="deleteLikeNote(index)">取消收藏</span>
-          <span v-if="isMyNote" @click="openEditor(item,index)">编辑笔记</span>
+        <div class="menu">
+          <span @click="rHelp.openNoteDetailNewWindow(item.id)" class="btn">查看详情</span>
+          <span v-if="isMyNote" @click="deleteMyNote(index)" class="btn">删除笔记</span>
+          <span v-else @click="deleteLikeNote(index)" class="btn">取消收藏</span>
+          <span v-if="isMyNote" @click="openEditor(item,index)" class="btn">编辑笔记</span>
+          <span class="like"><i class="iconfont icon-shoucangrenshu like-icon"></i>{{item.likeCount}}</span>
         </div>
       </div>
     </div>
@@ -33,8 +37,8 @@
 </template>
 
 <script>
-  import { MY_NOTE, LIKE_NOTE } from '../../../common/js/data'
-  import noteEditor from '../../noteEditor/noteEditor'
+  import { MY_NOTE, LIKE_NOTE } from '../../../../public/js/data'
+  import noteEditor from '../../note/noteEditor/noteEditor'
 
   export default {
     name: 'note',
@@ -45,7 +49,8 @@
         likeNoteList: null,
         isEditorShow: false,
         currentNote: null,
-        currentEditIndex: null
+        currentEditIndex: null,
+        activeIndex: null
       }
     },
     props: {
@@ -57,12 +62,13 @@
       } else {
         // 根据用户id和课程id取讨论
       }
+      this.activeIndex = this.$route.params.type + ''
       this.myNoteList = MY_NOTE
     },
     methods: {
-      // 切换tab
-      toggleList (value) {
-        this.isMyNote = value
+      // 处理tab切换
+      handleSelect (index, indexPath) {
+        this.isMyNote = index === '0'
         // 第一次进入收藏笔记时请求数据
         if (!this.isMyNote && !this.likeNoteList) {
           this.likeNoteList = LIKE_NOTE
@@ -72,7 +78,13 @@
         this.myNoteList.splice(index, 1)
       },
       deleteLikeNote (index) {
-        this.likeNoteList.splice(index, 1)
+        this.$confirm('确定删除该笔记?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.likeNoteList.splice(index, 1)
+        })
       },
       // 打开笔记编辑器并记录编辑的笔记序号
       openEditor (note, index) {
@@ -104,9 +116,87 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../../../common/style/textEllipsis.css"
+  @import "../../../../public/css/textEllipsis.css"
   .main-wrapper
-    .top-tabs
-      .mine
-        margin 5px 10px
+    .item-wrapper
+      width 100%
+      border-bottom 1px solid #CBCBCB
+
+      .create-info
+        margin 15px 0
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 20px;
+
+        .title
+          margin-right 15px
+
+        .creator
+          display inline-block
+          width 150px
+
+          .avatar
+            display inline-block
+            vertical-align top
+            margin-right 5px
+            width 18px
+            height 18px
+            border-radius 50%
+
+        .date
+          display inline-block
+          width 150px
+          text-align center
+
+        .course
+          cursor pointer
+          display inline-block
+          text-align center
+          width 250px
+
+          &:hover
+            color rgba(4, 156, 255, 1);
+            text-decoration underline
+
+        .play
+          display inline-block
+          cursor pointer
+          font-size 16px
+
+          &:hover
+            color rgba(4, 156, 255, 1);
+
+      .content
+        margin-bottom 15px
+        padding 0 20px
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 17px;
+
+      .menu
+        margin-bottom 20px
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(166, 166, 166, 1);
+        line-height: 17px;
+
+        .btn, .like
+          display inline-block
+          margin-right 10px
+
+        .btn
+          cursor pointer
+
+          &:hover
+            color rgba(4, 156, 255, 1);
+
+        .like
+          .like-icon
+            font-size 12px
+
 </style>

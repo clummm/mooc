@@ -1,4 +1,4 @@
-import router from '../../router'
+import router from '../../src/router'
 // 辅助路由跳转的公共方法
 export default {
   // 在新窗口打开课程详情页面

@@ -1,4 +1,4 @@
-import user from '../../../../common/user.jpg'
+import user from '../../../../../public/images/user.jpg'
 
 const NOTES = {
   notes: [

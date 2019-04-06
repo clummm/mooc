@@ -1,5 +1,5 @@
-import user from '../../../common/user.jpg'
-import courseImg from '../../../common/course.png'
+import user from '../../../../public/images/user.jpg'
+import courseImg from '../../../../public/images/course.png'
 
 const COURSE = {
   id: 0,

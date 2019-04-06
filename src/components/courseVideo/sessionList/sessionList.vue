@@ -35,7 +35,7 @@
 
 <script>
   import { CATALOG } from '../../course/js/course'
-  import { secToTimer } from '../../../common/js/Time'
+  import { secToTimer } from '../../../../public/js/Time'
 
   export default {
     name: 'sessionList',

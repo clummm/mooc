@@ -122,11 +122,11 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { number2character } from '../../../common/js/numberChange'
-  import { secToTimer } from '../../../common/js/Time'
+  import { number2character } from '../../../../public/js/numberChange'
+  import { secToTimer } from '../../../../public/js/Time'
   import myvideo from '../../myVideo/myVideo'
-  import keywordTag from '../../keywordTag/keywordTag'
-  import keywordEditor from '../../keywordEditor/keywordEditor'
+  import keywordTag from '../../keyword/keywordTag/keywordTag'
+  import keywordEditor from '../../keyword/keywordEditor/keywordEditor'
 
   export default {
     name: 'uploadCatalogue',

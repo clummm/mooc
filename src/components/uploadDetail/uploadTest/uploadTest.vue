@@ -110,7 +110,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../../../common/style/popwindow.css"
+  @import "../../../../public/css/popwindow.css"
   .editor-wrapper
     width 400px
     height 300px

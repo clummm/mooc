@@ -26,7 +26,7 @@
 <script>
   import { CATALOG, CATALOG_LOGOUT } from '../js/course'
   import { mapGetters, mapActions } from 'vuex'
-  import { secToTimer } from '../../../common/js/Time'
+  import { secToTimer } from '../../../../public/js/Time'
 
   export default {
     name: 'catalog',

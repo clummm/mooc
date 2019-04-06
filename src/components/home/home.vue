@@ -80,8 +80,8 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import { CATEGORY_TYPE, PRIMARY_CATEGORY, SECOND_CATEGORY } from './js/category'
-  import courseCardHorizon from '../courseCardHorizon/courseCardHorizon'
-  import courseCardVertical from '../courseCardVertical/courseCardVertical'
+  import courseCardHorizon from '../courseCard/courseCardHorizon/courseCardHorizon'
+  import courseCardVertical from '../courseCard/courseCardVertical/courseCardVertical'
 
   export default {
     name: 'home',
