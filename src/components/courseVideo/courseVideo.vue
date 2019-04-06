@@ -132,7 +132,7 @@
       },
       // 侧边目录滚动，滚动距离=滚动条长度/数组长度*当前数组的index -默认不滚动的距离
       scrollTo (length, index) {
-        this.$refs.aside.scrollTop = this.$refs.aside.scrollHeight / length * index - 100
+        this.$refs.aside.scrollTop = this.$refs.aside.scrollHeight / length * index // - 100
         this.$refs.aside.scrollTop = this.$refs.aside.scrollTop < 0 ? 0 : this.$refs.aside.scrollTop
       },
       // 跳转到某个节点
@@ -160,10 +160,13 @@
         console.log('-------------route change--------------')
         console.log(this.$route)
         this.getSession()
+        if (to.params.cid !== from.params.cid || to.params.chapter !== from.params.chapter || to.params.sid !== from.params.sid) {
+          this.beforeCloseHandler()
+        }
       }
     },
-    destroyed () {
-      window.removeEventListener('beforeunload', e => this.beforeCloseHandler(e))
+    beforeDestroy () {
+      this.beforeCloseHandler()
     }
   }
 </script>

@@ -1,7 +1,7 @@
 const courses = [
   {
     id: 0,
-    img: '#',
+    img: '/images/course.png',
     name: '前端框架课程0',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -9,7 +9,7 @@ const courses = [
   },
   {
     id: 1,
-    img: '#',
+    img: '/images/course.png',
     name: '前端框架课程1',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -17,7 +17,7 @@ const courses = [
   },
   {
     id: 2,
-    img: '#',
+    img: '/images/course.png',
     name: '前端框架课程2',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -25,7 +25,7 @@ const courses = [
   },
   {
     id: 3,
-    img: '#',
+    img: '/images/course.png',
     name: '前端框架课程3',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -33,7 +33,7 @@ const courses = [
   },
   {
     id: 0,
-    img: '#',
+    img: '/images/course.png',
     name: '小程序课程0',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -41,7 +41,7 @@ const courses = [
   },
   {
     id: 1,
-    img: '#',
+    img: '/images/course.png',
     name: '小程序课程1',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -49,7 +49,7 @@ const courses = [
   },
   {
     id: 2,
-    img: '#',
+    img: '/images/course.png',
     name: '小程序课程2',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -57,7 +57,7 @@ const courses = [
   },
   {
     id: 3,
-    img: '#',
+    img: '/images/course.png',
     name: '小程序课程3',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -65,7 +65,7 @@ const courses = [
   },
   {
     id: 0,
-    img: '#',
+    img: '/images/course.png',
     name: '语言基础课程0',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -73,7 +73,7 @@ const courses = [
   },
   {
     id: 1,
-    img: '#',
+    img: '/images/course.png',
     name: '语言基础课程1',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -81,7 +81,7 @@ const courses = [
   },
   {
     id: 2,
-    img: '#',
+    img: '/images/course.png',
     name: '语言基础课程2',
     subtitle: '课程副标题',
     learningCount: 1000,
@@ -89,7 +89,7 @@ const courses = [
   },
   {
     id: 3,
-    img: '#',
+    img: '/images/course.png',
     name: '语言基础课程3',
     subtitle: '课程副标题',
     learningCount: 1000,

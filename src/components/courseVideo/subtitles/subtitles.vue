@@ -28,15 +28,11 @@
         // 获取字幕的dom元素
         self.$refs.subtitles.forEach(function (item, index) {
           let curSentence = self.subtitles[index] || {}
-          let nextSentence = self.subtitles[index + 1] || {}
-          if (newVal >= curSentence.start && newVal < nextSentence.start) {
+          if (newVal >= curSentence.start && newVal <= curSentence.end) {
             // 下一句与这一句之间
             item.className = 'active'
             // 滚动条滚动
             self.$emit('scroll-to', self.$refs.subtitles.length, index)
-          } else if (newVal >= curSentence.start && !nextSentence.start) {
-            // 最后一句字幕
-            item.className = 'active'
           } else {
             item.className = ''
           }
