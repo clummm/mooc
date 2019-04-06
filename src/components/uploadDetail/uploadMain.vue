@@ -11,7 +11,7 @@
         <el-menu-item index="1"><i class="el-icon-tickets"></i> 课程目录</el-menu-item>
         <el-menu-item index="2"><i class="el-icon-edit"></i> 课程测试</el-menu-item>
       </el-menu>
-      <router-view :course="course" @saveInfo="saveInfo"></router-view>
+      <router-view :course="course" @saveInfo="saveInfo" style="margin-top: 20px"></router-view>
     </div>
   </div>
 </template>
@@ -51,9 +51,9 @@
       },
       handleSelect (key, keyPath) {
         if (key === '0') {
-          this.$router.push('info')
+          this.$router.push({ name: 'uploadInfo' })
         } else if (key === '1') {
-          this.$router.push('catalogue')
+          this.$router.push({ name: 'uploadCatalogue' })
         } else if (key === '2') {
           this.$router.push({ name: 'uploadTest' })
         }

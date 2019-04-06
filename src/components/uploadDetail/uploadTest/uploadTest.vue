@@ -25,7 +25,7 @@
     <el-table
       :data="course.tests"
       border
-      style="width: 100%">
+      style="width: 100%;margin-bottom: 60px">
       <el-table-column
         label="测试名称"
         width="200">

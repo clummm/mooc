@@ -2,7 +2,8 @@
   <div class="video" ref="vcontainer"
        @pointerup.prevent="stopDragging"
        @pointermove.prevent="handleMouseMove" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd">
+    <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd" @click="togglePlaying"
+    >
       <source :src="`${videoSrc}#t=${playTime}`"/>
       <track :src="webvtt" kind="subtitles" label="中文字幕" srclang="zh" default/>
     </video>
@@ -17,26 +18,34 @@
             <div class="controller-inner-dot"></div>
           </div>
           <div class="node-dot" v-for="(node,index) in nodes" @click.stop="jump2Node(index)" :key="index"
-               :style="{left:nodePlace(node.time)}"></div>
+               :style="{left:nodePlace(node.time)}" @mouseenter="node.show=true" @mouseleave="node.show=false">
+            <div v-if="previewSize&&preview[node.time]&&node.show" class="preview"
+                 :style="{width:previewSize.width+'px',height:previewSize.height+'px',bottom:previewSize.height*0.5+5+'px'}">
+              <img :src="preview[node.time]" :width="previewSize.width" :height="previewSize.height">
+              <div class="preview-text"
+                   :style="{fontSize:previewSize.fontSize+'px',lineHeight:previewSize.lineHeight+'px'}">{{node.name}}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="controller-btn-wrapper">
-        <div class="controller-btn" @click="togglePlaying">
-          <button class="btn" v-show="isPaused">播放</button>
-          <button class="btn" v-show="!isPaused">暂停</button>
+        <div class="controller-btn" @click="togglePlaying" style="margin-right: 1%">
+          <img class="btn" v-show="isPaused" src="./play.png">
+          <img class="btn" v-show="!isPaused" src="./pause.png">
         </div>
-        <div class="controller-btn" @click="stopPlaying">
-          <button class="btn" @click="stopPlaying">stop</button>
-        </div>
-        <div class="controller-btn" @click="toggleMute">
-          <button class="btn" v-show="isMuted">已禁音</button>
-          <button class="btn" v-show="!isMuted">禁音</button>
+        <div class="controller-btn" @click="stopPlaying" style="margin-right: 2%">
+          <img class="stop" @click="stopPlaying" src="./stop.png" width="20" height="20">
         </div>
         <div class="controller-timer">
           {{videoTime}}
         </div>
+        <div class="controller-btn voice" @click="toggleMute">
+          <img class="btn" v-show="isMuted" src="./silence.png">
+          <img class="btn" v-show="!isMuted" src="./voice.png">
+        </div>
         <div class="controller-btn fullscreen" @click="toggleFullscreen">
-          <button class="btn">fullscreen</button>
+          <img class="btn" src="./fullscreen.png">
         </div>
       </div>
     </div>
@@ -44,7 +53,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { secToTimer } from '../../../common/js/Time'
+  import { secToTimer } from '../../common/js/Time'
 
   export default {
     name: 'myVideo',
@@ -55,13 +64,24 @@
       playTime: {
         default: 0
       },
+      duration: {
+        default: 60
+      },
       nodes: {
         type: Array,
         default: null
       },
+      preview: {
+        default: () => {
+          return []
+        }
+      },
       webvtt: {
         type: String,
         default: '/example.vtt'
+      },
+      size: {
+        default: 'mini'
       }
     },
     data () {
@@ -76,12 +96,36 @@
         dotOffsetX: 0,
         draggingStartX: 0,
         isDragging: false,
-        isControlVisible: true
+        isControlVisible: true,
+        pictureSrc: null,
+        videoSize: null
       }
     },
     computed: {
       videoProgressPercent () {
         return `${this.videoProgress * 100}%`
+      },
+      // 略缩图大小
+      previewSize () {
+        if (this.videoSize) {
+          if (this.fullscreen) {
+            return {
+              width: document.body.offsetWidth * 0.15,
+              height: document.body.offsetHeight * 0.15,
+              fontSize: document.body.offsetWidth * 0.015,
+              lineHeight: document.body.offsetWidth * 0.02
+            }
+          } else {
+            return {
+              width: this.videoSize.width * 0.2,
+              height: this.videoSize.height * 0.2,
+              fontSize: this.videoSize.width * 0.02,
+              lineHeight: this.videoSize.width * 0.03
+            }
+          }
+        } else {
+          return null
+        }
       }
     },
     watch: {
@@ -100,11 +144,12 @@
           this.video.currentTime = newVal || 0
         }
       }
+
     },
     methods: {
       // 计算节点位置
       nodePlace (time) {
-        return `${(time / 60.095011) * 100}%`
+        return `${(time / this.duration) * 100}%`
       },
       jump2Node (index) {
         this.videoProgress = this.nodes[index].time / this.video.duration
@@ -135,6 +180,10 @@
           }
         }
         this.fullscreen = !this.fullscreen
+        console.log('fenge')
+        console.log(this.video.offsetWidth)
+        console.log(this.previewSize)
+        console.log(this.fullscreen)
       },
       handleTimeUpdate () {
         this.videoTime = this.refreshTime()
@@ -249,6 +298,10 @@
       self.video.ontimeupdate = function () {
         self.$emit('time-update', self.video.currentTime)
       }
+      this.videoSize = {
+        width: this.video.offsetWidth,
+        height: this.video.offsetHeight
+      }
     }
   }
 </script>
@@ -280,7 +333,7 @@
         align-items: center;
 
         .controller-progress
-          height: 5px;
+          height: 3px;
           position: relative;
           width: calc(100% - 30px);
           border-radius: 100px;
@@ -306,6 +359,19 @@
           justify-content: center;
           align-items: center;
 
+          .preview
+            position relative
+
+            .preview-text
+              position absolute
+              bottom 0
+              width 100%
+              background rgba(0, 0, 0, 0.5)
+              color white
+              text-align center
+              font-family: PingFangSC-Regular;
+              font-weight: 400
+
         .controller-dot
           position: absolute;
           z-index: 50;
@@ -330,18 +396,22 @@
         height: calc(100% - 5px);
         display: flex;
         align-items: center;
+        margin-top 5px
         color: #fff;
         padding: 0 18px;
 
         .controller-btn
-          margin: 0 20px;
-          transition: .5s;
+          cursor: pointer;
 
-          .btn:hover
-            cursor: pointer;
-            background: #409eff
+          .btn
+            width 28px
+            height 28px
+
+        .voice
+          position absolute
+          right calc(3% + 28px)
 
         .fullscreen
           position absolute
-          right 15px
+          right 2%
 </style>
