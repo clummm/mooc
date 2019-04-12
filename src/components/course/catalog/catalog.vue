@@ -1,9 +1,9 @@
 <!-- 课程目录 -->
 <template>
   <div class="catalog-wrapper">
-    <div class="intro course-box">简介：{{catalog.intro}}</div>
+    <el-card class="course-box">简介：{{catalog.intro}}</el-card>
     <div class="catalog">
-      <div class="chapter course-box" v-for="(chapter, index) in catalog.catalog" :key="index">
+      <el-card class="chapter course-box" v-for="(chapter, index) in catalog.catalog" :key="index">
         <div class="chapter-title">{{chapter.title}}</div>
         <div class="chapter-intro">{{chapter.intro}}</div>
         <ul class="sessions">
@@ -14,11 +14,13 @@
               <span v-if="leavePosition && leavePosition.chapter === chapter.id && leavePosition.sid === session.id">
                 最近学习
               </span>
-              <i :class="getLearningState(session.leaveTime, session.duration)"></i>
+              <img src="../../../common/radio-unchecked.png" v-if="session.leaveTime <= -1"/>
+              <img src="../../../common/contrast.png" v-else-if="session.leaveTime < session.duration"/>
+              <img src="../../../common/checkmark.png" v-else-if="session.leaveTime >= session.duration"/>
             </div>
           </li>
         </ul>
-      </div>
+      </el-card>
     </div>
   </div>
 </template>
@@ -42,22 +44,6 @@
       }),
       timeFormatter (second) {
         return secToTimer(second)
-      },
-      // 根据课时学习进度更改图标
-      getLearningState (leaveTime, duration) {
-        leaveTime = Number(leaveTime)
-        duration = Number(duration)
-        let className = 'el-icon-warning'
-        if (leaveTime === -1) {
-          className = 'el-icon-warning'
-        } else if (leaveTime < duration) {
-          // 未学习完
-          className = 'el-icon-question'
-        } else if (leaveTime === duration) {
-          // 学习完
-          className = 'el-icon-success'
-        }
-        return className
       },
       playVideo (chapter, sid, leaveTime) {
         console.log(`catalog, leaveTime: ${leaveTime}`)
@@ -92,7 +78,6 @@
       this.catalog = this.userInfo ? CATALOG : CATALOG_LOGOUT
       // this.leavePosition = this.$route.meta.leavePosition
       // console.log(`catalog's name: ${this.$route.name}`)
-      console.log(this.leavePosition)
     }
   }
 </script>
@@ -100,9 +85,8 @@
 <style lang="stylus" scoped>
   .catalog-wrapper
     .course-box
-      border silver solid 1px
       line-height 26px
-      padding 24px 32px 28px
+      padding 20px
       margin-bottom 8px
 
     .chapter
@@ -130,4 +114,6 @@
             span
               font-size 14px
               padding-right 10px
+            img
+              width 15px
 </style>

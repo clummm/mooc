@@ -78,7 +78,7 @@
       },
       webvtt: {
         type: String,
-        default: '/example.vtt'
+        default: ''
       },
       size: {
         default: 'mini'

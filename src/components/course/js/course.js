@@ -4,15 +4,15 @@ import courseImg from '../../../common/course.png'
 const COURSE = {
   id: 0,
   img: courseImg,
-  name: 'Unity5.x 创造 3D VR游戏',
-  subtitle: '零基础入门游戏行业',
+  name: '前端框架课程0',
+  subtitle: '前端框架课程0副标题',
   category1: {
-    id: 8,
-    name: '移动开发'
+    id: 0,
+    name: '前端开发'
   },
   category2: {
-    id: 9,
-    name: 'Android开发'
+    id: 1,
+    name: '前端框架'
   },
   needToKnow: '1.前端基础知识的HTML，Javascript, css\n' +
     '2.适合于前端小白，想了解最流行的前端框架的小伙伴。\n' +
@@ -31,7 +31,7 @@ const COURSE = {
     id: 123,
     name: '张三',
     icon: user,
-    job: 'android开发工程师'
+    job: '前端开发工程师'
   },
   totalTime: 8100,
   learningCount: 2200,
@@ -39,8 +39,8 @@ const COURSE = {
   favorite: true,
   // 对课程的最近学习时间点
   leavePosition: {
-    chapter: 2,
-    sid: 1,
+    chapter: 1,
+    sid: 2,
     name: '课时名称',
     time: '123'
   }
@@ -60,6 +60,7 @@ const CATALOG = {
           url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
           duration: 150,
           leaveTime: -1,
+          webvtt: '/example.vtt',
           nodes: [
             {
               name: '节点名',
@@ -69,13 +70,11 @@ const CATALOG = {
           keywords: [
             {
               keyword: 'bunny',
-              explain: '兔子',
-              active: false
+              meaning: '兔子'
             },
             {
               keyword: 'buck',
-              explain: '雄鹿',
-              active: false
+              meaning: '雄鹿'
             }
           ]
         },
@@ -85,6 +84,7 @@ const CATALOG = {
           url: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
           duration: 52,
           leaveTime: 50,
+          webvtt: '/example.vtt',
           nodes: [
             {
               name: '节点名',
@@ -94,8 +94,7 @@ const CATALOG = {
           keywords: [
             {
               keyword: 'trailer',
-              explain: '火车',
-              active: false
+              meaning: '火车'
             }
           ]
         }
@@ -111,23 +110,22 @@ const CATALOG = {
           title: 'mov_bbb',
           url: 'http://www.w3school.com.cn/example/html5/mov_bbb.mp4',
           duration: 10,
-          leaveTime: 5,
+          leaveTime: 10,
+          webvtt: '/example.vtt',
           nodes: [
             {
               name: '节点名',
-              time: 30
+              time: 5
             }
           ],
           keywords: [
             {
               keyword: 'mov',
-              explain: 'move',
-              active: false
+              meaning: 'move'
             },
             {
               keyword: 'bbb',
-              explain: 'bbb',
-              active: false
+              meaning: 'bbb'
             }
           ]
         }

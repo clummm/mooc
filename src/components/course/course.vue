@@ -56,23 +56,21 @@
       </el-menu>
     </div>
     <div class="course-info-main">
-      <div class="aside">
-        <div class="aside-wrapper">
-          <div class="learn">
-            <el-button round @click="playVideo">{{course.leavePosition ? '继续学习' : '开始学习'}}</el-button>
-          </div>
-          <div class="course-info-tip">
-            <dl class="needToKnow">
-              <dt>课程须知</dt>
-              <dd>{{course.needToKnow}}</dd>
-            </dl>
-            <dl class="gains">
-              <dt>老师告诉你能学到什么？</dt>
-              <dd>{{course.gains}}</dd>
-            </dl>
-          </div>
+      <el-card class="aside">
+        <div class="learn">
+          <el-button round @click="playVideo">{{course.leavePosition ? '继续学习' : '开始学习'}}</el-button>
         </div>
-      </div>
+        <div class="course-info-tip">
+          <dl class="needToKnow">
+            <dt>课程须知</dt>
+            <dd>{{course.needToKnow}}</dd>
+          </dl>
+          <dl class="gains">
+            <dt>老师告诉你能学到什么？</dt>
+            <dd>{{course.gains}}</dd>
+          </dl>
+        </div>
+      </el-card>
       <div class="course-content">
         <div class="course-content-wrapper">
           <router-view>
@@ -259,28 +257,23 @@
         padding-top 36px
         padding-right 352px
       .aside
-        border silver solid 1px
-        border-radius 12px
-        background-color #ffff
         position absolute
         top -150px
         right 0
         width 320px
-        .aside-wrapper
-          padding 24px 32px 32px
-          .learn
-            text-align center
-          .course-info-tip
-            dl
-              margin-top 24px
-            dt
-              font-weight 700
-              margin-bottom 6px
-              font-size 14px
-            dd
-              font-size 12px
-              line-height 24px
-              white-space pre-line
-              word-wrap break-word
-              word-break break-all
+        .learn
+          text-align center
+        .course-info-tip
+          dl
+            margin-top 24px
+          dt
+            font-weight 700
+            margin-bottom 6px
+            font-size 14px
+          dd
+            font-size 12px
+            line-height 24px
+            white-space pre-line
+            word-wrap break-word
+            word-break break-all
 </style>

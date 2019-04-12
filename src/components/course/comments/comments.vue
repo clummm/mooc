@@ -1,28 +1,30 @@
 <!-- 用户评价 -->
 <template>
   <div class="comments-wrapper">
-    <div class="comments-header clearfix">
-      <div class="rating-title left">综合<br/>评分</div>
-      <div class="rating-score left">{{rating}}</div>
-      <div class="star-box left">
-        <el-rate v-model="rating" disabled></el-rate>
+    <el-card class="comments-header">
+      <div class="clearfix">
+        <div class="rating-title left">综合<br/>评分</div>
+        <div class="rating-score left">{{rating}}</div>
+        <div class="star-box left">
+          <el-rate v-model="rating" disabled></el-rate>
+        </div>
+        <ul class="rating-item left">
+          <li v-for="(item, index) in ratingItem" :key="index">
+            {{ratingItemTile[index]}}
+            <span>{{item}}</span>
+          </li>
+        </ul>
       </div>
-      <ul class="rating-item right">
-        <li v-for="(item, index) in ratingItem" :key="index">
-          {{ratingItemTile[index]}}
-          <span>{{item}}</span>
-        </li>
-      </ul>
-    </div>
-    <div class="comment-hint" v-if="!myComment">
+    </el-card>
+    <el-card class="comment-hint" v-if="!myComment">
       <div class="unqualified" v-if="!leavePosition">
         <i class="el-icon-warning"></i>您尚未学习该课程，不能对课程进行评价
       </div>
       <div class="qualified" v-if="leavePosition">
         <el-button round @click="dialogVisible = true">发表评价</el-button>
       </div>
-    </div>
-    <div class="my-comment" v-if="myComment">
+    </el-card>
+    <el-card class="my-comment" v-if="myComment">
       <span>我的评价</span>
       <el-button round size="medium" @click="dialogVisible = true">重新编辑</el-button>
       <div class="comment-wrapper">
@@ -46,9 +48,9 @@
           <el-rate v-model="myComment.rating" disabled></el-rate>
         </div>
       </div>
-    </div>
+    </el-card>
     <div class="comments">
-      <div class="comment" v-for="(item, index) in comments" :key="index">
+      <el-card class="comment" v-for="(item, index) in comments" :key="index">
         <div class="comment-wrapper">
           <div class="creator-icon">
             <img :src="item.creator.avatar"/>
@@ -70,7 +72,7 @@
             <el-rate v-model="item.rating" disabled></el-rate>
           </div>
         </div>
-      </div>
+      </el-card>
     </div>
     <div class="pagination">
       <el-pagination
@@ -268,8 +270,7 @@
 <style lang="stylus" scoped>
   .comments-wrapper
     .comments-header
-      padding 32px 20px
-      border silver solid 1px
+      padding 20px 0
       margin-bottom 30px
 
       .rating-title
@@ -299,13 +300,11 @@
       line-height 100px
       text-align center
       margin-bottom 30px
-      border silver solid 1px
       i
         margin-right 10px
 
     .comment
-      padding 32px
-      border silver solid 1px
+      padding 20px
       margin-bottom 8px
 
     .comment-wrapper
@@ -345,7 +344,6 @@
       position relative
       top 0
       left 0
-      border silver solid 1px
       padding 52px 32px 32px 32px
       margin-bottom 30px
       span
@@ -371,7 +369,15 @@
           padding-left 30px
           span
             float left
-      .content
-        width 350px
-        float left
+      .content-wrapper
+        position relative
+        top 0
+        left 0
+        .content
+          width 350px
+          float left
+        .commit
+          position absolute
+          bottom 10px
+          right 20px
 </style>

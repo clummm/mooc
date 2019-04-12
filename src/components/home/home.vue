@@ -11,7 +11,7 @@
             <router-link class="sub-category-item"
                          v-for="(subItem, i) in show2SubCategory(item.second)" :key="i"
                          :to="{name: 'category', params:{cid: subItem.id}}">{{subItem.name}}</router-link>
-            <div class="sub-category-content" v-if="item.active">
+            <el-card class="sub-category-content" v-if="item.active">
               <div class="inner-box">
                 <router-link :to="{name: 'category', params:{cid: subItem.id}}"
                              v-for="(subItem, i) in item.second"
@@ -22,7 +22,7 @@
               <div class="recommend-box">
                 <course-card-horizon v-for="(course, i) in item.recommend" :key="i" :course="course"></course-card-horizon>
               </div>
-            </div>
+            </el-card>
           </li>
         </ul>
         <div class="carousel-wrapper">
@@ -238,9 +238,8 @@
             top 0
             left 265px
             z-index 3
-            width 720px
+            width 800px
             background-color #fff
-            box-shadow 0 2px 6px 0 rgba(0,0,0,0.26)
 
             .inner-box
               padding 40px 30px 20px 30px
@@ -253,7 +252,7 @@
                 line-height 20px
 
             .recommend-box
-              padding 0 0 50px 30px
+              padding 0 30px
 
     .main-content
       width 1024px

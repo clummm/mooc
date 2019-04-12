@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="forum">
-      <div class="forum-item clearfix"
+      <el-card class="forum-item clearfix"
            v-for="(item, index) in forum" :key="index"
            @click="discussDetail(item.id)">
         <div class="forum-item-wrapper">
@@ -39,7 +39,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </el-card>
     </div>
     <div class="pagination">
       <slot name="pagination"
@@ -113,7 +113,6 @@
       // url不带页码的形式进行当前页变化
       handleCurrentChangeWithoutQuery (page) {
         this.currentPage = page
-        console.log(`sotring type is ${this.sortingType}`)
         // 后台获取讨论
         // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
         this.forum = FORUM.forum
@@ -123,7 +122,6 @@
       getForum () {
         this.currentPage = Number(this.$route.query.p) || 1
         this.sortingType = Number(this.$route.query.type) || 0
-        console.log(`sotring type is ${this.sortingType}`)
         // 后台获取讨论
         // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
         this.forum = FORUM.forum
@@ -164,7 +162,6 @@
       checkTitle () {
         console.log(`title is ${this.discuss.title}`)
         if (this.discuss.title.trim().length < 5) {
-          console.log('标题不能少于5个字符')
           this.showTitleHint = true
         } else {
           this.showTitleHint = false
@@ -282,8 +279,7 @@
 
     .forum
       .forum-item
-        padding 32px
-        border silver solid 1px
+        padding 20px
         margin-bottom 8px
 
         &:hover

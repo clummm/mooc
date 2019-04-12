@@ -19,7 +19,7 @@ const FORUM = {
         courseName: 'Unity5.x 创造 3D VR游戏',
         chapter: 2,
         sid: 1,
-        sessionName: '课时标题1',
+        sessionName: 'mov_bbb',
         time: 123
       }
     },

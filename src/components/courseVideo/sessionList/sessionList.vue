@@ -8,11 +8,13 @@
             <div class="clearfix">
               <div class="session left" @click="playVideo(chapter.id, session.id, session.leaveTime)">
                 {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.duration)})`}}
-                <div class="learningState right">
+                <div class="learning-state right">
                   <span v-if="Number(chapterId) === Number(chapter.id) && Number(sid) === Number(session.id)">
                   正在学习
                   </span>
-                  <i :class="getLearningState(session.leaveTime, session.duration)"></i>
+                  <img src="../../../common/radio-unchecked.png" v-if="session.leaveTime <= -1"/>
+                  <img src="../../../common/contrast.png" v-else-if="session.leaveTime < session.duration"/>
+                  <img src="../../../common/checkmark.png" v-else-if="session.leaveTime >= session.duration"/>
                 </div>
               </div>
               <div class="nodes-shown-label right">
@@ -103,6 +105,9 @@
             cursor pointer
             color grey
             background-color silver
+          .learning-state
+            img
+              width 15px
 
         .nodes-shown-label
           &:hover

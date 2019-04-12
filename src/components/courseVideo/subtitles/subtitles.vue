@@ -3,7 +3,7 @@
     <ul ref="box">
       <li v-for="(sentence, index) in subtitles" :key="index"
           ref="subtitles"
-          @click="$emit('jump-to', sentence.start)">
+          @click="jumpTo(sentence.start)">
         {{sentence.content}}
       </li>
     </ul>
@@ -22,6 +22,12 @@
         default: 0
       }
     },
+    methods: {
+      jumpTo (time) {
+        console.log(`跳转到：${time}`)
+        this.$emit('jump-to', time)
+      }
+    },
     watch: {
       currentTime: function (newVal, oldVal) {
         let self = this
@@ -31,6 +37,7 @@
           if (newVal >= curSentence.start && newVal <= curSentence.end) {
             // 下一句与这一句之间
             item.className = 'active'
+            console.log(`当前字幕：${curSentence.content}(${curSentence.start} -> ${curSentence.end})`)
             // 滚动条滚动
             self.$emit('scroll-to', self.$refs.subtitles.length, index)
           } else {

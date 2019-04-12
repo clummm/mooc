@@ -49,7 +49,7 @@ const MY_COMMENT = {
   },
   createTime: '2019-01-10',
   likeCount: 10,
-  like: false
+  like: true
 }
 
 export { COMMENTS, MY_COMMENT }

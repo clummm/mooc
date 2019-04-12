@@ -16,10 +16,10 @@ const NOTES = {
       },
       createPosition: {
         cid: 0,
-        courseName: 'Unity5.x 创造 3D VR游戏',
+        courseName: '前端框架课程0',
         chapter: 2,
         sid: 1,
-        sessionName: '课时标题1',
+        sessionName: 'mov_bbb',
         time: 123
       }
     },
@@ -37,11 +37,11 @@ const NOTES = {
       },
       createPosition: {
         cid: 0,
-        courseName: 'Unity5.x 创造 3D VR游戏',
+        courseName: '前端框架课程0',
         chapter: 1,
         sid: 2,
-        sessionName: '课时标题1',
-        time: 123
+        sessionName: 'trailer',
+        time: 10
       }
     }
   ],

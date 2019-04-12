@@ -10,7 +10,7 @@
     </ul>
     <div class="main-content">
       <div class="player">
-        <my-video :video-src="session.url" :play-time="playTime" @time-update="timeUpdate"></my-video>
+        <my-video :video-src="session.url" :play-time="playTime" @time-update="timeUpdate" :webvtt="session.webvtt"></my-video>
       </div>
       <div class="aside-menu">
         <el-menu default-active="catalog" mode="horizontal" @select="handleAsideMenuSelect">
@@ -32,22 +32,10 @@
         </div>
       </div>
     </div>
-    <ul class="keywords clearfix">
-      <li class="meta left">关键字</li>
-      <li class="left value" v-for="(keyword, index) in session.keywords" :key="index">
-        <div class="explain"
-             v-show="explainActive[index]"
-             @mouseenter="$set(explainActive, index, true)"
-             @mouseleave="$set(explainActive, index, false)">
-          {{keyword.explain}}
-          <a>查看更多>>></a>
-        </div>
-        <div @mouseenter="$set(explainActive, index, true)"
-             @mouseleave="$set(explainActive, index, false)">
-          <el-tag class="tag">{{keyword.keyword}}</el-tag>
-        </div>
-      </li>
-    </ul>
+    <el-card class="keywords">
+      <keyword-tag class="keyword" v-for="(keyword, index) in session.keywords" :key="index"
+                   :word="keyword" :index="index" :editable="false"></keyword-tag>
+    </el-card>
     <div class="subcontainer">
       <footer-menu></footer-menu>
     </div>
@@ -63,6 +51,7 @@
   import publishNote from './publishNote/publishNote'
   import selfTest from './selfTest/selfTest'
   import subtitles from './subtitles/subtitles'
+  import keywordTag from '../keywordTag/keywordTag'
 
   export default {
     name: 'courseVideo',
@@ -73,7 +62,8 @@
       subtitles,
       myVideo,
       footerMenu,
-      sessionList
+      sessionList,
+      keywordTag
     },
     data () {
       return {
@@ -106,8 +96,9 @@
         this.sid = this.$route.params.sid
         this.playTime = this.$route.params.playTime || 0
         this.playTime = this.playTime < 0 ? 0 : this.playTime
-        console.log(`cid: ${this.cid}, chapter: ${this.chapter}, sid: ${this.sid}, leaveTime: ${this.playTime}`)
-
+        console.log('-----------当前时间节点-----------')
+        console.log(`课程id: ${this.cid}, 章节: ${this.chapter}, 课时: ${this.sid}, 时间节点(秒): ${this.playTime}`)
+        console.log('-----------当前时间节点-----------')
         // 保存到 sessionStorage
         let sessionStorage = window.sessionStorage
         if (this.$route.params.playTime) {
@@ -124,7 +115,9 @@
       // 关闭视频前上传离开时的节点
       beforeCloseHandler (e) {
         // ...
-        console.log('beforeCloseHandler')
+        console.log('-----------上传时间节点-----------')
+        console.log(`课程id: ${this.cid}, 章节: ${this.chapter}, 课时: ${this.sid}, 时间节点(秒): ${this.currentTime} ≈ ${Math.floor(this.currentTime)}`)
+        console.log('-----------上传时间节点-----------')
       },
       // 侧边目录页点击处理
       handleAsideMenuSelect (key) {
@@ -158,11 +151,10 @@
       '$route' (to, from) {
         // 对路由变化作出响应...
         console.log('-------------route change--------------')
-        console.log(this.$route)
-        this.getSession()
         if (to.params.cid !== from.params.cid || to.params.chapter !== from.params.chapter || to.params.sid !== from.params.sid) {
           this.beforeCloseHandler()
         }
+        this.getSession()
       }
     },
     beforeDestroy () {
@@ -188,32 +180,10 @@
           background-color silver
 
     .keywords
-      border silver solid 1px
       margin 10px
-      padding 20px
-
-      .meta
-        padding-top 5px
-
-      .value
+      .keyword
+        display inline-block
         margin-left 20px
-        position relative
-        top 0
-        left 0
-
-        .explain
-          position absolute
-          bottom 100%
-          left 0
-          min-height 80px
-          min-width 150px
-          background-color #ffffff
-          font-size 12px
-          padding 5px
-          a
-            position absolute
-            right 0
-            bottom 0
 
     .main-content
       width 100%

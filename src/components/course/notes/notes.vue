@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="notes">
-      <div class="note-item clearfix"
+      <el-card class="note-item clearfix"
            v-for="(item, index) in notes" :key="index"
            @click="noteDetail(item.id)">
         <div class="note-item-wrapper">
@@ -43,7 +43,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </el-card>
     </div>
     <div class="pagination">
       <slot name="pagination"
@@ -231,8 +231,7 @@
 
     .notes
       .note-item
-        padding 32px
-        border silver solid 1px
+        padding 20px
         margin-bottom 8px
 
         &:hover

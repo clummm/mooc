@@ -1,31 +1,31 @@
 const subtitles = [
   {
-    content: '请把你的锅',
+    content: '第一句字幕',
     start: 0,
     end: 1
   },
   {
-    content: '带回你的虾',
+    content: '第二句字幕',
     start: 1,
     end: 3
   },
   {
-    content: '请把你的微笑留下……',
+    content: '第三句字幕',
     start: 3,
     end: 7
   },
   {
-    content: '请把你的锅',
+    content: '第四句字幕',
     start: 7,
     end: 10
   },
   {
-    content: '带回你的虾',
+    content: '第五句字幕',
     start: 10,
     end: 12
   },
   {
-    content: '请把你的微笑留下',
+    content: '第六句字幕',
     start: 12,
     end: 15
   }
