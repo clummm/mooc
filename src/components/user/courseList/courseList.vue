@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { MY_COURSE, HISTORY } from '../../../common/js/data'
+  import { MY_COURSE, HISTORY } from '../../../../public/js/data'
   import myCourse from './myCourse/myCourse'
   import myHistory from './myHistory/myHistory'
 

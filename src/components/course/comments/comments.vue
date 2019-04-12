@@ -116,7 +116,7 @@
 <script>
   import { COMMENTS, MY_COMMENT } from './js/comments'
   import { mapGetters, mapActions } from 'vuex'
-  import { DateFormatter } from '../../../common/js/Time'
+  import { DateFormatter } from '../../../../public/js/Time'
 
   const template = {
     content: '',

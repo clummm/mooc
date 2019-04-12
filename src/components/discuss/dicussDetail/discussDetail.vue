@@ -68,7 +68,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { DISCUSS_DETAIL_OTHER, DISCUSS_DETAIL_MINE } from '../../common/js/data'
+  import { DISCUSS_DETAIL_OTHER, DISCUSS_DETAIL_MINE } from '../../../../public/js/data'
 
   export default {
     name: 'discussDetail',

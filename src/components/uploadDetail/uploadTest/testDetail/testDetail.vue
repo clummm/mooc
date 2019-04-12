@@ -77,7 +77,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { TEST_DETAIL } from '../../../../common/js/data'
+  import { TEST_DETAIL } from '../../../../../public/js/data'
 
   export default {
     name: 'testDetail',

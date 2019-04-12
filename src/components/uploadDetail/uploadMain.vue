@@ -17,7 +17,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { UPLOAD_COURSE } from '../../common/js/data'
+  import { UPLOAD_COURSE } from '../../../public/js/data'
 
   export default {
     name: 'uploadMain',

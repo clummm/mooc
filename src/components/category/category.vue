@@ -49,7 +49,7 @@
 <script>
   import { PRIMARY_CATEGORY } from './js/category'
   import { COURSE_LIST } from './js/courseList'
-  import courseCardVertical from '../courseCardVertical/courseCardVertical'
+  import courseCardVertical from '../courseCard/courseCardVertical/courseCardVertical'
 
   export default {
     name: 'category',

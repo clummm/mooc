@@ -53,7 +53,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { secToTimer } from '../../common/js/Time'
+  import { secToTimer } from '../../../public/js/Time'
 
   export default {
     name: 'myVideo',

@@ -23,7 +23,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { LIKE_NOTE, MY_NOTE } from '../../common/js/data'
+  import { LIKE_NOTE, MY_NOTE } from '../../../../public/js/data'
   import { mapGetters } from 'vuex'
   import noteEditor from '../noteEditor/noteEditor'
 

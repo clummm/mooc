@@ -128,8 +128,8 @@
 <script type="text/ecmascript-6">
   import { SELECT_CATEGORY } from './category'
   import { quillEditor } from 'vue-quill-editor'
-  import keywordTag from '../../keywordTag/keywordTag'
-  import keywordEditor from '../../keywordEditor/keywordEditor'
+  import keywordTag from '../../keyword/keywordTag/keywordTag'
+  import keywordEditor from '../../keyword/keywordEditor/keywordEditor'
 
   const INTRO = 0
   const NEED_KNOW = 1
@@ -308,7 +308,7 @@
 </script>
 
 <style lang="stylus" scoped>
-  @import "../../../common/style/popwindow.css"
+  @import "../../../../public/css/popwindow.css"
   .avatar-uploader .el-upload {
     display inline-block
     border: 1px dashed #d9d9d9;
