@@ -1,64 +1,69 @@
 <!-- 课程页 -->
 <template>
   <div class="course-wrapper">
-    <div class="breadcrumb">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{name: 'category', params: {cid: course.category1.id}}">
-          {{course.category1.name}}
-        </el-breadcrumb-item>
-        <el-breadcrumb-item :to="{name: 'category', params: {cid: course.category2.id}}">
-          {{course.category2.name}}
-        </el-breadcrumb-item>
-        <el-breadcrumb-item>{{course.name}}</el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="course-info">
-      <div class="title">
-        <span>{{course.name}}</span>
-      </div>
-      <div class="brief-info clearfix">
-        <div class="lector-info">
-          <div class="lector-icon">
-            <img :src="course.lector.icon">
+    <div class="course-header">
+      <div class="fixed-center-wrapper">
+        <div class="breadcrumb">
+          <el-breadcrumb separator="\">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item :to="{name: 'category', params: {cid: course.category1.id}}">
+              {{course.category1.name}}
+            </el-breadcrumb-item>
+            <el-breadcrumb-item :to="{name: 'category', params: {cid: course.category2.id}}">
+              {{course.category2.name}}
+            </el-breadcrumb-item>
+            <el-breadcrumb-item>{{course.name}}</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
+        <div class="course-info">
+          <div class="title">
+            <span>{{course.name}}</span>
           </div>
-          <div class="lector-rside">
-            <span class="lector-name">{{course.lector.name}}</span>
-            <span class="lector-job">{{course.lector.job}}</span>
+          <div class="brief-info clearfix">
+            <div class="lector-info">
+              <div class="lector-icon">
+                <img :src="course.lector.icon">
+              </div>
+              <div class="lector-rside">
+                <span class="lector-name">{{course.lector.name}}</span>
+                <span class="lector-job">{{course.lector.job}}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <span class="meta">时长</span>
+              <span class="meta-value">{{timeFormatter(course.totalTime)}}</span>
+            </div>
+            <div class="info-item">
+              <span class="meta">学习人数</span>
+              <span class="meta-value">{{course.learningCount}}</span>
+            </div>
+            <div class="info-item">
+              <span class="meta">综合评分</span>
+              <span class="meta-value">{{course.rating}}</span>
+            </div>
           </div>
-        </div>
-        <div class="info-item">
-          <span class="meta">学习总时长</span>
-          <span class="meta-value">{{timeFormatter(course.totalTime)}}</span>
-        </div>
-        <div class="info-item">
-          <span class="meta">学习人数</span>
-          <span class="meta-value">{{course.learningCount}}人</span>
-        </div>
-        <div class="info-item">
-          <span class="meta">评价</span>
-          <span class="meta-value">{{course.rating}}</span>
-        </div>
-      </div>
-      <div class="extra">
-        <div class="favorite" @click="changeFavor">
-          <i :class="favorite ? 'el-icon-star-on' : 'el-icon-star-off'"></i>
-          <span>收藏</span>
+          <div class="extra">
+            <div class="favorite" @click="changeFavor">
+              <i :class="favorite ? 'el-icon-star-on' : 'el-icon-star-off'"></i>
+              <span>收藏</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="course-info-menu">
-      <el-menu :default-active="this.$route.name" mode="horizontal" @select="handleSelect">
+      <el-menu :default-active="this.$route.name" mode="horizontal"
+               active-text-color="#049CFF" text-color="#333333" @select="handleSelect">
         <el-menu-item index="course">课程章节</el-menu-item>
         <el-menu-item index="forum">课程讨论</el-menu-item>
         <el-menu-item index="notes">课程笔记</el-menu-item>
         <el-menu-item index="comments">课程评价</el-menu-item>
       </el-menu>
     </div>
-    <div class="course-info-main">
+    <div class="course-info-main fixed-center-wrapper">
       <el-card class="aside">
         <div class="learn">
-          <el-button round @click="playVideo">{{course.leavePosition ? '继续学习' : '开始学习'}}</el-button>
+          <el-button type="primary" round @click="playVideo">{{course.leavePosition ? '继续学习' : '开始学习'}}</el-button>
         </div>
         <div class="course-info-tip">
           <dl class="needToKnow">
@@ -89,6 +94,7 @@
             </template>
             <template v-slot:pagination="listSlotProps">
               <el-pagination
+                background="false"
                 layout="prev, pager, next"
                 :total="listSlotProps.totalNum"
                 :current-page="listSlotProps.currentPage"
@@ -192,13 +198,21 @@
 
 <style lang="stylus" scoped>
   .course-wrapper
-    width 1024px
-    margin auto
+    background-color #F8FAFC
+    font-family PingFangSC-Regular
+    padding-bottom 20px
+
+    .course-header
+      background-color #010101
+      color #FFFFFF
 
     .breadcrumb
-      margin 10px 10px 10px 0
+      padding 22px 0
+      .el-breadcrumb
+        .el-breadcrumb__item>>>.el-breadcrumb__inner
+            color #B0B0B0
     .course-info
-      height 150px
+      padding-bottom 23px
       position relative
       left 0
       top 0
@@ -206,7 +220,7 @@
         font-size 32px
         font-weight 400
         line-height 48px
-        padding-bottom 8px
+        padding-bottom 9px
       .brief-info
         .lector-info
           float left
@@ -218,22 +232,27 @@
               height 48px
               border-radius 100%
           .lector-rside
-            margin-left 5px
+            margin-left 10px
             float left
             .lector-name
               display block
+              padding-bottom 4px
+              font-family PingFangSC-Medium
             .lector-job
-              font-size 12px
+              font-size 14px
+              color #E0E0E0
         .info-item
           float left
           position relative
           top 15px
           margin-right 16px
+          font-size 14px
           &:after
             margin-left 16px
             content "·"
           .meta
-            padding-right: 8px
+            padding-right 10px
+            font-weight 600
           &:last-child
             &:after
               display none
@@ -249,6 +268,17 @@
           margin-left 5px
           font-size 14px
 
+    .course-info-menu
+      background-color #FFFFFF
+      .el-menu
+        margin auto
+        width 1024px
+        .el-menu-item
+          font-size 16px
+          font-weight 700
+          font-family PingFangSC-Medium
+          margin-right 72px
+
     .course-info-main
       position relative
       top 0
@@ -258,11 +288,19 @@
         padding-right 352px
       .aside
         position absolute
-        top -150px
+        top -40px
         right 0
         width 320px
+        padding 10px 0
         .learn
           text-align center
+          .el-button.is-round
+            width 230px
+            padding 10px 0
+            border-radius 24px
+            font-size 20px
+            font-family PingFangSC-Regular
+            font-weight 500
         .course-info-tip
           dl
             margin-top 24px

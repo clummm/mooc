@@ -76,6 +76,7 @@
     </div>
     <div class="pagination">
       <el-pagination
+        background="false"
         layout="prev, pager, next"
         :total="commentsNum"
         :current-page="currentPage"

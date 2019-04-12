@@ -106,7 +106,7 @@
           top 0
           left 0
           &:hover
-            background-color silver
+            background-color #E0F3FF
           .learningState
             position absolute
             right 10px

@@ -51,7 +51,7 @@
   import publishNote from './publishNote/publishNote'
   import selfTest from './selfTest/selfTest'
   import subtitles from './subtitles/subtitles'
-  import keywordTag from '../keywordTag/keywordTag'
+  import keywordTag from '../keyword/keywordTag/keywordTag'
 
   export default {
     name: 'courseVideo',

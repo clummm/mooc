@@ -122,3 +122,9 @@ html, body {
 .right {
   float: right;
 }
+
+/* 定宽居中 */
+.fixed-center-wrapper {
+  width: 1024px;
+  margin: auto;
+}

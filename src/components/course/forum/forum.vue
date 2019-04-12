@@ -321,6 +321,7 @@
 
     .pagination
       text-align center
+
     .publish-dialog
       .title
         margin-bottom 8px
