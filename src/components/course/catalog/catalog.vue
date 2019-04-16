@@ -1,7 +1,10 @@
 <!-- 课程目录 -->
 <template>
   <div class="catalog-wrapper">
-    <el-card class="course-box">简介：{{catalog.intro}}</el-card>
+    <el-card class="course-box intro-box">
+      <div class="intro" :class="more ? '' : 'line-limit'">简介：{{catalog.intro}}</div>
+      <i :class="more ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" @click="more = !more"></i>
+    </el-card>
     <div class="catalog">
       <el-card class="chapter course-box" v-for="(chapter, index) in catalog.catalog" :key="index">
         <div class="chapter-title">{{chapter.title}}</div>
@@ -9,6 +12,7 @@
         <ul class="sessions">
           <li class="session" v-for="(session, i) in chapter.sessions" :key="i"
               @click="playVideo(chapter.id, session.id, session.leaveTime)">
+            <i class="play-icon"></i>
             {{`${chapter.id}-${session.id} ${session.title} (${timeFormatter(session.duration)})`}}
             <div class="learningState">
               <span v-if="leavePosition && leavePosition.chapter === chapter.id && leavePosition.sid === session.id">
@@ -35,7 +39,9 @@
     data () {
       return {
         cid: '',
-        catalog: {}
+        catalog: {},
+        // 是否展示更多简介
+        more: false
       }
     },
     methods: {
@@ -89,6 +95,18 @@
       padding 20px
       margin-bottom 8px
 
+    .intro
+      transition-property height
+      transition-duration .2s
+    .intro-box
+      position relative
+      top 0
+      left 0
+      i
+        position absolute
+        bottom 16px
+        right 30px
+        cursor pointer
     .chapter
       .chapter-title
         font-weight 700
@@ -105,8 +123,17 @@
           position relative
           top 0
           left 0
+          background-image url("./play_empty.png")
+          background-repeat no-repeat
+          background-position left center
           &:hover
             background-color #E0F3FF
+            background-image url("./play_full.png")
+          .play-icon
+            display inline-block
+            width 26px
+            height 26px
+            padding-right 16px
           .learningState
             position absolute
             right 10px

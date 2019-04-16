@@ -79,11 +79,19 @@
       <div class="course-content">
         <div class="course-content-wrapper">
           <router-view>
-            <template v-slot:sortingType="sortingSlotProps">
+            <template v-slot:latest="sortingSlotProps">
               <span @click="sortingSlotProps.sortingWithQuery(0)"
-                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
+                    :class="sortingSlotProps.getSortingTypeClass(0)">
+                最新
+              <img src="./new.png"/>
+              </span>
+            </template>
+            <template v-slot:hottest="sortingSlotProps">
               <span @click="sortingSlotProps.sortingWithQuery(1)"
-                    :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
+                    :class="sortingSlotProps.getSortingTypeClass(1)">
+                最热
+                <img src="./hot.png"/>
+              </span>
             </template>
             <template v-slot:showMine="mineSlotProps">
               <el-switch

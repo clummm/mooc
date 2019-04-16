@@ -3,7 +3,11 @@
   <div class="notes-wrapper">
     <div class="notes-header clearfix">
       <div class="left">
-        <slot name="sortingType"
+        <slot name="latest"
+              :sortingWithQuery="sortingWithQuery"
+              :sortingWithoutQuery="sortingWithoutQuery"
+              :getSortingTypeClass="getSortingTypeClass"></slot>
+        <slot name="hottest"
               :sortingWithQuery="sortingWithQuery"
               :sortingWithoutQuery="sortingWithoutQuery"
               :getSortingTypeClass="getSortingTypeClass"></slot>

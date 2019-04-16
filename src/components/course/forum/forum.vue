@@ -3,43 +3,51 @@
   <div class="forum-wrapper">
     <div class="forum-header clearfix">
       <div class="left">
-        <slot name="sortingType"
+        <slot name="latest"
               :sortingWithQuery="sortingWithQuery"
               :sortingWithoutQuery="sortingWithoutQuery"
-              :getSortingTypeClass="getSortingTypeClass"></slot>
+              :getSortingTypeClass="getSortingTypeClass">
+        </slot>
+        <slot name="hottest"
+              :sortingWithQuery="sortingWithQuery"
+              :sortingWithoutQuery="sortingWithoutQuery"
+              :getSortingTypeClass="getSortingTypeClass">
+        </slot>
       </div>
       <div class="publish">
-        <el-button round @click="showPublishDialog">我要发布</el-button>
+        <!--<el-button @click="showPublishDialog" size="small">我要发布</el-button>-->
+        <button class="publish-button" @click="showPublishDialog">我要发布</button>
       </div>
     </div>
     <div class="forum">
-      <el-card class="forum-item clearfix"
-           v-for="(item, index) in forum" :key="index"
-           @click="discussDetail(item.id)">
-        <div class="forum-item-wrapper">
-          <div class="creator-icon">
-            <img :src="item.creator.avatar"/>
-          </div>
-          <div class="content">
-            <div class="creator line-limit">{{item.creator.name}}</div>
-            <div class="content-title line-limit">
-              {{item.title}}
+      <div v-for="(item, index) in forum" :key="index">
+        <el-card class="forum-item clearfix"
+                 @click="discussDetail(item.id)">
+          <div class="forum-item-wrapper">
+            <div class="creator-icon">
+              <img :src="item.creator.avatar"/>
             </div>
-            <div class="content-footer">
-              <span>回复数 {{item.replyCount}}</span>
-              <span>浏览数 {{item.pageViews}}</span>
-              <span>关注人数 {{item.likeCount}}</span>
+            <div class="content">
+              <div class="creator line-limit">{{item.creator.name}}</div>
+              <div class="content-title line-limit">
+                {{item.title}}
+              </div>
             </div>
-          </div>
-          <div class="aside">
-            <div class="publish-time">{{item.createTime}}</div>
-            <div class="binding-session line-limit" v-if="item.createPosition"
-                 @click.stop="playVideo(item.createPosition)">
-              {{`${item.createPosition.chapter}-${item.createPosition.sid} ${item.createPosition.sessionName}`}}
+            <div class="aside">
+              <div class="publish-time">{{item.createTime}}</div>
+              <div class="binding-session line-limit" v-if="item.createPosition"
+                   @click.stop="playVideo(item.createPosition)">
+                {{`${item.createPosition.chapter}-${item.createPosition.sid} ${item.createPosition.sessionName}`}}
+              </div>
             </div>
           </div>
+        </el-card>
+        <div class="forum-item-footer">
+          <span><img src="../hot.png"/> {{item.pageViews}}</span>
+          <span><img src="../reply.jpg"/> {{item.replyCount}}</span>
+          <span><img :src="item.like ? require('../like_full.png') : require('../like.png')"/> {{item.likeCount}}</span>
         </div>
-      </el-card>
+      </div>
     </div>
     <div class="pagination">
       <slot name="pagination"
@@ -58,7 +66,7 @@
                     @blur="checkTitle"
                     @focus="showTitleHint = false"
                     v-model="discuss.title"></el-input>
-          <div class="hint-box"><span class="hint" v-if="showTitleHint">标题不能少于5个字符</span></div>
+          <div class="hint-box"><span class="hint" v-if="showTitleHint">标题不能少于4个字符</span></div>
         </div>
         <div class="content">
           <el-input
@@ -161,11 +169,7 @@
       // 检查是否讨论标题是够符合要求
       checkTitle () {
         console.log(`title is ${this.discuss.title}`)
-        if (this.discuss.title.trim().length < 5) {
-          this.showTitleHint = true
-        } else {
-          this.showTitleHint = false
-        }
+        this.showTitleHint = this.discuss.title.trim().length < 4
       },
       // 发布讨论
       commit () {
@@ -276,48 +280,69 @@
       .publish
         float right
         display inline-block
+      .publish-button
+        width 77px
+        height 32px
+        background-color #FFFFFF
+        box-shadow 0 2px 4px 0 rgba(0,0,0,0.12)
+        border-radius 5px
+        border 0
+        cursor pointer
+        font-size 14px
+        font-family PingFangSC-Medium
+        font-weight 500
+        color rgba(102,102,102,1)
+        line-height 20px
+        &:hover
+          color #049CFF
 
     .forum
+      .forum-item-footer
+        margin-top 18px
+        margin-bottom 22px
+        text-align right
+        font-size 12px
+        span
+          padding-left 20px
+
       .forum-item
-        padding 20px
         margin-bottom 8px
+        border-radius 15px
 
         &:hover
-          background-color silver
+          background-color #E0F3FF
           cursor pointer
 
         .forum-item-wrapper
-          position relative
-          top 0
-          left 0
+          display flex
+          font-size 14px
+          font-family PingFangSC-Regular
+          font-weight 400
+          color rgba(102,102,102,1)
 
           .creator-icon
-            float left
-
             img
               width 48px
               height 48px
               border-radius 100%
 
           .content
-            padding-right 120px
-            .content-footer
-              font-size 12px
-
-              span
-                padding-right 5px
+            padding-left 8px
+            padding-right 50px
+            flex 1
+            .creator
+              font-size 16px
+              font-weight 600
+            .content-title
+              padding 5px 0
 
           .aside
-            position absolute
-            top 0
-            right 0
-            width 120px
-
+            width 110px
             .binding-session
               cursor pointer
-
+              margin-top 5px
               &:hover
-                color #ffff
+                color #049CFF
 
     .pagination
       text-align center

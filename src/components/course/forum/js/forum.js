@@ -4,11 +4,12 @@ const FORUM = {
   forum: [
     {
       id: 100,
-      title: '讨论标题',
+      title: '讨论标题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题题',
       createTime: '2019-01-10',
       replyCount: 2,
       pageViews: 10,
       likeCount: 10,
+      like: false,
       creator: {
         id: 123,
         avatar: user,
@@ -30,6 +31,7 @@ const FORUM = {
       replyCount: 2,
       pageViews: 10,
       likeCount: 10,
+      like: true,
       creator: {
         id: 123,
         avatar: user,
