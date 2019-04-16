@@ -2,69 +2,44 @@
 <template>
   <div class="notes-wrapper">
     <div class="notes-header clearfix">
-      <div class="left">
-        <slot name="latest"
-              :sortingWithQuery="sortingWithQuery"
-              :sortingWithoutQuery="sortingWithoutQuery"
-              :getSortingTypeClass="getSortingTypeClass"></slot>
-        <slot name="hottest"
-              :sortingWithQuery="sortingWithQuery"
-              :sortingWithoutQuery="sortingWithoutQuery"
-              :getSortingTypeClass="getSortingTypeClass"></slot>
-      </div>
+      <span @click="sorting(0)" :class="getSortingTypeClass(0)">
+        最新
+        <img :src="Number(this.sortingType) === 0 ? require('../new_full.jpg') : require('../new.png')"/>
+      </span>
+      <span @click="sorting(1)" :class="getSortingTypeClass(1)">
+        最热
+        <img :src="Number(this.sortingType) === 1 ? require('../hot_full.jpg') : require('../hot.png')"/>
+      </span>
       <div class="mine">
-        <slot name="showMine"
-              :mine="mine"
-              :showMineWithQuery="showMineWithQuery"
-              :showMineWithoutQuery="showMineWithoutQuery"></slot>
+        <el-switch
+          v-model="mine"
+          active-color="#13ce66"
+          @change="showMine">
+        </el-switch>
         <span>只看自己</span>
       </div>
     </div>
-    <div class="notes">
-      <el-card class="note-item clearfix"
-           v-for="(item, index) in notes" :key="index"
-           @click="noteDetail(item.id)">
-        <div class="note-item-wrapper">
-          <div class="creator-icon">
-            <img :src="item.creator.avatar"/>
-          </div>
-          <div class="content">
-            <div class="creator line-limit">{{item.creator.name}}</div>
-            <div class="content-title line-limit">
-              {{item.title}}
-            </div>
-            <div class="content-footer">
-              <span>回复数 {{item.replyCount}}</span>
-              <span>浏览数 {{item.pageViews}}</span>
-              <span>关注人数 {{item.likeCount}}</span>
-            </div>
-          </div>
-          <div class="aside">
-            <div class="publish-time">{{item.createTime}}</div>
-            <div class="binding-session line-limit" v-if="item.createPosition"
-                 @click.stop="playVideo(item.createPosition)">
-              {{`${item.createPosition.chapter}-${item.createPosition.sid} ${item.createPosition.sessionName}`}}
-            </div>
-          </div>
-        </div>
-      </el-card>
-    </div>
-    <div class="pagination">
-      <slot name="pagination"
-            :totalNum="notesNum"
-            :currentPage="currentPage"
-            :handleCurrentChangeWithQuery="handleCurrentChangeWithQuery"
-            :handleCurrentChangeWithoutQuery="handleCurrentChangeWithoutQuery"></slot>
-    </div>
+    <mooc-list :list="notes" :total-num="notesNum" :current-page="currentPage"
+               @current-change="handleCurrentChange"
+               @to-detail="noteDetail"></mooc-list>
   </div>
 </template>
 
 <script>
   import { NOTES } from './js/NOTES'
   import { mapGetters, mapActions } from 'vuex'
+  import moocList from '../../list/moocList'
 
   export default {
     name: 'notes',
+    props: {
+      // url是否保留页码、排序方式等查询参数
+      withQuery: {
+        type: Boolean,
+        default: true
+      }
+    },
+    components: { moocList },
     data () {
       return {
         // 当前页
@@ -84,37 +59,36 @@
       ...mapActions('account', {
         setAccountWindowShow: 'setAccountWindowShow'
       }),
-      // url带页码的形式进行当前页变化
-      handleCurrentChangeWithQuery (page) {
+      // 进行当前页变化
+      handleCurrentChange (page) {
         this.handleRoute(page, this.sortingType)
-      },
-      // url不带页码的形式进行当前页变化
-      handleCurrentChangeWithoutQuery (page) {
-        this.currentPage = page
-        this.fetchNotes()
       },
       // 笔记页的路由逻辑处理
       handleRoute (page, sortingType) {
         page = String(page)
         sortingType = String(sortingType)
-        if (this.mine) {
-          this.$router.push({
-            name: 'notes',
-            params: this.$route.params,
-            query: { p: page, type: sortingType, filter: 'mine' }
-          })
+        if (this.withQuery) {
+          if (this.mine) {
+            this.$router.push({
+              name: 'notes',
+              params: this.$route.params,
+              query: { p: page, type: sortingType, filter: 'mine' }
+            })
+          } else {
+            this.$router.push({
+              name: 'notes',
+              params: this.$route.params,
+              query: { p: page, type: sortingType }
+            })
+          }
         } else {
-          this.$router.push({
-            name: 'notes',
-            params: this.$route.params,
-            query: { p: page, type: sortingType }
-          })
+          this.currentPage = page
+          this.sortingType = sortingType
+          this.fetchNotes()
         }
       },
       // 展示自己的笔记
-      showMineWithQuery () {
-        this.mine = !this.mine
-        console.log(`mine is ${this.mine}`)
+      showMine () {
         if (!this.userInfo) {
           this.mine = false
           this.setAccountWindowShow({
@@ -125,11 +99,7 @@
           this.handleRoute('1', this.sortingType)
         }
       },
-      // 展示自己的笔记
-      showMineWithoutQuery () {
-        this.mine = !this.mine
-        this.fetchNotes()
-      },
+      // url获取查询参数
       getNotes () {
         this.currentPage = Number(this.$route.query.p) || 1
         this.sortingType = Number(this.$route.query.type) || 0
@@ -147,6 +117,7 @@
           // 获取所有笔记
           // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
         }
+        console.log(`向后台申请笔记：当前页(${this.currentPage}), 排序(${this.sortingType}), 是否只看自己(${this.mine})`)
         this.notes = NOTES.notes
         this.notesNum = NOTES.notesNum
       },
@@ -154,16 +125,11 @@
       getSortingTypeClass (sortingType) {
         return Number(this.sortingType) === sortingType ? 'sorting-type-on' : 'sorting-type'
       },
-      // url保留排序规则的方式，更改讨论列表排序规则
-      sortingWithQuery (sortingType) {
-        if (this.sortingType !== sortingType) {
-          this.handleRoute('1', sortingType)
-        }
-      },
-      // url不保留排序规则的方式，更改讨论列表排序规则
-      sortingWithoutQuery (sortingType) {
+      // 更改讨论列表排序规则
+      sorting (sortingType) {
         if (this.sortingType !== sortingType) {
           this.sortingType = sortingType
+          this.handleRoute('1', sortingType)
         }
       },
       // 前往笔记详情页
@@ -176,23 +142,6 @@
         } else {
           // 前往详情页
           this.$router.push({ name: 'noteDetail', params: { nid: id } })
-        }
-      },
-      // 前往课时播放页
-      playVideo (position) {
-        // 未登录时无法播放课程，弹出登录窗口提示登录
-        if (!this.userInfo) {
-          this.setAccountWindowShow({
-            show: true,
-            type: 'LOGIN'
-          })
-        } else {
-          this.rHelp.openVideoWindow({
-            cid: position.cid,
-            chapter: position.chapter,
-            sid: position.sid,
-            playTime: position.time
-          })
         }
       }
     },
@@ -215,16 +164,24 @@
 
 <style lang="stylus" scoped>
   .notes-wrapper
+    font-family PingFangSC-Regular
+    color rgba(51,51,51,1)
+    line-height 22px
     .notes-header
       margin-bottom 30px
-
+      &>span
+        padding-right 36px
+        img
+          padding-left 10px
+          vertical-align middle
       .sorting-type-on
-        font-weight 700
+        font-weight 600
 
       .sorting-type
+        color #333333
         &:hover
           cursor pointer
-          color grey
+          color #979797
 
       span
         padding-left 5px

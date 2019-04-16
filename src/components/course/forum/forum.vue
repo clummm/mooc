@@ -2,60 +2,22 @@
 <template>
   <div class="forum-wrapper">
     <div class="forum-header clearfix">
-      <div class="left">
-        <slot name="latest"
-              :sortingWithQuery="sortingWithQuery"
-              :sortingWithoutQuery="sortingWithoutQuery"
-              :getSortingTypeClass="getSortingTypeClass">
-        </slot>
-        <slot name="hottest"
-              :sortingWithQuery="sortingWithQuery"
-              :sortingWithoutQuery="sortingWithoutQuery"
-              :getSortingTypeClass="getSortingTypeClass">
-        </slot>
-      </div>
+      <span @click="sorting(0)" :class="getSortingTypeClass(0)">
+        最新
+        <img :src="Number(this.sortingType) === 0 ? require('../new_full.jpg') : require('../new.png')"/>
+      </span>
+      <span @click="sorting(1)" :class="getSortingTypeClass(1)">
+        最热
+        <img :src="Number(this.sortingType) === 1 ? require('../hot_full.jpg') : require('../hot.png')"/>
+      </span>
       <div class="publish">
         <!--<el-button @click="showPublishDialog" size="small">我要发布</el-button>-->
         <button class="publish-button" @click="showPublishDialog">我要发布</button>
       </div>
     </div>
-    <div class="forum">
-      <div v-for="(item, index) in forum" :key="index">
-        <el-card class="forum-item clearfix"
-                 @click="discussDetail(item.id)">
-          <div class="forum-item-wrapper">
-            <div class="creator-icon">
-              <img :src="item.creator.avatar"/>
-            </div>
-            <div class="content">
-              <div class="creator line-limit">{{item.creator.name}}</div>
-              <div class="content-title line-limit">
-                {{item.title}}
-              </div>
-            </div>
-            <div class="aside">
-              <div class="publish-time">{{item.createTime}}</div>
-              <div class="binding-session line-limit" v-if="item.createPosition"
-                   @click.stop="playVideo(item.createPosition)">
-                {{`${item.createPosition.chapter}-${item.createPosition.sid} ${item.createPosition.sessionName}`}}
-              </div>
-            </div>
-          </div>
-        </el-card>
-        <div class="forum-item-footer">
-          <span><img src="../hot.png"/> {{item.pageViews}}</span>
-          <span><img src="../reply.jpg"/> {{item.replyCount}}</span>
-          <span><img :src="item.like ? require('../like_full.png') : require('../like.png')"/> {{item.likeCount}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="pagination">
-      <slot name="pagination"
-            :totalNum="forumNum"
-            :currentPage="currentPage"
-            :handleCurrentChangeWithQuery="handleCurrentChangeWithQuery"
-            :handleCurrentChangeWithoutQuery="handleCurrentChangeWithoutQuery"></slot>
-    </div>
+    <mooc-list :list="forum" :total-num="forumNum" :current-page="currentPage"
+               @current-change="handleCurrentChange"
+               @to-detail="discussDetail"></mooc-list>
     <div class="publish-dialog">
       <el-dialog
         title="我要发布"
@@ -85,9 +47,20 @@
 <script>
   import { FORUM } from './js/forum'
   import { mapGetters, mapActions } from 'vuex'
+  import moocList from '../../list/moocList'
 
   export default {
     name: 'forum',
+    props: {
+      // url是否保留页码、排序方式等查询参数
+      withQuery: {
+        type: Boolean,
+        default: true
+      }
+    },
+    components: {
+      moocList
+    },
     data () {
       return {
         // 当前页
@@ -115,25 +88,36 @@
         setAccountWindowShow: 'setAccountWindowShow'
       }),
       // url带页码的形式进行当前页变化
-      handleCurrentChangeWithQuery (page) {
-        this.$router.push({ name: 'forum', params: this.$route.params, query: { p: page, type: String(this.sortingType) } })
+      handleCurrentChange (page) {
+        this.handleRoute(page, this.sortingType)
       },
-      // url不带页码的形式进行当前页变化
-      handleCurrentChangeWithoutQuery (page) {
-        this.currentPage = page
-        // 后台获取讨论
-        // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
-        this.forum = FORUM.forum
-        this.forumNum = FORUM.forumNum
-      },
-      // 后台获取讨论
       getForum () {
         this.currentPage = Number(this.$route.query.p) || 1
         this.sortingType = Number(this.$route.query.type) || 0
+        this.fetchForum()
+      },
+      // 后台获取讨论
+      fetchForum () {
         // 后台获取讨论
         // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
         this.forum = FORUM.forum
         this.forumNum = FORUM.forumNum
+      },
+      // 路由处理逻辑
+      handleRoute (page, sortingType) {
+        page = String(page)
+        sortingType = String(sortingType)
+        if (this.withQuery) {
+          this.$router.push({
+            name: 'forum',
+            params: this.$route.params,
+            query: { p: page, type: sortingType }
+          })
+        } else {
+          this.currentPage = page
+          this.sortingType = sortingType
+          this.fetchForum()
+        }
       },
       /**
        * *********************************
@@ -209,34 +193,10 @@
         return Number(this.sortingType) === sortingType ? 'sorting-type-on' : 'sorting-type'
       },
       // url保留排序规则的方式，更改讨论列表排序规则
-      sortingWithQuery (sortingType) {
-        if (this.sortingType !== sortingType) {
-          this.$router.push({ name: 'forum', params: this.$route.params, query: { p: '1', type: sortingType } })
-        }
-      },
-      // url不保留排序规则的方式，更改讨论列表排序规则
-      sortingWithoutQuery (sortingType) {
+      sorting (sortingType) {
         if (this.sortingType !== sortingType) {
           this.sortingType = sortingType
-        }
-      },
-      // 前往课时播放页
-      playVideo (position) {
-        // 未登录时无法播放课程，弹出登录窗口提示登录
-        console.log('play')
-        console.log(position)
-        if (!this.userInfo) {
-          this.setAccountWindowShow({
-            show: true,
-            type: 'LOGIN'
-          })
-        } else {
-          this.rHelp.openVideoWindow({
-            cid: position.cid,
-            chapter: position.chapter,
-            sid: position.sid,
-            playTime: position.time
-          })
+          this.handleRoute('1', sortingType)
         }
       }
     },
@@ -263,16 +223,24 @@
 
 <style lang="stylus" scoped>
   .forum-wrapper
+    font-family PingFangSC-Regular
+    color rgba(51,51,51,1)
+    line-height 22px
     .forum-header
       margin-bottom 30px
-
+      &>span
+        padding-right 36px
+        img
+          padding-left 10px
+          vertical-align middle
       .sorting-type-on
-        font-weight 700
+        font-weight 600
 
       .sorting-type
+        color #333333
         &:hover
           cursor pointer
-          color grey
+          color #979797
 
       span
         padding-left 5px

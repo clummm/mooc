@@ -78,38 +78,7 @@
       </el-card>
       <div class="course-content">
         <div class="course-content-wrapper">
-          <router-view>
-            <template v-slot:latest="sortingSlotProps">
-              <span @click="sortingSlotProps.sortingWithQuery(0)"
-                    :class="sortingSlotProps.getSortingTypeClass(0)">
-                最新
-              <img src="./new.png"/>
-              </span>
-            </template>
-            <template v-slot:hottest="sortingSlotProps">
-              <span @click="sortingSlotProps.sortingWithQuery(1)"
-                    :class="sortingSlotProps.getSortingTypeClass(1)">
-                最热
-                <img src="./hot.png"/>
-              </span>
-            </template>
-            <template v-slot:showMine="mineSlotProps">
-              <el-switch
-                v-model="mineSlotProps.mine"
-                active-color="#13ce66"
-                @change="mineSlotProps.showMineWithQuery">
-              </el-switch>
-            </template>
-            <template v-slot:pagination="listSlotProps">
-              <el-pagination
-                background="false"
-                layout="prev, pager, next"
-                :total="listSlotProps.totalNum"
-                :current-page="listSlotProps.currentPage"
-                @current-change="listSlotProps.handleCurrentChangeWithQuery">
-              </el-pagination>
-            </template>
-          </router-view>
+          <router-view></router-view>
         </div>
       </div>
     </div>
