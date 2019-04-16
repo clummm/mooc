@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { FORUM } from './js/forum'
+  import { Forum, secondForum } from '../../../../public/js/forum'
   import { mapGetters, mapActions } from 'vuex'
   import moocList from '../../list/moocList'
 
@@ -99,9 +99,19 @@
       // 后台获取讨论
       fetchForum () {
         // 后台获取讨论
-        // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
-        this.forum = FORUM.forum
-        this.forumNum = FORUM.forumNum
+        let chapter = typeof (this.$route.params.chapter) === 'undefined' ? -1 : this.$route.params.chapter
+        let sid = typeof (this.$route.params.sid) === 'undefined' ? -1 : this.$route.params.sid
+        // ...post({cid: this.$route.params.cid, chapter: chapter, sid: sid,
+        // currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
+        console.log(`向后台申请讨论：章节(${chapter}), 课时(${sid}), 当前页(${this.currentPage}), 排序(${this.sortingType}), 是否只看自己(${this.mine})`)
+        // 用于测试
+        if (chapter === -1 || sid === -1) {
+          this.forum = Forum.forum
+          this.forumNum = Forum.forumNum
+        } else {
+          this.forum = secondForum.forum
+          this.forumNum = secondForum.forumNum
+        }
       },
       // 路由处理逻辑
       handleRoute (page, sortingType) {

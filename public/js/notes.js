@@ -1,6 +1,6 @@
-import user from '../../../../../public/images/user.jpg'
+import user from '../images/user.jpg'
 
-const NOTES = {
+const Notes = {
   notes: [
     {
       id: 100,
@@ -85,10 +85,10 @@ const secondNotes = {
       },
       createPosition: {
         cid: 0,
-        courseName: '前端框架课程0',
-        chapter: 1,
-        sid: 2,
-        sessionName: 'trailer',
+        courseName: '前端框架课程000000000000000',
+        chapter: 2,
+        sid: 1,
+        sessionName: 'mov_bbb',
         time: 10
       }
     }
@@ -96,4 +96,4 @@ const secondNotes = {
   notesNum: 100
 }
 
-export { NOTES, secondNotes }
+export { Notes, secondNotes }

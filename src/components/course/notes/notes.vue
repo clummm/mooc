@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import { NOTES } from './js/NOTES'
+  import { Notes, secondNotes } from '../../../../public/js/notes'
   import { mapGetters, mapActions } from 'vuex'
   import moocList from '../../list/moocList'
 
@@ -109,17 +109,27 @@
       // 后台获取笔记
       fetchNotes () {
         // 后台获取笔记
+        let chapter = typeof (this.$route.params.chapter) === 'undefined' ? -1 : this.$route.params.chapter
+        let sid = typeof (this.$route.params.sid) === 'undefined' ? -1 : this.$route.params.sid
         if (this.mine) {
           // 获取自己的笔记
-          // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType
+          // ...post({cid: this.$route.params.cid, chapter: chapter, sid: sid,
+          // currentPage: this.currentPage, pageSize: this.pageSize, sortingType
           // type: 'mine', uid, token})
         } else {
           // 获取所有笔记
-          // ...post({cid: this.$route.params.cid, currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
+          // ...post({cid: this.$route.params.cid, chapter: chapter, sid: sid,
+          // currentPage: this.currentPage, pageSize: this.pageSize, sortingType})
         }
-        console.log(`向后台申请笔记：当前页(${this.currentPage}), 排序(${this.sortingType}), 是否只看自己(${this.mine})`)
-        this.notes = NOTES.notes
-        this.notesNum = NOTES.notesNum
+        console.log(`向后台申请笔记：章节(${chapter}), 课时(${sid}), 当前页(${this.currentPage}), 排序(${this.sortingType}), 是否只看自己(${this.mine})`)
+        // 用于测试
+        if (chapter === -1 || sid === -1) {
+          this.notes = Notes.notes
+          this.notesNum = Notes.notesNum
+        } else {
+          this.notes = secondNotes.notes
+          this.notesNum = secondNotes.notesNum
+        }
       },
       // 获取排序规则的样式
       getSortingTypeClass (sortingType) {
