@@ -1,3 +1,4 @@
+<!-- 课时详情页与课时播放页的笔记、讨论列表 -->
 <template>
   <div class="list-wrapper">
     <div class="list">

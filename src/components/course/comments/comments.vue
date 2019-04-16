@@ -76,7 +76,7 @@
     </div>
     <div class="pagination">
       <el-pagination
-        background="false"
+        background
         layout="prev, pager, next"
         :total="commentsNum"
         :current-page="currentPage"
@@ -270,6 +270,8 @@
 
 <style lang="stylus" scoped>
   .comments-wrapper
+    .el-card
+      border-radius 15px
     .comments-header
       padding 20px 0
       margin-bottom 30px
@@ -305,8 +307,7 @@
         margin-right 10px
 
     .comment
-      padding 20px
-      margin-bottom 8px
+      margin-bottom 20px
 
     .comment-wrapper
       position relative
@@ -323,13 +324,17 @@
 
       .content-box
         padding-left 64px
+        padding-right 20px
         .content
+          padding 12px 0 14px 0
           word-wrap break-word
         .content-footer
           margin-top 10px
           .thumb-up-box
             cursor pointer
-            padding 5px 14px
+            text-align center
+            width 50px
+            padding 5px
             font-size 14px
             background-color silver
             border silver solid 1px
@@ -338,24 +343,24 @@
       .aside
         position absolute
         top 0
-        right 0
+        right 20px
         width 150px
 
     .my-comment
       position relative
       top 0
       left 0
-      padding 52px 32px 32px 32px
+      padding-top 40px
       margin-bottom 30px
       span
         position absolute
-        left 30px
+        left 20px
         top 14px
         font-weight 700
         font-size 22px
       button
         position absolute
-        right 32px
+        right 40px
         top 8px
 
     .pagination

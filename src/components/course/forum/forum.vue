@@ -87,7 +87,7 @@
       ...mapActions('account', {
         setAccountWindowShow: 'setAccountWindowShow'
       }),
-      // url带页码的形式进行当前页变化
+      // 当前页变化
       handleCurrentChange (page) {
         this.handleRoute(page, this.sortingType)
       },
@@ -202,7 +202,7 @@
       getSortingTypeClass (sortingType) {
         return Number(this.sortingType) === sortingType ? 'sorting-type-on' : 'sorting-type'
       },
-      // url保留排序规则的方式，更改讨论列表排序规则
+      // 更改讨论列表排序规则
       sorting (sortingType) {
         if (this.sortingType !== sortingType) {
           this.sortingType = sortingType
