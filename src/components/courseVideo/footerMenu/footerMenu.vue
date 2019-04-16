@@ -5,45 +5,8 @@
       <el-menu-item index="notes">课程笔记</el-menu-item>
     </el-menu>
     <div class="footer-menu-content">
-      <forum v-show="footMenuActive === 'forum'">
-        <template v-slot:sortingType="sortingSlotProps">
-              <span @click="sortingSlotProps.sortingWithoutQuery(0)"
-                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
-          <span @click="sortingSlotProps.sortingWithoutQuery(1)"
-                :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
-        </template>
-        <template v-slot:pagination="listSlotProps">
-          <el-pagination
-            layout="prev, pager, next"
-            :total="listSlotProps.totalNum"
-            :current-page="listSlotProps.currentPage"
-            @current-change="listSlotProps.handleCurrentChangeWithoutQuery">
-          </el-pagination>
-        </template>
-      </forum>
-      <notes v-show="footMenuActive === 'notes'">
-        <template v-slot:sortingType="sortingSlotProps">
-              <span @click="sortingSlotProps.sortingWithoutQuery(0)"
-                    :class="sortingSlotProps.getSortingTypeClass(0)">最新</span>
-          <span @click="sortingSlotProps.sortingWithoutQuery(1)"
-                :class="sortingSlotProps.getSortingTypeClass(1)">最热</span>
-        </template>
-        <template v-slot:showMine="mineSlotProps">
-          <el-switch
-            v-model="mineSlotProps.mine"
-            active-color="#13ce66"
-            @change="mineSlotProps.showMineWithoutQuery">
-          </el-switch>
-        </template>
-        <template v-slot:pagination="listSlotProps">
-          <el-pagination
-            layout="prev, pager, next"
-            :total="listSlotProps.totalNum"
-            :current-page="listSlotProps.currentPage"
-            @current-change="listSlotProps.handleCurrentChangeWithoutQuery">
-          </el-pagination>
-        </template>
-      </notes>
+      <forum v-show="footMenuActive === 'forum'" :with-query="false"></forum>
+      <notes v-show="footMenuActive === 'notes'" :with-query="false"></notes>
     </div>
   </div>
 </template>
