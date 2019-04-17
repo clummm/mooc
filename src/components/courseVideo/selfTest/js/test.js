@@ -1,79 +1,59 @@
-const test = [
+const tests = [
   {
-    id: 0,
-    title: '测试1',
-    description: '以下哪个不是 JavaScipt 的基本类型？',
-    choices: [
-      {
-        cid: 0,
-        content: 'Undefined'
-      },
-      {
-        cid: 1,
-        content: 'Null'
-      },
-      {
-        cid: 2,
-        content: 'Object'
-      },
-      {
-        cid: 3,
-        content: 'Number'
-      }
-    ],
-    answer: 2,
-    analysis: 'JavaScript 的基本类型有 undefined、null、number、string、boolean、symbol，复合类型有 object。'
+    id: 200,
+    name: '测试名字1',
+    count: 3,
+    description: '测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1'
   },
   {
-    id: 1,
-    title: '测试2',
-    description: '以下哪个不是 JavaScipt 的基本类型？',
-    choices: [
-      {
-        cid: 0,
-        content: 'Undefined'
-      },
-      {
-        cid: 1,
-        content: 'Null'
-      },
-      {
-        cid: 2,
-        content: 'Object'
-      },
-      {
-        cid: 3,
-        content: 'Number'
-      }
-    ],
-    answer: 2,
-    analysis: 'JavaScript 的基本类型有 undefined、null、number、string、boolean、symbol，复合类型有 object。'
+    id: 200,
+    name: '测试名字1',
+    count: 3,
+    description: '测试描述1'
   },
   {
-    id: 2,
-    title: '测试3',
-    description: '以下哪个不是 JavaScipt 的基本类型？',
-    choices: [
-      {
-        cid: 0,
-        content: 'Undefined'
-      },
-      {
-        cid: 1,
-        content: 'Null'
-      },
-      {
-        cid: 2,
-        content: 'Object'
-      },
-      {
-        cid: 3,
-        content: 'Number'
-      }
-    ],
-    answer: 2,
-    analysis: 'JavaScript 的基本类型有 undefined、null、number、string、boolean、symbol，复合类型有 object。'
+    id: 200,
+    name: '测试名字1',
+    count: 3,
+    description: '测试描述1'
   }
 ]
 
-export { test }
+const test = {
+  id: 200,
+  name: '测试名字1',
+  count: 3,
+  description: '测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1测试描述1',
+  list: [
+    {
+      query: '以下哪个不是 JavaScript 的基本类型？',
+      choiceA: 'Undefined',
+      choiceB: 'Null',
+      choiceC: 'Object',
+      choiceD: 'Number',
+      answer: 'A',
+      explain: 'JavaScript 的基本类型有 undefined、null、number、string、boolean、symbol，复合类型有 object。'
+    },
+    {
+      query: '以下哪个不是 JavaScript 的基本类型？',
+      choiceA: 'Undefined',
+      choiceB: 'Null',
+      choiceC: 'Object',
+      choiceD: 'Number',
+      answer: 'A',
+      explain: 'JavaScript 的基本类型有 undefined、null、number、string、boolean、symbol，复合类型有 object。'
+    },
+    {
+      query: '以下哪个不是 JavaScript 的基本类型？',
+      choiceA: 'Undefined',
+      choiceB: 'Null',
+      choiceC: 'Object',
+      choiceD: 'Number',
+      answer: 'A',
+      explain: 'JavaScript 的基本类型有 undefined、null、number、string、boolean、symbol，复合类型有 object。'
+    }
+  ]
+
+}
+
+export { tests, test }

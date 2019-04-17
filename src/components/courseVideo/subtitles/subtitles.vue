@@ -61,6 +61,7 @@
 
 <style lang="stylus" scoped>
   .subtitles
+    font-family PingFangSC-Regular
     li
       cursor pointer
       margin-top 50px
