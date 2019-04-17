@@ -1,6 +1,7 @@
 <template>
   <div class="footer-menu">
-    <el-menu default-active="forum" mode="horizontal" @select="handleFootMenuSelect">
+    <el-menu default-active="forum" mode="horizontal" @select="handleFootMenuSelect"
+             active-text-color="#049CFF" text-color="#333333">
       <el-menu-item index="forum">课程讨论</el-menu-item>
       <el-menu-item index="notes">课程笔记</el-menu-item>
     </el-menu>
@@ -41,4 +42,14 @@
     .footer-menu-content
       padding-top 36px
       padding-right 352px
+      padding-bottom 20px
+    .el-menu
+      background-color #F5F7FA
+      .el-menu-item
+        font-size 16px
+        font-weight 700
+        font-family PingFangSC-Medium
+        margin-right 72px
+        &:focus, &:hover
+          background-color #F5F7FA
 </style>

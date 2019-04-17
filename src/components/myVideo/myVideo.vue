@@ -2,8 +2,7 @@
   <div class="video" ref="vcontainer"
        @pointerup.prevent="stopDragging"
        @pointermove.prevent="handleMouseMove" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd" @click="togglePlaying"
-    >
+    <video class="video-player" ref="v" @timeupdate="handleTimeUpdate" @ended="handleEnd" @click="togglePlaying">
       <source :src="`${videoSrc}#t=${playTime}`"/>
       <track :src="webvtt" kind="subtitles" label="中文字幕" srclang="zh" default/>
     </video>
@@ -414,4 +413,7 @@
         .fullscreen
           position absolute
           right 2%
+  ::cue
+    font-size 16px
+
 </style>

@@ -10,10 +10,12 @@
     </ul>
     <div class="main-content">
       <div class="player">
-        <my-video :video-src="session.url" :play-time="playTime" @time-update="timeUpdate" :webvtt="session.webvtt"></my-video>
+        <my-video :video-src="session.url" :play-time="playTime" @time-update="timeUpdate"
+                  :webvtt="session.webvtt" :nodes="session.nodes"></my-video>
       </div>
       <div class="aside-menu">
-        <el-menu default-active="catalog" mode="horizontal" @select="handleAsideMenuSelect">
+        <el-menu default-active="catalog" mode="horizontal" @select="handleAsideMenuSelect"
+                 active-text-color="#049CFF" text-color="#333333">
           <el-menu-item index="catalog">课程章节</el-menu-item>
           <el-menu-item index="forum">发起讨论</el-menu-item>
           <el-menu-item index="note">发起笔记</el-menu-item>
@@ -32,11 +34,13 @@
         </div>
       </div>
     </div>
-    <el-card class="keywords">
-      <keyword-tag class="keyword" v-for="(keyword, index) in session.keywords" :key="index"
-                   :word="keyword" :index="index" :editable="false"></keyword-tag>
-    </el-card>
-    <div class="subcontainer">
+    <div class="fixed-center-wrapper">
+      <el-card class="keywords">
+        <keyword-tag class="keyword" v-for="(keyword, index) in session.keywords" :key="index"
+                     :word="keyword" :index="index" :editable="false"></keyword-tag>
+      </el-card>
+    </div>
+    <div class="subcontainer fixed-center-wrapper">
       <footer-menu></footer-menu>
     </div>
   </div>
@@ -125,7 +129,7 @@
       },
       // 侧边目录滚动，滚动距离=滚动条长度/数组长度*当前数组的index -默认不滚动的距离
       scrollTo (length, index) {
-        this.$refs.aside.scrollTop = this.$refs.aside.scrollHeight / length * index // - 100
+        this.$refs.aside.scrollTop = this.$refs.aside.scrollHeight / length * index - 100
         this.$refs.aside.scrollTop = this.$refs.aside.scrollTop < 0 ? 0 : this.$refs.aside.scrollTop
       },
       // 跳转到某个节点
@@ -165,8 +169,10 @@
 
 <style lang="stylus" scoped>
   .course-video-wrapper
+    background-color #F5F7FA
     .header
       height 60px
+      background-color #FFFFFF
 
       li
         font-size 24px
@@ -177,7 +183,7 @@
         text-align center
 
         &:hover
-          background-color silver
+          background-color #E0F3FF
 
     .keywords
       margin 10px
@@ -187,18 +193,30 @@
 
     .main-content
       width 100%
-      height 400px
+      height 550px
       display flex
+      box-shadow 0 0 8px #e2e2e2
 
       .player
         flex 1
+        background-color #1C1C1C
 
       .aside-menu
         display flex
         flex-direction column
+        border-radius 5px
+        border-left 1px solid #e2e2e2
+        width 460px
         .aside-menu-content
           flex 1
           overflow auto
-          width 450px
+          background-color #FFFFFF
+          padding 15px 20px
+
+    .el-menu
+      .el-menu-item
+        font-size 14px
+        font-weight 700
+        font-family PingFangSC-Medium
 
 </style>

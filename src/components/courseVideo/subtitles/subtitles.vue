@@ -67,5 +67,5 @@
       margin-bottom 10px
       text-align center
     .active
-      color red
+      color #049CFF
 </style>
