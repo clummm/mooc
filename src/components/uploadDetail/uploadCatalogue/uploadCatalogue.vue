@@ -38,18 +38,18 @@
         <span class="title">课程目录</span>
         <div>
           <div v-for="(chapter,index) in course.catalogue.chapters" :key="index">
-            <div>
-              <span>第{{number2character(index+1)}}章</span>
+            <div class="chapter">
+              <span>第{{number2character(index+1)}}章 </span>
               <span>{{chapter.title}}</span>
-              <span @click="editChapter(index)">编辑</span>
-              <span @click="deleteChapter(index)">删除</span>
+              <el-button type="text" plain @click="editChapter(index)" style="float: right">编辑</el-button>
+              <el-button type="text" plain @click="deleteChapter(index)" style="float: right;margin-right: 10px">删除</el-button>
             </div>
-            <div>{{chapter.intro}}</div>
-            <div>
+            <div class="intro">{{chapter.intro}}</div>
+            <div >
               <div v-if="chapter.sessions">
                 <div v-for="(session,sIndex) in chapter.sessions" :key="sIndex"
                      :class="{'session-chosen':isSessionChosen(session.id)}">
-                  <div @click="chooseSession(index,sIndex)">
+                  <div @click="chooseSession(index,sIndex)" class="session">
                     <span>{{index+1}}.{{sIndex+1}}</span>
                     <span>{{session.name}}</span>
                     <span>{{session.duration}}</span>
@@ -58,10 +58,10 @@
                   </div>
                 </div>
               </div>
-              <div @click="editSession(index,-1)">添加课时</div>
+              <el-button size="mini" style="margin: 10px" @click="editSession(index,-1)">添加课时</el-button>
             </div>
           </div>
-          <div @click="editChapter(-1)">添加章节</div>
+          <el-button size="mini" style="margin: 10px" @click="editChapter(-1)">添加章节</el-button>
         </div>
       </el-card>
       <el-card class="resources">
@@ -354,15 +354,22 @@
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
-        line-height: 28px;
-
+        line-height: 28px
       .catalogue
         margin-bottom 40px
         height 500px
         overflow auto
-
+        .chapter
+          font-weight 700
+        .intro
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(153,153,153,1);
+          margin 10px 0
+        .session
+          margin 10px 0
       .session-chosen
-        background grey
+        background rgba(4, 156, 255, .5);
 
     .right
       display inline-block

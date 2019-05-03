@@ -57,7 +57,7 @@ export default {
     })
     window.open(routeData.href, '_blank')
   },
-  // 当前窗口打开笔记详情页
+  // 当前窗口打开讨论详情页
   openDiscussDetail (id) {
     router.push({
       name: 'discussDetail',
